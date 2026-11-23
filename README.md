@@ -25,25 +25,28 @@ pnpm dev
 
 ### Uten Sanity
 
-Sanity-prosjektet er ikke opprettet ennå. Når `NEXT_PUBLIC_SANITY_PROJECT_ID` mangler, bruker nettsiden reserveinnhold fra `src/content/fallback.ts`. Studio på `/studio` viser da en melding om at Sanity ikke er koblet til.
+Når `NEXT_PUBLIC_SANITY_PROJECT_ID` mangler, bruker nettsiden reserveinnhold fra `src/content/fallback/`. Studio på `/studio` viser da en melding om at Sanity ikke er koblet til.
 
 ### Med Sanity
 
-1. Opprett prosjektet på [sanity.io/manage](https://www.sanity.io/manage), med datasettene `development` og `production`.
+1. PoC-en bruker prosjektet `up8wp88l` og datasettet `production`. Be om tilgang på [sanity.io/manage](https://www.sanity.io/manage).
 2. Legg til `http://localhost:3000` som CORS-origin med «Allow credentials».
 3. Fyll inn `NEXT_PUBLIC_SANITY_PROJECT_ID` og `NEXT_PUBLIC_SANITY_DATASET` i `.env.local`.
 4. Start `pnpm dev` og åpne <http://localhost:3000/studio>.
 
+Endringer fra Studio vises på en deployet side via webhook (se [docs/10-webhook.md](docs/10-webhook.md)). Lokalt starter du `pnpm dev` på nytt for å hente ferskt innhold.
+
 ## Kommandoer
 
-| Kommando         | Hva den gjør                             |
-| ---------------- | ---------------------------------------- |
-| `pnpm dev`       | Utviklingsserver                         |
-| `pnpm build`     | Produksjonsbygg                          |
-| `pnpm start`     | Kjører produksjonsbygget                 |
-| `pnpm lint`      | ESLint                                   |
-| `pnpm typecheck` | Genererer rutetyper og kjører TypeScript |
-| `pnpm format`    | Formaterer koden med Prettier            |
+| Kommando         | Hva den gjør                              |
+| ---------------- | ----------------------------------------- |
+| `pnpm dev`       | Utviklingsserver                          |
+| `pnpm build`     | Produksjonsbygg                           |
+| `pnpm start`     | Kjører produksjonsbygget                  |
+| `pnpm lint`      | ESLint                                    |
+| `pnpm typecheck` | Genererer rutetyper og kjører TypeScript  |
+| `pnpm format`    | Formaterer koden med Prettier             |
+| `pnpm typegen`   | Genererer typer fra Sanity-skjema og GROQ |
 
 ## Struktur
 
@@ -54,16 +57,25 @@ src/
 │   └── (studio)/studio/     Sanity Studio
 ├── components/
 │   ├── layout/              Header, mega-meny, bunntekst, markedsvelger
-│   └── ui/                  Knapper og layoutkomponenter
-├── content/fallback.ts      Reserveinnhold når Sanity ikke er koblet til
+│   ├── modules/             Én komponent per sidemodul (hero, kortrutenett …)
+│   └── ui/                  Knapper, bilder, lenker og layoutkomponenter
+├── content/fallback/        Reserveinnhold når Sanity ikke er koblet til
 ├── lib/                     Markeder, UI-tekster, datahenting
 ├── proxy.ts                 Sender besøkende til riktig marked
 └── sanity/
-    ├── schemaTypes/         Dokumenttyper og objekter
+    ├── schemaTypes/         Dokumenttyper, moduler og objekter
     ├── structure.ts         Venstremenyen i Studio
-    └── queries.ts           GROQ-spørringer
+    ├── queries.ts           GROQ-spørringer
+    ├── sanity.types.ts      Generert av TypeGen (ikke rediger)
+    └── types.ts             Typer avledet fra de genererte
 ```
 
 ## Markeder
 
-Hvert marked har sitt eget prefiks i URL-en (`/no`, `/is`) og sine egne dokumenter i Sanity. Innstillinger og navigasjon er singletons med faste ID-er per språk, for eksempel `siteSettings-nb` og `navigation-is`.
+Hvert marked har sitt eget prefiks i URL-en (`/no`, `/is`) og sine egne dokumenter i Sanity. Forside, innstillinger og navigasjon er singletons med faste ID-er per språk, for eksempel `frontPage-nb` og `navigation-is`. Sider (`page`) oversettes med `@sanity/document-internationalization`, og har feltet `language`.
+
+## Moduler
+
+Forsiden og sidene bygges av moduler: hero, rik tekst, tekst med bilde, kortrutenett, fordelsliste og CTA-banner. Skjemaene ligger i `src/sanity/schemaTypes/modules.ts`, komponentene i `src/components/modules/`.
+
+Etter endringer i skjema eller GROQ-spørringer kjører du `pnpm typegen`.

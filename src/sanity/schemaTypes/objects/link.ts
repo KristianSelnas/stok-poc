@@ -1,9 +1,75 @@
 import { LinkIcon } from "@sanity/icons/Link";
 import { defineField, defineType } from "sanity";
 
+import { referenceFilterByLanguage } from "../../lib/referenceFilter";
+
+/** Dokumenttyper en intern lenke kan peke på. Utvides i fase 3. */
+export const linkableTypes = [{ type: "page" }];
+
+/** Felt for hvor lenken peker. Deles av `link` og `linkAnnotation`. */
+const targetFields = [
+  defineField({
+    name: "linkType",
+    title: "Type",
+    type: "string",
+    initialValue: "internal",
+    options: {
+      list: [
+        { title: "Side", value: "internal" },
+        { title: "Sti", value: "path" },
+        { title: "Ekstern lenke", value: "external" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+  }),
+  defineField({
+    name: "internal",
+    title: "Side",
+    type: "reference",
+    to: linkableTypes,
+    options: { filter: referenceFilterByLanguage },
+    hidden: ({ parent }) => (parent?.linkType ?? "internal") !== "internal",
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as { linkType?: string } | undefined;
+        if ((parent?.linkType ?? "internal") === "internal" && !value) return "Velg en side";
+        return true;
+      }),
+  }),
+  defineField({
+    name: "path",
+    title: "Sti",
+    type: "string",
+    description: "Sti uten markedsprefiks, f.eks. /kontakt. Prefikset (/no eller /is) legges til automatisk.",
+    hidden: ({ parent }) => parent?.linkType !== "path",
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as { linkType?: string } | undefined;
+        if (parent?.linkType !== "path") return true;
+        if (!value) return "Fyll inn en sti";
+        if (!value.startsWith("/")) return "Stien må starte med /";
+        return true;
+      }),
+  }),
+  defineField({
+    name: "url",
+    title: "URL",
+    type: "url",
+    hidden: ({ parent }) => parent?.linkType !== "external",
+    validation: (rule) =>
+      rule.uri({ scheme: ["https", "http", "mailto", "tel"] }).custom((value, context) => {
+        const parent = context.parent as { linkType?: string } | undefined;
+        if (parent?.linkType === "external" && !value) return "Fyll inn en URL";
+        return true;
+      }),
+  }),
+];
+
 /**
- * Lenke med etikett. I fase 1 finnes bare sti og ekstern URL.
- * Interne referanser til dokumenter kommer i fase 2, når sidetypene finnes.
+ * Lenke med etikett. Intern lenke peker på et dokument i samme språk, så den
+ * ikke brytes når en side får ny adresse. Sti brukes for sider som ennå ikke
+ * finnes som dokumenter (bransjer, produkter og kontakt kommer i fase 3).
  */
 export const link = defineType({
   name: "link",
@@ -17,53 +83,29 @@ export const link = defineType({
       type: "string",
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "linkType",
-      title: "Type",
-      type: "string",
-      initialValue: "path",
-      options: {
-        list: [
-          { title: "Side på nettstedet", value: "path" },
-          { title: "Ekstern lenke", value: "external" },
-        ],
-        layout: "radio",
-        direction: "horizontal",
-      },
-    }),
-    defineField({
-      name: "path",
-      title: "Sti",
-      type: "string",
-      description:
-        "Sti uten markedsprefiks, f.eks. /kontakt. Prefikset (/no eller /is) legges til automatisk.",
-      hidden: ({ parent }) => parent?.linkType === "external",
-      validation: (rule) =>
-        rule.custom((value, context) => {
-          const parent = context.parent as { linkType?: string } | undefined;
-          if (parent?.linkType === "external") return true;
-          if (!value) return "Fyll inn en sti";
-          if (!value.startsWith("/")) return "Stien må starte med /";
-          return true;
-        }),
-    }),
-    defineField({
-      name: "url",
-      title: "URL",
-      type: "url",
-      hidden: ({ parent }) => parent?.linkType !== "external",
-      validation: (rule) =>
-        rule.uri({ scheme: ["https", "http", "mailto", "tel"] }).custom((value, context) => {
-          const parent = context.parent as { linkType?: string } | undefined;
-          if (parent?.linkType === "external" && !value) return "Fyll inn en URL";
-          return true;
-        }),
-    }),
+    ...targetFields,
   ],
   preview: {
-    select: { title: "label", path: "path", url: "url", linkType: "linkType" },
-    prepare({ title, path, url, linkType }) {
-      return { title, subtitle: linkType === "external" ? url : path };
+    select: {
+      title: "label",
+      path: "path",
+      url: "url",
+      linkType: "linkType",
+      internalTitle: "internal.title",
+    },
+    prepare({ title, path, url, linkType, internalTitle }) {
+      const subtitle =
+        linkType === "external" ? url : linkType === "path" ? path : internalTitle && `→ ${internalTitle}`;
+      return { title, subtitle };
     },
   },
+});
+
+/** Lenke i rik tekst. Lenketeksten er den markerte teksten, så etikett trengs ikke. */
+export const linkAnnotation = defineType({
+  name: "linkAnnotation",
+  title: "Lenke",
+  type: "object",
+  icon: LinkIcon,
+  fields: targetFields,
 });

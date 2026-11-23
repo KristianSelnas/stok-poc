@@ -8,7 +8,7 @@ Modellen kombinerer faste dokumenttyper for innhold med struktur (produkter, bra
 |---|---|
 | `siteSettings` | Sidetittel, logo, standard SEO, kontaktinfo, org.nr., sosiale medier, smiley-lenker |
 | `navigation` | Hovedmeny (med grupper til mega-meny), bunntekstlenker, CTA-knapp i header |
-| `frontPage` | Referanse til en `page` eller egne moduler |
+| `frontPage` | Moduler og SEO. Ett dokument per marked |
 
 ## Dokumenttyper
 
@@ -51,7 +51,9 @@ Alle sidetyper med feltet `moduler` kan bruke disse. Hver modul har en React-kom
 
 ## Felles objekttyper
 
-- `link`: intern referanse eller ekstern URL, med etikett. Interne lenker bruker referanser, så de ikke brytes ved endring av slug.
+- `link`: etikett og mål. Målet er en intern referanse til et dokument i samme språk, en sti eller en ekstern URL. Interne lenker bruker referanser, så de ikke brytes ved endring av slug.
+- `linkAnnotation`: samme mål som `link`, men uten etikett. Brukes for lenker i rik tekst.
+- `blockContent` og `simpleBlockContent`: rik tekst med og uten overskrifter og bilder
 - `seo`: metatittel, metabeskrivelse, Open Graph-bilde, `noindex`
 - `imageWithAlt`: bilde med påkrevd alternativ tekst, hotspot og crop
 

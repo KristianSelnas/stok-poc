@@ -20,6 +20,7 @@
 | B14 | Den islandske versjonen er på islandsk. Innhold hentes fra den islandske delen av bewifood.com, og resten oversettes maskinelt og merkes for kvalitetssikring | 23.11.2026 |
 | B15 | Den islandske versjonen dekker forside, kontaktside, én bransjeside og noen produkter | 23.11.2026 |
 | B16 | Markedene skilles med prefiks på ett domene (`/no`, `/is`) | 23.11.2026 |
+| B17 | PoC-en bruker Sanity-prosjektet `up8wp88l` med datasettet `production` i alle miljøer. Et ekte prosjekt får en ny instans | 23.11.2026 |
 
 ## Åpne spørsmål
 

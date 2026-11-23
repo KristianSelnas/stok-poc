@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Sanity
 .sanity/
+
+# Sanity TypeGen (mellomfil, genereres av pnpm typegen)
+src/sanity/schema.json

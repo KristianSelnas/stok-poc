@@ -69,10 +69,12 @@ stok-poc/
 
 ## Miljøer
 
+Alle miljøer bruker datasettet `production` i Sanity-prosjektet `up8wp88l` (beslutning B17). Et ekte prosjekt får en ny Sanity-instans.
+
 | Miljø | Sanity-dataset | URL |
 |---|---|---|
-| Lokal | `development` | localhost:3000 |
-| Forhåndsvisning | `development` | Vercel preview per gren |
+| Lokal | `production` | localhost:3000 |
+| Forhåndsvisning | `production` | Vercel preview per gren |
 | PoC-demo | `production` | Vercel-domene, f.eks. stok-poc.vercel.app |
 
 ## Hemmeligheter

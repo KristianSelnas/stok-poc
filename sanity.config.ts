@@ -1,16 +1,30 @@
 "use client";
 
+import { documentInternationalization } from "@sanity/document-internationalization";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 
-import { markets } from "@/lib/markets";
-import { apiVersion, dataset, projectId, studioBasePath } from "@/sanity/env";
-import { schemaTypes, singletonTypes } from "@/sanity/schemaTypes";
-import { singletonId } from "@/sanity/lib/singletons";
-import { structure } from "@/sanity/structure";
+import { markets } from "./src/lib/markets";
+import { apiVersion, dataset, projectId, studioBasePath } from "./src/sanity/env";
+import { singletonId } from "./src/sanity/lib/singletons";
+import { schemaTypes, singletonTypes, translatableTypes } from "./src/sanity/schemaTypes";
+import { structure } from "./src/sanity/structure";
 
 const singletons = new Set<string>(singletonTypes);
+const languages = Object.values(markets).map((market) => ({
+  id: market.language,
+  title: market.languageLabel,
+}));
+
+/** Maler redaktøren ikke skal se i «Nytt dokument»: singletons og sider uten språk. */
+function isHiddenTemplate(templateId: string): boolean {
+  const type = templateId.replace(/-(nb|is|parameterized)$/, "");
+  if (singletons.has(type)) return true;
+  return (
+    (translatableTypes as readonly string[]).includes(templateId) || templateId.endsWith("-parameterized")
+  );
+}
 
 export default defineConfig({
   name: "stok",
@@ -21,7 +35,6 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     // Én mal per singleton og språk, så `language` fylles ut automatisk.
-    // Singletons fjernes fra «Nytt dokument»-menyen.
     templates: (templates) => [
       ...templates.filter((template) => !singletons.has(template.schemaType)),
       ...singletonTypes.flatMap((type) =>
@@ -40,8 +53,14 @@ export default defineConfig({
       singletons.has(schemaType)
         ? actions.filter(({ action }) => action && ["publish", "discardChanges", "restore"].includes(action))
         : actions,
-    newDocumentOptions: (options) =>
-      options.filter((option) => !singletons.has(option.templateId.replace(/-(nb|is)$/, ""))),
+    newDocumentOptions: (options) => options.filter((option) => !isHiddenTemplate(option.templateId)),
   },
-  plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: apiVersion })],
+  plugins: [
+    structureTool({ structure }),
+    documentInternationalization({
+      supportedLanguages: languages,
+      schemaTypes: [...translatableTypes],
+    }),
+    visionTool({ defaultApiVersion: apiVersion }),
+  ],
 });

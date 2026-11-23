@@ -17,3 +17,4 @@ Proof of concept (PoC) på ny nettløsning for STOK Norge, tidligere BEWI Food. 
 | [07-innholdsmodell.md](07-innholdsmodell.md) | Dokumenttyper og moduler i Sanity |
 | [08-utviklingsplan.md](08-utviklingsplan.md) | Faser, leveranser og rekkefølge |
 | [09-beslutninger-og-sporsmal.md](09-beslutninger-og-sporsmal.md) | Avklarte beslutninger og åpne spørsmål |
+| [10-webhook.md](10-webhook.md) | Revalidering av innhold når redaktører publiserer |

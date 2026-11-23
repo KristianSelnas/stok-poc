@@ -4,3 +4,4 @@ pnpm-workspace.yaml
 .next/
 node_modules/
 .idea/
+src/sanity/sanity.types.ts
