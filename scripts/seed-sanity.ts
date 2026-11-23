@@ -13,12 +13,7 @@
  */
 import { getCliClient } from "sanity/cli";
 
-import {
-  baseFrontPages,
-  baseNavigation,
-  basePages,
-  baseSiteSettings,
-} from "./content/base";
+import { baseFrontPages, baseNavigation, basePages, baseSiteSettings } from "./content/base";
 import { markets, type MarketId } from "../src/lib/markets";
 import { docId, DocumentConverter, type SanityDocument } from "./lib/convert";
 
