@@ -10,8 +10,9 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typegen": "sanity schema extract --path src/sanity/schema.json && sanity typegen generate",
-    "seed": "sanity exec scripts/seed-sanity.ts --with-user-token --"
+    "typegen": "sanity schema extract --force --path src/sanity/schema.json && sanity typegen generate",
+    "seed": "sanity exec scripts/seed-sanity.ts --with-user-token --",
+    "seed:content": "sanity exec scripts/seed-content.ts --with-user-token --"
   },
   "dependencies": {
     "@sanity/client": "^8.17.0",

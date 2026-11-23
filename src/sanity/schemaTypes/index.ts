@@ -1,5 +1,9 @@
 import type { SchemaTypeDefinition } from "sanity";
 
+import { material, product, productGroup, productProperty } from "./documents/catalog";
+import { industry } from "./documents/industry";
+import { newsArticle, newsCategory } from "./documents/news";
+import { certificate, department, location, person, testimonial } from "./documents/organization";
 import { page } from "./documents/page";
 import { card, featureItem, moduleTypes } from "./modules";
 import { blockContent, simpleBlockContent } from "./objects/blockContent";
@@ -14,8 +18,24 @@ import { siteSettings } from "./singletons/siteSettings";
 /** Dokumenttyper som finnes i nøyaktig ett eksemplar per marked. */
 export const singletonTypes = ["siteSettings", "navigation", "frontPage"] as const;
 
-/** Dokumenttyper som oversettes med språkpluginen (ett dokument per språk). */
-export const translatableTypes = ["page"] as const;
+/**
+ * Dokumenttyper som er knyttet til ett språk via språkpluginen. Pluginen
+ * fyller ut `language` og kobler sammen oversettelser av samme dokument.
+ */
+export const translatableTypes = [
+  "page",
+  "industry",
+  "product",
+  "productGroup",
+  "material",
+  "newsArticle",
+  "newsCategory",
+  "person",
+  "department",
+  "location",
+  "testimonial",
+  "certificate",
+] as const;
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
@@ -24,6 +44,17 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   frontPage,
   // Dokumenter
   page,
+  industry,
+  product,
+  productGroup,
+  material,
+  newsArticle,
+  newsCategory,
+  person,
+  department,
+  location,
+  testimonial,
+  certificate,
   // Moduler
   ...moduleTypes,
   card,
@@ -38,4 +69,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   imageWithAlt,
   blockContent,
   simpleBlockContent,
+  productProperty,
 ];

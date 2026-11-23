@@ -38,15 +38,17 @@ Endringer fra Studio vises på en deployet side via webhook (se [docs/10-webhook
 
 ## Kommandoer
 
-| Kommando         | Hva den gjør                              |
-| ---------------- | ----------------------------------------- |
-| `pnpm dev`       | Utviklingsserver                          |
-| `pnpm build`     | Produksjonsbygg                           |
-| `pnpm start`     | Kjører produksjonsbygget                  |
-| `pnpm lint`      | ESLint                                    |
-| `pnpm typecheck` | Genererer rutetyper og kjører TypeScript  |
-| `pnpm format`    | Formaterer koden med Prettier             |
-| `pnpm typegen`   | Genererer typer fra Sanity-skjema og GROQ |
+| Kommando            | Hva den gjør                                                        |
+| ------------------- | ------------------------------------------------------------------- |
+| `pnpm dev`          | Utviklingsserver                                                    |
+| `pnpm build`        | Produksjonsbygg                                                     |
+| `pnpm start`        | Kjører produksjonsbygget                                            |
+| `pnpm lint`         | ESLint                                                              |
+| `pnpm typecheck`    | Genererer rutetyper og kjører TypeScript                            |
+| `pnpm format`       | Formaterer koden med Prettier                                       |
+| `pnpm typegen`      | Genererer typer fra Sanity-skjema og GROQ                           |
+| `pnpm seed`         | Legger reserveinnholdet (fase 2) inn i Sanity                       |
+| `pnpm seed:content` | Legger innholdet for fase 3 inn i Sanity (`--dry-run`, `--replace`) |
 
 ## Struktur
 

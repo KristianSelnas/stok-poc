@@ -3,10 +3,17 @@ import { BulbOutlineIcon } from "@sanity/icons/BulbOutline";
 import { DashboardIcon } from "@sanity/icons/Dashboard";
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
 import { ImageIcon } from "@sanity/icons/Image";
+import { CommentIcon } from "@sanity/icons/Comment";
+import { PackageIcon } from "@sanity/icons/Package";
+import { PinIcon } from "@sanity/icons/Pin";
+import { SearchIcon } from "@sanity/icons/Search";
 import { StarIcon } from "@sanity/icons/Star";
+import { StarFilledIcon } from "@sanity/icons/StarFilled";
+import { UsersIcon } from "@sanity/icons/Users";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 import { featureIcons } from "../../lib/featureIcons";
+import { referenceFilterByLanguage } from "../lib/referenceFilter";
 
 /**
  * Sidemoduler. Hver modul har en React-komponent med samme navn i
@@ -240,9 +247,252 @@ export const ctaBanner = defineType({
   },
 });
 
-export const moduleTypes = [hero, richText, textWithImage, cardGrid, featureList, ctaBanner];
+type ReferenceListOptions = {
+  description?: string;
+  min?: number;
+  max?: number;
+  /** Navnet på et felt i samme objekt som må ha denne verdien for at listen vises. */
+  showWhen?: { field: string; value: string; default?: string };
+};
 
-/** Felt med moduler, brukt av `page` og `frontPage`. */
+/** Liste med referanser til dokumenter i samme språk. */
+const languageReferences = (
+  name: string,
+  title: string,
+  type: string,
+  { description, min, max, showWhen }: ReferenceListOptions = {},
+) =>
+  defineField({
+    name,
+    title,
+    type: "array",
+    description,
+    of: [
+      defineArrayMember({
+        type: "reference",
+        to: [{ type }],
+        options: { filter: referenceFilterByLanguage },
+      }),
+    ],
+    hidden: showWhen
+      ? ({ parent }) =>
+          ((parent as Record<string, string> | undefined)?.[showWhen.field] ?? showWhen.default) !==
+          showWhen.value
+      : undefined,
+    validation: (rule) => {
+      let result = rule.unique();
+      if (min !== undefined) result = result.min(min);
+      if (max !== undefined) result = result.max(max);
+      return result;
+    },
+  });
+
+export const productGrid = defineType({
+  name: "productGrid",
+  title: "Produktutvalg",
+  type: "object",
+  icon: PackageIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    defineField({ name: "intro", title: "Ingress", type: "text", rows: 2 }),
+    defineField({
+      name: "source",
+      title: "Utvalg",
+      type: "string",
+      initialValue: "manual",
+      options: {
+        list: [
+          { title: "Velg produkter", value: "manual" },
+          { title: "Produkter i en gruppe", value: "group" },
+          { title: "Produkter i en bransje", value: "industry" },
+        ],
+        layout: "radio",
+      },
+    }),
+    languageReferences("products", "Produkter", "product", {
+      showWhen: { field: "source", value: "manual", default: "manual" },
+    }),
+    defineField({
+      name: "productGroup",
+      title: "Produktgruppe",
+      type: "reference",
+      to: [{ type: "productGroup" }],
+      options: { filter: referenceFilterByLanguage },
+      hidden: ({ parent }) => parent?.source !== "group",
+    }),
+    defineField({
+      name: "industry",
+      title: "Bransje",
+      type: "reference",
+      to: [{ type: "industry" }],
+      options: { filter: referenceFilterByLanguage },
+      hidden: ({ parent }) => parent?.source !== "industry",
+    }),
+    defineField({
+      name: "limit",
+      title: "Maks antall",
+      type: "number",
+      initialValue: 4,
+      validation: (rule) => rule.min(1).max(12),
+    }),
+    defineField({ name: "cta", title: "Lenke under utvalget", type: "link" }),
+  ],
+  preview: {
+    select: { title: "title", source: "source" },
+    prepare: ({ title, source }) => ({
+      title: title || "Produktutvalg",
+      subtitle: `Produktutvalg · ${source === "group" ? "gruppe" : source === "industry" ? "bransje" : "manuelt"}`,
+    }),
+  },
+});
+
+export const productCatalog = defineType({
+  name: "productCatalog",
+  title: "Produktkatalog",
+  type: "object",
+  icon: SearchIcon,
+  description: "Alle produkter med filtre for gruppe, bransje og materiale.",
+  fields: [titleField(false), defineField({ name: "intro", title: "Ingress", type: "text", rows: 2 })],
+  preview: {
+    select: { title: "title" },
+    prepare: ({ title }) => ({ title: title || "Produktkatalog", subtitle: "Produktkatalog med filtre" }),
+  },
+});
+
+export const newsList = defineType({
+  name: "newsList",
+  title: "Nyhetsliste",
+  type: "object",
+  icon: BulbOutlineIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    defineField({
+      name: "limit",
+      title: "Antall",
+      type: "number",
+      description: "Står feltet tomt, vises alle nyheter.",
+      validation: (rule) => rule.min(1).max(50),
+    }),
+    defineField({
+      name: "category",
+      title: "Bare kategori",
+      type: "reference",
+      to: [{ type: "newsCategory" }],
+      options: { filter: referenceFilterByLanguage },
+    }),
+    defineField({ name: "cta", title: "Lenke under listen", type: "link" }),
+  ],
+  preview: {
+    select: { title: "title", limit: "limit" },
+    prepare: ({ title, limit }) => ({
+      title: title || "Nyhetsliste",
+      subtitle: `Nyhetsliste · ${limit ? `${limit} siste` : "alle"}`,
+    }),
+  },
+});
+
+export const contactPeople = defineType({
+  name: "contactPeople",
+  title: "Kontaktpersoner",
+  type: "object",
+  icon: UsersIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    defineField({ name: "intro", title: "Ingress", type: "text", rows: 2 }),
+    defineField({
+      name: "showCustomerService",
+      title: "Vis kundeservice",
+      type: "boolean",
+      description: "Viser telefon og e-post fra Innstillinger øverst.",
+      initialValue: true,
+    }),
+    languageReferences("departments", "Avdelinger", "department", {
+      description: "Står listen tom, vises alle avdelinger med personer.",
+    }),
+    languageReferences("people", "Utvalgte personer", "person", {
+      description: "Velg personer for å vise bare dem, f.eks. på en bransjeside. Overstyrer avdelinger.",
+    }),
+  ],
+  preview: {
+    select: { title: "title" },
+    prepare: ({ title }) => ({ title: title || "Kontaktpersoner", subtitle: "Kontaktpersoner" }),
+  },
+});
+
+export const locations = defineType({
+  name: "locations",
+  title: "Lokasjoner",
+  type: "object",
+  icon: PinIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    languageReferences("items", "Lokasjoner", "location", {
+      description: "Står listen tom, vises alle lokasjoner.",
+    }),
+  ],
+  preview: {
+    select: { title: "title" },
+    prepare: ({ title }) => ({ title: title || "Lokasjoner", subtitle: "Lokasjoner" }),
+  },
+});
+
+export const testimonials = defineType({
+  name: "testimonials",
+  title: "Kundesitater",
+  type: "object",
+  icon: CommentIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    languageReferences("items", "Sitater", "testimonial", { min: 1, max: 6 }),
+  ],
+  preview: {
+    select: { title: "title", items: "items" },
+    prepare: ({ title, items }) => ({
+      title: title || "Kundesitater",
+      subtitle: `Kundesitater · ${countLabel(items, "sitat", "sitater")}`,
+    }),
+  },
+});
+
+export const logoRow = defineType({
+  name: "logoRow",
+  title: "Logorad",
+  type: "object",
+  icon: StarFilledIcon,
+  fields: [
+    eyebrowField,
+    titleField(false),
+    defineField({ name: "intro", title: "Ingress", type: "text", rows: 2 }),
+    languageReferences("certificates", "Sertifikater", "certificate"),
+  ],
+  preview: {
+    select: { title: "title" },
+    prepare: ({ title }) => ({ title: title || "Logorad", subtitle: "Sertifikater og logoer" }),
+  },
+});
+
+export const moduleTypes = [
+  hero,
+  richText,
+  textWithImage,
+  cardGrid,
+  featureList,
+  ctaBanner,
+  productGrid,
+  productCatalog,
+  newsList,
+  contactPeople,
+  locations,
+  testimonials,
+  logoRow,
+];
+
+/** Felt med moduler, brukt av `page`, `frontPage` og `industry`. */
 export const modulesField = defineField({
   name: "modules",
   title: "Moduler",

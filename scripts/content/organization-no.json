@@ -1,0 +1,140 @@
+{
+  "customerService": {
+    "phone": "+47 32 23 74 00",
+    "email": "kundeservice@bewifood.com"
+  },
+  "departments": [
+    {
+      "key": "salg",
+      "title": "Salg",
+      "order": 1
+    },
+    {
+      "key": "kundeservice-og-ordre",
+      "title": "Kundeservice og ordre",
+      "order": 2
+    },
+    {
+      "key": "lager-og-logistikk",
+      "title": "Lager og logistikk",
+      "order": 3
+    },
+    {
+      "key": "baerekraft-og-kvalitet",
+      "title": "Bærekraft og kvalitet",
+      "order": 4
+    },
+    {
+      "key": "ledelse",
+      "title": "Ledelse",
+      "order": 5
+    }
+  ],
+  "people": [
+    {
+      "name": "Reidar Gundersen",
+      "role": "Salgssjef fiber og sjøfryst",
+      "phone": "+47 926 86 564",
+      "email": "reidar.gundersen@bewifood.com",
+      "department": "salg",
+      "order": 0
+    },
+    {
+      "name": "Vidar Undebakke",
+      "role": "Salgssjef fleksibel emballasje",
+      "phone": "+47 478 19 671",
+      "email": null,
+      "department": "salg",
+      "order": 1
+    },
+    {
+      "name": "Ove Kragseth",
+      "role": "Kundeservice og ordre",
+      "phone": "+47 450 33 920",
+      "email": "ove.kragseth@bewifood.com",
+      "department": "kundeservice-og-ordre",
+      "order": 2
+    },
+    {
+      "name": "Johny Solsvik",
+      "role": "Kundeservice og ordre",
+      "phone": "+47 482 99 781",
+      "email": "johny.solsvik@bewifood.com",
+      "department": "kundeservice-og-ordre",
+      "order": 3
+    },
+    {
+      "name": "Bente Skjesol",
+      "role": "Kundeservice og ordre",
+      "phone": "+47 982 60 605",
+      "email": "bente.skjesol@bewifood.com",
+      "department": "kundeservice-og-ordre",
+      "order": 4
+    },
+    {
+      "name": "Bård Kjøsnes",
+      "role": "Lagersjef",
+      "phone": "+47 982 60 617",
+      "email": "bard.kjosnes@bewifood.com",
+      "department": "lager-og-logistikk",
+      "order": 5
+    },
+    {
+      "name": "Jan Erik Trones",
+      "role": "Logistikksjef",
+      "phone": "+47 915 52 457",
+      "email": "jan.e.trones@bewifood.com",
+      "department": "lager-og-logistikk",
+      "order": 6
+    },
+    {
+      "name": "Justina Jumatova",
+      "role": "Innkjøpssjef",
+      "phone": "+47 968 72 171",
+      "email": "justina.jumatova@bewifood.com",
+      "department": "lager-og-logistikk",
+      "order": 7
+    },
+    {
+      "name": "Bjørn Arve Skorstad",
+      "role": "Logistikkoordinator",
+      "phone": "+47 488 54 544",
+      "email": "bjorn.skorstad@bewifood.com",
+      "department": "lager-og-logistikk",
+      "order": 8
+    },
+    {
+      "name": "Kenneth Kvithyll",
+      "role": "Logistikkoordinator",
+      "phone": "+47 480 99 646",
+      "email": "kenneth.kvithyll@bewifood.com",
+      "department": "lager-og-logistikk",
+      "order": 9
+    },
+    {
+      "name": "Petter Bostrøm",
+      "role": "Bærekraft- og kvalitetsingeniør",
+      "phone": "+47 993 89 161",
+      "email": "petter.bostrom@bewifood.com",
+      "department": "baerekraft-og-kvalitet",
+      "order": 10
+    },
+    {
+      "name": "Nils Rusten",
+      "role": "Administrerende direktør",
+      "phone": "+47 905 98 485",
+      "email": "nils.rusten@bewifood.com",
+      "department": "ledelse",
+      "order": 11
+    },
+    {
+      "name": "Marie Meling Veien",
+      "role": "Finansdirektør",
+      "phone": "+47 922 41 114",
+      "email": "marie.meling.veien@bewifood.com",
+      "department": "ledelse",
+      "order": 12
+    }
+  ],
+  "locations": []
+}

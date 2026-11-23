@@ -19,6 +19,15 @@ export const pageLink = (label: string, slug: string): Link => ({
   url: null,
 });
 
+/** Intern lenke til et hvilket som helst dokument, f.eks. en bransje eller et produkt. */
+export const docLink = (label: string, type: NonNullable<Link["internal"]>["_type"], slug: string): Link => ({
+  label,
+  linkType: "internal",
+  internal: { _type: type, slug } as NonNullable<Link["internal"]>,
+  path: null,
+  url: null,
+});
+
 export const pathLink = (label: string, path: string): Link => ({
   label,
   linkType: "path",
@@ -46,6 +55,7 @@ const imageSizes = {
   "medarbeidere.jpg": [1072, 912],
   "pakkemaskin.jpg": [1024, 768],
   "pakket-paprika.jpg": [1000, 800],
+  "papp-pa-pall.jpg": [1500, 907],
   "radgivning-lager.jpg": [1600, 1073],
   "resirkulering.jpg": [1000, 800],
   "salat-i-kasse.jpg": [1600, 762],
@@ -58,6 +68,16 @@ export const image = (file: keyof typeof imageSizes, alt: string): Image => ({
   alt,
   width: imageSizes[file][0],
   height: imageSizes[file][1],
+  lqip: null,
+  hotspot: null,
+});
+
+/** Bilde fra en ekstern URL. Importskriptet laster det ned og opp i Sanity. */
+export const remoteImage = (url: string, alt: string): Image => ({
+  url,
+  alt,
+  width: null,
+  height: null,
   lqip: null,
   hotspot: null,
 });
@@ -112,6 +132,15 @@ export const h2 = (text: string) => block("h2", text);
 export const h3 = (text: string) => block("h3", text);
 export const lead = (text: string) => block("lead", text);
 export const ul = (...items: string[]) => items.map((item) => block("normal", item, "bullet"));
+export const quote = (text: string) => block("blockquote", text);
+
+/** Enkel JSON-form for rik tekst, brukt i innholdsfilene under `scripts/content/`. */
+export type JsonBlock = { p: string } | { h: string } | { ul: string[] } | { quote: string };
+
+export const blocksFromJson = (blocks: JsonBlock[]) =>
+  blocks.flatMap((b) =>
+    "p" in b ? [p(b.p)] : "h" in b ? [h2(b.h)] : "ul" in b ? ul(...b.ul) : [quote(b.quote)],
+  );
 
 /** Enkel tekst (bare avsnitt og punktlister) til «Tekst med bilde». */
 export const simple = (...blocks: (Block | Block[])[]): SimpleTextContent =>
@@ -201,4 +230,55 @@ export const ctaBanner = (
   cta: null,
   image: null,
   ...value,
+});
+
+export const productCatalog = (
+  value: Partial<Omit<ModuleOf<"productCatalog">, "_type" | "_key">> = {},
+): ModuleOf<"productCatalog"> => ({
+  _type: "productCatalog",
+  _key: key("pc"),
+  title: null,
+  intro: null,
+  ...value,
+});
+
+/** Nyhetsliste. Artiklene hentes av GROQ-spørringen, så listen er tom her. */
+export const newsList = (
+  value: Partial<Omit<ModuleOf<"newsList">, "_type" | "_key" | "articles">> = {},
+): ModuleOf<"newsList"> => ({
+  _type: "newsList",
+  _key: key("nl"),
+  eyebrow: null,
+  title: null,
+  limit: null,
+  cta: null,
+  ...value,
+  articles: [],
+});
+
+/** Kontaktpersoner. Personer og avdelinger hentes av GROQ-spørringen. */
+export const contactPeople = (
+  value: Partial<Pick<ModuleOf<"contactPeople">, "eyebrow" | "title" | "intro" | "showCustomerService">> = {},
+): ModuleOf<"contactPeople"> => ({
+  _type: "contactPeople",
+  _key: key("cp"),
+  eyebrow: null,
+  title: null,
+  intro: null,
+  showCustomerService: true,
+  ...value,
+  selectedPeople: null,
+  departments: [],
+  people: [],
+});
+
+export const locations = (
+  value: Partial<Pick<ModuleOf<"locations">, "eyebrow" | "title">> = {},
+): ModuleOf<"locations"> => ({
+  _type: "locations",
+  _key: key("loc"),
+  eyebrow: null,
+  title: null,
+  ...value,
+  items: [],
 });

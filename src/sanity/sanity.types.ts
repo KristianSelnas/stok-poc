@@ -15,6 +15,12 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: src/sanity/schema.json
+export type ProductProperty = {
+  _type: "productProperty";
+  key?: string;
+  value?: string;
+};
+
 export type SimpleBlockContent = Array<{
   children?: Array<{
     marks?: Array<string>;
@@ -122,10 +128,31 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
+export type IndustryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "industry";
+};
+
+export type ProductReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "product";
+};
+
+export type NewsArticleReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "newsArticle";
+};
+
 export type LinkAnnotation = {
   _type: "linkAnnotation";
   linkType?: "internal" | "path" | "external";
-  internal?: PageReference;
+  internal?: PageReference | IndustryReference | ProductReference | NewsArticleReference;
   path?: string;
   url?: string;
 };
@@ -134,7 +161,7 @@ export type Link = {
   _type: "link";
   label?: string;
   linkType?: "internal" | "path" | "external";
-  internal?: PageReference;
+  internal?: PageReference | IndustryReference | ProductReference | NewsArticleReference;
   path?: string;
   url?: string;
 };
@@ -164,6 +191,139 @@ export type Card = {
   title?: string;
   text?: string;
   link?: Link;
+};
+
+export type CertificateReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "certificate";
+};
+
+export type LogoRow = {
+  _type: "logoRow";
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  certificates?: Array<
+    {
+      _key: string;
+    } & CertificateReference
+  >;
+};
+
+export type TestimonialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "testimonial";
+};
+
+export type Testimonials = {
+  _type: "testimonials";
+  eyebrow?: string;
+  title?: string;
+  items?: Array<
+    {
+      _key: string;
+    } & TestimonialReference
+  >;
+};
+
+export type LocationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "location";
+};
+
+export type Locations = {
+  _type: "locations";
+  eyebrow?: string;
+  title?: string;
+  items?: Array<
+    {
+      _key: string;
+    } & LocationReference
+  >;
+};
+
+export type DepartmentReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "department";
+};
+
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
+export type ContactPeople = {
+  _type: "contactPeople";
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  showCustomerService?: boolean;
+  departments?: Array<
+    {
+      _key: string;
+    } & DepartmentReference
+  >;
+  people?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+};
+
+export type NewsCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "newsCategory";
+};
+
+export type NewsList = {
+  _type: "newsList";
+  eyebrow?: string;
+  title?: string;
+  limit?: number;
+  category?: NewsCategoryReference;
+  cta?: Link;
+};
+
+export type ProductCatalog = {
+  _type: "productCatalog";
+  title?: string;
+  intro?: string;
+};
+
+export type ProductGroupReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "productGroup";
+};
+
+export type ProductGrid = {
+  _type: "productGrid";
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  source?: "manual" | "group" | "industry";
+  products?: Array<
+    {
+      _key: string;
+    } & ProductReference
+  >;
+  productGroup?: ProductGroupReference;
+  industry?: IndustryReference;
+  limit?: number;
+  cta?: Link;
 };
 
 export type CtaBanner = {
@@ -254,6 +414,27 @@ export type FrontPage = {
     | ({
         _key: string;
       } & CtaBanner)
+    | ({
+        _key: string;
+      } & ProductGrid)
+    | ({
+        _key: string;
+      } & ProductCatalog)
+    | ({
+        _key: string;
+      } & NewsList)
+    | ({
+        _key: string;
+      } & ContactPeople)
+    | ({
+        _key: string;
+      } & Locations)
+    | ({
+        _key: string;
+      } & Testimonials)
+    | ({
+        _key: string;
+      } & LogoRow)
   >;
   seo?: Seo;
 };
@@ -320,10 +501,284 @@ export type InternationalizedArrayReference = Array<
   } & InternationalizedArrayReferenceValue
 >;
 
+export type MaterialReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "material";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: PageReference;
+  value?:
+    | PageReference
+    | IndustryReference
+    | ProductReference
+    | ProductGroupReference
+    | MaterialReference
+    | NewsArticleReference
+    | NewsCategoryReference
+    | PersonReference
+    | DepartmentReference
+    | LocationReference
+    | TestimonialReference
+    | CertificateReference;
   language?: string;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type Certificate = {
+  _id: string;
+  _type: "certificate";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  description?: string;
+  logo?: ImageWithAlt;
+  url?: string;
+  file?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type Testimonial = {
+  _id: string;
+  _type: "testimonial";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  quote?: string;
+  name?: string;
+  role?: string;
+  company?: string;
+  logo?: ImageWithAlt;
+};
+
+export type Location = {
+  _id: string;
+  _type: "location";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  street?: string;
+  postalCode?: string;
+  city?: string;
+  phone?: string;
+  email?: string;
+  openingHours?: string;
+  position?: Geopoint;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
+export type Person = {
+  _id: string;
+  _type: "person";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  name?: string;
+  role?: string;
+  image?: ImageWithAlt;
+  phone?: string;
+  email?: string;
+  department?: DepartmentReference;
+  area?: string;
+  order?: number;
+};
+
+export type Department = {
+  _id: string;
+  _type: "department";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  order?: number;
+};
+
+export type NewsArticle = {
+  _id: string;
+  _type: "newsArticle";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+  publishedAt?: string;
+  category?: NewsCategoryReference;
+  excerpt?: string;
+  image?: ImageWithAlt;
+  body?: BlockContent;
+  seo?: Seo;
+};
+
+export type NewsCategory = {
+  _id: string;
+  _type: "newsCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type Material = {
+  _id: string;
+  _type: "material";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+};
+
+export type Product = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+  shortDescription?: string;
+  images?: Array<
+    {
+      _key: string;
+    } & ImageWithAlt
+  >;
+  description?: BlockContent;
+  properties?: Array<
+    {
+      _key: string;
+    } & ProductProperty
+  >;
+  datasheet?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  productGroup?: ProductGroupReference;
+  industries?: Array<
+    {
+      _key: string;
+    } & IndustryReference
+  >;
+  materials?: Array<
+    {
+      _key: string;
+    } & MaterialReference
+  >;
+  relatedProducts?: Array<
+    {
+      _key: string;
+    } & ProductReference
+  >;
+  seo?: Seo;
+};
+
+export type ProductGroup = {
+  _id: string;
+  _type: "productGroup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+  order?: number;
+};
+
+export type Industry = {
+  _id: string;
+  _type: "industry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title?: string;
+  slug?: Slug;
+  heroTitle?: string;
+  lead?: string;
+  image?: ImageWithAlt;
+  modules?: Array<
+    | ({
+        _key: string;
+      } & Hero)
+    | ({
+        _key: string;
+      } & RichText)
+    | ({
+        _key: string;
+      } & TextWithImage)
+    | ({
+        _key: string;
+      } & CardGrid)
+    | ({
+        _key: string;
+      } & FeatureList)
+    | ({
+        _key: string;
+      } & CtaBanner)
+    | ({
+        _key: string;
+      } & ProductGrid)
+    | ({
+        _key: string;
+      } & ProductCatalog)
+    | ({
+        _key: string;
+      } & NewsList)
+    | ({
+        _key: string;
+      } & ContactPeople)
+    | ({
+        _key: string;
+      } & Locations)
+    | ({
+        _key: string;
+      } & Testimonials)
+    | ({
+        _key: string;
+      } & LogoRow)
+  >;
+  featuredProducts?: Array<
+    {
+      _key: string;
+    } & ProductReference
+  >;
+  seo?: Seo;
 };
 
 export type Page = {
@@ -354,6 +809,27 @@ export type Page = {
     | ({
         _key: string;
       } & CtaBanner)
+    | ({
+        _key: string;
+      } & ProductGrid)
+    | ({
+        _key: string;
+      } & ProductCatalog)
+    | ({
+        _key: string;
+      } & NewsList)
+    | ({
+        _key: string;
+      } & ContactPeople)
+    | ({
+        _key: string;
+      } & Locations)
+    | ({
+        _key: string;
+      } & Testimonials)
+    | ({
+        _key: string;
+      } & LogoRow)
   >;
   seo?: Seo;
 };
@@ -372,12 +848,6 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -470,14 +940,8 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type AllSanitySchemaTypes =
+  | ProductProperty
   | SimpleBlockContent
   | BlockContent
   | SanityImageAssetReference
@@ -487,10 +951,27 @@ export type AllSanitySchemaTypes =
   | MenuItem
   | LinkGroup
   | PageReference
+  | IndustryReference
+  | ProductReference
+  | NewsArticleReference
   | LinkAnnotation
   | Link
   | FeatureItem
   | Card
+  | CertificateReference
+  | LogoRow
+  | TestimonialReference
+  | Testimonials
+  | LocationReference
+  | Locations
+  | DepartmentReference
+  | PersonReference
+  | ContactPeople
+  | NewsCategoryReference
+  | NewsList
+  | ProductCatalog
+  | ProductGroupReference
+  | ProductGrid
   | CtaBanner
   | FeatureList
   | CardGrid
@@ -502,378 +983,196 @@ export type AllSanitySchemaTypes =
   | SiteSettings
   | TranslationMetadata
   | InternationalizedArrayReference
+  | MaterialReference
   | InternationalizedArrayReferenceValue
+  | SanityFileAssetReference
+  | Certificate
+  | Testimonial
+  | Location
+  | Geopoint
+  | Person
+  | Department
+  | NewsArticle
+  | NewsCategory
+  | Slug
+  | Material
+  | Product
+  | ProductGroup
+  | Industry
   | Page
   | SanityImageCrop
   | SanityImageHotspot
-  | Slug
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
   | SanityImageMetadata
   | SanityFileAsset
   | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+  | SanityImageAsset;
 
 // Source: src/sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_id == $id][0]{    title,    description,    companyName,    orgNumber,    address,    phone,    email,    socialLinks[]{ _key, platform, url }  }
-export type SiteSettingsQueryResult =
-  | {
-      title: null;
-      description: null;
-      companyName: null;
-      orgNumber: null;
-      address: null;
-      phone: null;
-      email: null;
-      socialLinks: null;
-    }
-  | {
-      title: string | null;
-      description: null;
-      companyName: null;
-      orgNumber: null;
-      address: null;
-      phone: null;
-      email: null;
-      socialLinks: null;
-    }
-  | {
-      title: string | null;
-      description: string | null;
-      companyName: null;
-      orgNumber: null;
-      address: null;
-      phone: null;
-      email: null;
-      socialLinks: null;
-    }
-  | {
-      title: string | null;
-      description: string | null;
-      companyName: string | null;
-      orgNumber: string | null;
-      address: string | null;
-      phone: string | null;
-      email: string | null;
-      socialLinks: Array<{
-        _key: string;
-        platform: "facebook" | "instagram" | "linkedin" | "youtube" | null;
-        url: string | null;
-      }> | null;
-    }
-  | null;
+// Query: *[_type == "siteSettings" && _id == $id][0]{    title,    description,    companyName,    orgNumber,    address,    phone,    email,    socialLinks[]{ _key, platform, url }  }
+export type SiteSettingsQueryResult = {
+  title: string | null;
+  description: string | null;
+  companyName: string | null;
+  orgNumber: string | null;
+  address: string | null;
+  phone: string | null;
+  email: string | null;
+  socialLinks: Array<{
+    _key: string;
+    platform: "facebook" | "instagram" | "linkedin" | "youtube" | null;
+    url: string | null;
+  }> | null;
+} | null;
 
 // Source: src/sanity/queries.ts
 // Variable: navigationQuery
-// Query: *[_id == $id][0]{    mainMenu[]{      _key,      label,      link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },      groups[]{ _key, title, links[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }    },    headerCta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    footerGroups[]{ _key, title, links[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } },    legalLinks[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  }
-export type NavigationQueryResult =
-  | {
-      mainMenu: null;
-      headerCta: null;
-      footerGroups: null;
-      legalLinks: null;
-    }
-  | {
-      mainMenu: Array<{
-        _key: string;
-        label: string | null;
-        link: {
-          label: string | null;
-          linkType: "external" | "internal" | "path" | null;
-          path: string | null;
-          url: string | null;
-          internal: {
+// Query: *[_type == "navigation" && _id == $id][0]{    mainMenu[]{      _key,      label,      link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },      groups[]{ _key, title, links[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }    },    headerCta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    footerGroups[]{ _key, title, links[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } },    legalLinks[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  }
+export type NavigationQueryResult = {
+  mainMenu: Array<{
+    _key: string;
+    label: string | null;
+    link: {
+      label: string | null;
+      linkType: "external" | "internal" | "path" | null;
+      path: string | null;
+      url: string | null;
+      internal:
+        | {
+            _type: "industry";
+            slug: string | null;
+          }
+        | {
+            _type: "newsArticle";
+            slug: string | null;
+          }
+        | {
             _type: "page";
             slug: string | null;
-          } | null;
-        } | null;
-        groups: Array<{
-          _key: string;
-          title: string | null;
-          links: Array<{
-            _key: string;
-            label: string | null;
-            linkType: "external" | "internal" | "path" | null;
-            path: string | null;
-            url: string | null;
-            internal: {
+          }
+        | {
+            _type: "product";
+            slug: string | null;
+          }
+        | null;
+    } | null;
+    groups: Array<{
+      _key: string;
+      title: string | null;
+      links: Array<{
+        _key: string;
+        label: string | null;
+        linkType: "external" | "internal" | "path" | null;
+        path: string | null;
+        url: string | null;
+        internal:
+          | {
+              _type: "industry";
+              slug: string | null;
+            }
+          | {
+              _type: "newsArticle";
+              slug: string | null;
+            }
+          | {
               _type: "page";
               slug: string | null;
-            } | null;
-          }> | null;
-        }> | null;
+            }
+          | {
+              _type: "product";
+              slug: string | null;
+            }
+          | null;
       }> | null;
-      headerCta: {
-        label: string | null;
-        linkType: "external" | "internal" | "path" | null;
-        path: string | null;
-        url: string | null;
-        internal: {
+    }> | null;
+  }> | null;
+  headerCta: {
+    label: string | null;
+    linkType: "external" | "internal" | "path" | null;
+    path: string | null;
+    url: string | null;
+    internal:
+      | {
+          _type: "industry";
+          slug: string | null;
+        }
+      | {
+          _type: "newsArticle";
+          slug: string | null;
+        }
+      | {
           _type: "page";
           slug: string | null;
-        } | null;
-      } | null;
-      footerGroups: Array<{
-        _key: string;
-        title: string | null;
-        links: Array<{
-          _key: string;
-          label: string | null;
-          linkType: "external" | "internal" | "path" | null;
-          path: string | null;
-          url: string | null;
-          internal: {
+        }
+      | {
+          _type: "product";
+          slug: string | null;
+        }
+      | null;
+  } | null;
+  footerGroups: Array<{
+    _key: string;
+    title: string | null;
+    links: Array<{
+      _key: string;
+      label: string | null;
+      linkType: "external" | "internal" | "path" | null;
+      path: string | null;
+      url: string | null;
+      internal:
+        | {
+            _type: "industry";
+            slug: string | null;
+          }
+        | {
+            _type: "newsArticle";
+            slug: string | null;
+          }
+        | {
             _type: "page";
             slug: string | null;
-          } | null;
-        }> | null;
-      }> | null;
-      legalLinks: Array<{
-        _key: string;
-        label: string | null;
-        linkType: "external" | "internal" | "path" | null;
-        path: string | null;
-        url: string | null;
-        internal: {
+          }
+        | {
+            _type: "product";
+            slug: string | null;
+          }
+        | null;
+    }> | null;
+  }> | null;
+  legalLinks: Array<{
+    _key: string;
+    label: string | null;
+    linkType: "external" | "internal" | "path" | null;
+    path: string | null;
+    url: string | null;
+    internal:
+      | {
+          _type: "industry";
+          slug: string | null;
+        }
+      | {
+          _type: "newsArticle";
+          slug: string | null;
+        }
+      | {
           _type: "page";
           slug: string | null;
-        } | null;
-      }> | null;
-    }
-  | null;
+        }
+      | {
+          _type: "product";
+          slug: string | null;
+        }
+      | null;
+  }> | null;
+} | null;
 
 // Source: src/sanity/queries.ts
 // Variable: frontPageQuery
-// Query: *[_id == $id][0]{    modules[]{   _key,  _type,  _type == "hero" => {    eyebrow,    title,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    ctas[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "richText" => {    content[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "textWithImage" => {    eyebrow,    title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    imagePosition,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "cardGrid" => {    eyebrow,    title,    intro,    columns,    cards[]{ _key, title, text, image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }, link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }  },  _type == "featureList" => {    eyebrow,    title,    intro,    items[]{ _key, icon, title, text }  },  _type == "ctaBanner" => {    title,    text,    tone,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }  } },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
-export type FrontPageQueryResult =
-  | {
-      modules: null;
-      seo: null;
-    }
-  | {
-      modules: Array<
-        | {
-            _key: string;
-            _type: "cardGrid";
-            eyebrow: string | null;
-            title: string | null;
-            intro: string | null;
-            columns: 2 | 3 | 4 | null;
-            cards: Array<{
-              _key: string;
-              title: string | null;
-              text: string | null;
-              image: {
-                url: string | null;
-                alt: string | null;
-                width: number | null;
-                height: number | null;
-                lqip: string | null;
-                hotspot: SanityImageHotspot | null;
-              } | null;
-              link: {
-                label: string | null;
-                linkType: "external" | "internal" | "path" | null;
-                path: string | null;
-                url: string | null;
-                internal: {
-                  _type: "page";
-                  slug: string | null;
-                } | null;
-              } | null;
-            }> | null;
-          }
-        | {
-            _key: string;
-            _type: "ctaBanner";
-            title: string | null;
-            text: string | null;
-            tone: "blue" | "green" | "light" | null;
-            cta: {
-              label: string | null;
-              linkType: "external" | "internal" | "path" | null;
-              path: string | null;
-              url: string | null;
-              internal: {
-                _type: "page";
-                slug: string | null;
-              } | null;
-            } | null;
-            image: {
-              url: string | null;
-              alt: string | null;
-              width: number | null;
-              height: number | null;
-              lqip: string | null;
-              hotspot: SanityImageHotspot | null;
-            } | null;
-          }
-        | {
-            _key: string;
-            _type: "featureList";
-            eyebrow: string | null;
-            title: string | null;
-            intro: string | null;
-            items: Array<{
-              _key: string;
-              icon:
-                | "advice"
-                | "box"
-                | "check"
-                | "fish"
-                | "gear"
-                | "handshake"
-                | "leaf"
-                | "people"
-                | "recycle"
-                | "shield"
-                | "truck"
-                | "warehouse"
-                | null;
-              title: string | null;
-              text: string | null;
-            }> | null;
-          }
-        | {
-            _key: string;
-            _type: "hero";
-            eyebrow: string | null;
-            title: string | null;
-            lead: string | null;
-            image: {
-              url: string | null;
-              alt: string | null;
-              width: number | null;
-              height: number | null;
-              lqip: string | null;
-              hotspot: SanityImageHotspot | null;
-            } | null;
-            ctas: Array<{
-              _key: string;
-              label: string | null;
-              linkType: "external" | "internal" | "path" | null;
-              path: string | null;
-              url: string | null;
-              internal: {
-                _type: "page";
-                slug: string | null;
-              } | null;
-            }> | null;
-          }
-        | {
-            _key: string;
-            _type: "richText";
-            content: Array<
-              | {
-                  children?: Array<{
-                    marks?: Array<string>;
-                    text?: string;
-                    _type: "span";
-                    _key: string;
-                  }>;
-                  style?: "blockquote" | "h2" | "h3" | "lead" | "normal";
-                  listItem?: "bullet" | "number";
-                  markDefs: Array<{
-                    _key: string;
-                    _type: "linkAnnotation";
-                    linkType: "external" | "internal" | "path" | null;
-                    internal: {
-                      _type: "page";
-                      slug: string | null;
-                    } | null;
-                    path: string | null;
-                    url: string | null;
-                    label: null;
-                  }> | null;
-                  level?: number;
-                  _type: "block";
-                  _key: string;
-                }
-              | {
-                  _key: string;
-                  _type: "imageWithAlt";
-                  asset?: SanityImageAssetReference;
-                  media?: unknown;
-                  hotspot: SanityImageHotspot | null;
-                  crop?: SanityImageCrop;
-                  alt: string | null;
-                  url: string | null;
-                  width: number | null;
-                  height: number | null;
-                  lqip: string | null;
-                }
-            > | null;
-          }
-        | {
-            _key: string;
-            _type: "textWithImage";
-            eyebrow: string | null;
-            title: string | null;
-            body: Array<{
-              children?: Array<{
-                marks?: Array<string>;
-                text?: string;
-                _type: "span";
-                _key: string;
-              }>;
-              style?: "normal";
-              listItem?: "bullet";
-              markDefs: Array<{
-                _key: string;
-                _type: "linkAnnotation";
-                linkType: "external" | "internal" | "path" | null;
-                internal: {
-                  _type: "page";
-                  slug: string | null;
-                } | null;
-                path: string | null;
-                url: string | null;
-                label: null;
-              }> | null;
-              level?: number;
-              _type: "block";
-              _key: string;
-            }> | null;
-            image: {
-              url: string | null;
-              alt: string | null;
-              width: number | null;
-              height: number | null;
-              lqip: string | null;
-              hotspot: SanityImageHotspot | null;
-            } | null;
-            imagePosition: "left" | "right" | null;
-            cta: {
-              label: string | null;
-              linkType: "external" | "internal" | "path" | null;
-              path: string | null;
-              url: string | null;
-              internal: {
-                _type: "page";
-                slug: string | null;
-              } | null;
-            } | null;
-          }
-      > | null;
-      seo: {
-        title: string | null;
-        description: string | null;
-        image: string | null;
-        noIndex: boolean | null;
-      } | null;
-    }
-  | null;
-
-// Source: src/sanity/queries.ts
-// Variable: pageQuery
-// Query: *[_type == "page" && language == $language && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    modules[]{   _key,  _type,  _type == "hero" => {    eyebrow,    title,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    ctas[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "richText" => {    content[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "textWithImage" => {    eyebrow,    title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    imagePosition,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "cardGrid" => {    eyebrow,    title,    intro,    columns,    cards[]{ _key, title, text, image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }, link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }  },  _type == "featureList" => {    eyebrow,    title,    intro,    items[]{ _key, icon, title, text }  },  _type == "ctaBanner" => {    title,    text,    tone,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }  } },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
-export type PageQueryResult = {
-  _id: string;
-  title: string | null;
-  slug: string | null;
+// Query: *[_type == "frontPage" && _id == $id && language == $language][0]{    modules[]{   _key,  _type,  _type == "hero" => {    eyebrow,    title,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    ctas[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "richText" => {    content[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "textWithImage" => {    eyebrow,    title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    imagePosition,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "cardGrid" => {    eyebrow,    title,    intro,    columns,    cards[]{ _key, title, text, image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }, link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }  },  _type == "featureList" => {    eyebrow,    title,    intro,    items[]{ _key, icon, title, text }  },  _type == "ctaBanner" => {    title,    text,    tone,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }  },  _type == "productGrid" => {    eyebrow,    title,    intro,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "products": select(      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      products[]->{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title }    )  },  _type == "productCatalog" => {    title,    intro  },  _type == "newsList" => {    eyebrow,    title,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){   _id,  _type,  title,  "slug": slug.current,  publishedAt,  excerpt,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "category": category->title }  },  _type == "contactPeople" => {    eyebrow,    title,    intro,    showCustomerService,    "selectedPeople": people[]->{   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref },    "departments": select(      count(departments) > 0 => departments[]->{ _id, title },      *[_type == "department" && language == $language] | order(order asc){ _id, title }    ),    "people": *[_type == "person" && language == $language] | order(order asc, name asc){   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref }  },  _type == "locations" => {    eyebrow,    title,    "items": select(      count(items) > 0 => items[]->{   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours },      *[_type == "location" && language == $language] | order(title asc){   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours }    )  },  _type == "testimonials" => {    eyebrow,    title,    "items": items[]->{ _id, quote, name, role, company, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "logoRow" => {    eyebrow,    title,    intro,    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  } },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
+export type FrontPageQueryResult = {
   modules: Array<
     | {
         _key: string;
@@ -899,12 +1198,72 @@ export type PageQueryResult = {
             linkType: "external" | "internal" | "path" | null;
             path: string | null;
             url: string | null;
-            internal: {
-              _type: "page";
-              slug: string | null;
-            } | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
           } | null;
         }> | null;
+      }
+    | {
+        _key: string;
+        _type: "contactPeople";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        showCustomerService: boolean | null;
+        selectedPeople: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }> | null;
+        departments: Array<{
+          _id: string;
+          title: string | null;
+        }> | null;
+        people: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }>;
       }
     | {
         _key: string;
@@ -917,10 +1276,24 @@ export type PageQueryResult = {
           linkType: "external" | "internal" | "path" | null;
           path: string | null;
           url: string | null;
-          internal: {
-            _type: "page";
-            slug: string | null;
-          } | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
         } | null;
         image: {
           url: string | null;
@@ -977,10 +1350,164 @@ export type PageQueryResult = {
           linkType: "external" | "internal" | "path" | null;
           path: string | null;
           url: string | null;
-          internal: {
-            _type: "page";
-            slug: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "locations";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          title: string | null;
+          street: string | null;
+          postalCode: string | null;
+          city: string | null;
+          phone: string | null;
+          email: string | null;
+          openingHours: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "logoRow";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        certificates: Array<{
+          _id: string;
+          title: string | null;
+          description: string | null;
+          url: string | null;
+          fileUrl: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
           } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "newsList";
+        eyebrow: string | null;
+        title: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        articles: Array<{
+          _id: string;
+          _type: "newsArticle";
+          title: string | null;
+          slug: string | null;
+          publishedAt: string | null;
+          excerpt: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          category: string | null;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "productCatalog";
+        title: string | null;
+        intro: string | null;
+      }
+    | {
+        _key: string;
+        _type: "productGrid";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        products: Array<{
+          _id: string;
+          _type: "product";
+          title: string | null;
+          slug: string | null;
+          shortDescription: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          group: string | null;
         }> | null;
       }
     | {
@@ -1000,10 +1527,24 @@ export type PageQueryResult = {
                 _key: string;
                 _type: "linkAnnotation";
                 linkType: "external" | "internal" | "path" | null;
-                internal: {
-                  _type: "page";
-                  slug: string | null;
-                } | null;
+                internal:
+                  | {
+                      _type: "industry";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "newsArticle";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "page";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "product";
+                      slug: string | null;
+                    }
+                  | null;
                 path: string | null;
                 url: string | null;
                 label: null;
@@ -1029,6 +1570,27 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
+        _type: "testimonials";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          quote: string | null;
+          name: string | null;
+          role: string | null;
+          company: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
         _type: "textWithImage";
         eyebrow: string | null;
         title: string | null;
@@ -1045,10 +1607,24 @@ export type PageQueryResult = {
             _key: string;
             _type: "linkAnnotation";
             linkType: "external" | "internal" | "path" | null;
-            internal: {
-              _type: "page";
-              slug: string | null;
-            } | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
             path: string | null;
             url: string | null;
             label: null;
@@ -1071,10 +1647,24 @@ export type PageQueryResult = {
           linkType: "external" | "internal" | "path" | null;
           path: string | null;
           url: string | null;
-          internal: {
-            _type: "page";
-            slug: string | null;
-          } | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
         } | null;
       }
   > | null;
@@ -1087,18 +1677,1365 @@ export type PageQueryResult = {
 } | null;
 
 // Source: src/sanity/queries.ts
-// Variable: pageSlugsQuery
-// Query: *[_type == "page" && language == $language && defined(slug.current)].slug.current
-export type PageSlugsQueryResult = Array<string>;
+// Variable: pageQuery
+// Query: *[_type == "page" && language == $language && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    modules[]{   _key,  _type,  _type == "hero" => {    eyebrow,    title,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    ctas[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "richText" => {    content[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "textWithImage" => {    eyebrow,    title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    imagePosition,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "cardGrid" => {    eyebrow,    title,    intro,    columns,    cards[]{ _key, title, text, image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }, link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }  },  _type == "featureList" => {    eyebrow,    title,    intro,    items[]{ _key, icon, title, text }  },  _type == "ctaBanner" => {    title,    text,    tone,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }  },  _type == "productGrid" => {    eyebrow,    title,    intro,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "products": select(      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      products[]->{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title }    )  },  _type == "productCatalog" => {    title,    intro  },  _type == "newsList" => {    eyebrow,    title,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){   _id,  _type,  title,  "slug": slug.current,  publishedAt,  excerpt,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "category": category->title }  },  _type == "contactPeople" => {    eyebrow,    title,    intro,    showCustomerService,    "selectedPeople": people[]->{   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref },    "departments": select(      count(departments) > 0 => departments[]->{ _id, title },      *[_type == "department" && language == $language] | order(order asc){ _id, title }    ),    "people": *[_type == "person" && language == $language] | order(order asc, name asc){   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref }  },  _type == "locations" => {    eyebrow,    title,    "items": select(      count(items) > 0 => items[]->{   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours },      *[_type == "location" && language == $language] | order(title asc){   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours }    )  },  _type == "testimonials" => {    eyebrow,    title,    "items": items[]->{ _id, quote, name, role, company, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "logoRow" => {    eyebrow,    title,    intro,    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  } },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
+export type PageQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  modules: Array<
+    | {
+        _key: string;
+        _type: "cardGrid";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        columns: 2 | 3 | 4 | null;
+        cards: Array<{
+          _key: string;
+          title: string | null;
+          text: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          link: {
+            label: string | null;
+            linkType: "external" | "internal" | "path" | null;
+            path: string | null;
+            url: string | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "contactPeople";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        showCustomerService: boolean | null;
+        selectedPeople: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }> | null;
+        departments: Array<{
+          _id: string;
+          title: string | null;
+        }> | null;
+        people: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "ctaBanner";
+        title: string | null;
+        text: string | null;
+        tone: "blue" | "green" | "light" | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "featureList";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        items: Array<{
+          _key: string;
+          icon:
+            | "advice"
+            | "box"
+            | "check"
+            | "fish"
+            | "gear"
+            | "handshake"
+            | "leaf"
+            | "people"
+            | "recycle"
+            | "shield"
+            | "truck"
+            | "warehouse"
+            | null;
+          title: string | null;
+          text: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "hero";
+        eyebrow: string | null;
+        title: string | null;
+        lead: string | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+        ctas: Array<{
+          _key: string;
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "locations";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          title: string | null;
+          street: string | null;
+          postalCode: string | null;
+          city: string | null;
+          phone: string | null;
+          email: string | null;
+          openingHours: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "logoRow";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        certificates: Array<{
+          _id: string;
+          title: string | null;
+          description: string | null;
+          url: string | null;
+          fileUrl: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "newsList";
+        eyebrow: string | null;
+        title: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        articles: Array<{
+          _id: string;
+          _type: "newsArticle";
+          title: string | null;
+          slug: string | null;
+          publishedAt: string | null;
+          excerpt: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          category: string | null;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "productCatalog";
+        title: string | null;
+        intro: string | null;
+      }
+    | {
+        _key: string;
+        _type: "productGrid";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        products: Array<{
+          _id: string;
+          _type: "product";
+          title: string | null;
+          slug: string | null;
+          shortDescription: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          group: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "richText";
+        content: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "lead" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                _key: string;
+                _type: "linkAnnotation";
+                linkType: "external" | "internal" | "path" | null;
+                internal:
+                  | {
+                      _type: "industry";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "newsArticle";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "page";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "product";
+                      slug: string | null;
+                    }
+                  | null;
+                path: string | null;
+                url: string | null;
+                label: null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              _key: string;
+              _type: "imageWithAlt";
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot: SanityImageHotspot | null;
+              crop?: SanityImageCrop;
+              alt: string | null;
+              url: string | null;
+              width: number | null;
+              height: number | null;
+              lqip: string | null;
+            }
+        > | null;
+      }
+    | {
+        _key: string;
+        _type: "testimonials";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          quote: string | null;
+          name: string | null;
+          role: string | null;
+          company: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "textWithImage";
+        eyebrow: string | null;
+        title: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: "bullet";
+          markDefs: Array<{
+            _key: string;
+            _type: "linkAnnotation";
+            linkType: "external" | "internal" | "path" | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
+            path: string | null;
+            url: string | null;
+            label: null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+        imagePosition: "left" | "right" | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+      }
+  > | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: industryQuery
+// Query: *[_type == "industry" && language == $language && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    heroTitle,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    modules[]{   _key,  _type,  _type == "hero" => {    eyebrow,    title,    lead,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    ctas[]{ _key,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "richText" => {    content[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "textWithImage" => {    eyebrow,    title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    imagePosition,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }  },  _type == "cardGrid" => {    eyebrow,    title,    intro,    columns,    cards[]{ _key, title, text, image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }, link{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } } }  },  _type == "featureList" => {    eyebrow,    title,    intro,    items[]{ _key, icon, title, text }  },  _type == "ctaBanner" => {    title,    text,    tone,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot }  },  _type == "productGrid" => {    eyebrow,    title,    intro,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "products": select(      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },      products[]->{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title }    )  },  _type == "productCatalog" => {    title,    intro  },  _type == "newsList" => {    eyebrow,    title,    limit,    cta{   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } },    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){   _id,  _type,  title,  "slug": slug.current,  publishedAt,  excerpt,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "category": category->title }  },  _type == "contactPeople" => {    eyebrow,    title,    intro,    showCustomerService,    "selectedPeople": people[]->{   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref },    "departments": select(      count(departments) > 0 => departments[]->{ _id, title },      *[_type == "department" && language == $language] | order(order asc){ _id, title }    ),    "people": *[_type == "person" && language == $language] | order(order asc, name asc){   _id,  name,  role,  phone,  email,  area,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "departmentId": department._ref }  },  _type == "locations" => {    eyebrow,    title,    "items": select(      count(items) > 0 => items[]->{   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours },      *[_type == "location" && language == $language] | order(title asc){   _id,  title,  street,  postalCode,  city,  phone,  email,  openingHours }    )  },  _type == "testimonials" => {    eyebrow,    title,    "items": items[]->{ _id, quote, name, role, company, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  },  _type == "logoRow" => {    eyebrow,    title,    intro,    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } }  } },    "featuredProducts": featuredProducts[]->{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },    "industryProducts": *[_type == "product" && language == $language && references(^._id)] | order(title asc){   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
+export type IndustryQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  heroTitle: string | null;
+  lead: string | null;
+  image: {
+    url: string | null;
+    alt: string | null;
+    width: number | null;
+    height: number | null;
+    lqip: string | null;
+    hotspot: SanityImageHotspot | null;
+  } | null;
+  modules: Array<
+    | {
+        _key: string;
+        _type: "cardGrid";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        columns: 2 | 3 | 4 | null;
+        cards: Array<{
+          _key: string;
+          title: string | null;
+          text: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          link: {
+            label: string | null;
+            linkType: "external" | "internal" | "path" | null;
+            path: string | null;
+            url: string | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "contactPeople";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        showCustomerService: boolean | null;
+        selectedPeople: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }> | null;
+        departments: Array<{
+          _id: string;
+          title: string | null;
+        }> | null;
+        people: Array<{
+          _id: string;
+          name: string | null;
+          role: string | null;
+          phone: string | null;
+          email: string | null;
+          area: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          departmentId: string | null;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "ctaBanner";
+        title: string | null;
+        text: string | null;
+        tone: "blue" | "green" | "light" | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+      }
+    | {
+        _key: string;
+        _type: "featureList";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        items: Array<{
+          _key: string;
+          icon:
+            | "advice"
+            | "box"
+            | "check"
+            | "fish"
+            | "gear"
+            | "handshake"
+            | "leaf"
+            | "people"
+            | "recycle"
+            | "shield"
+            | "truck"
+            | "warehouse"
+            | null;
+          title: string | null;
+          text: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "hero";
+        eyebrow: string | null;
+        title: string | null;
+        lead: string | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+        ctas: Array<{
+          _key: string;
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "locations";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          title: string | null;
+          street: string | null;
+          postalCode: string | null;
+          city: string | null;
+          phone: string | null;
+          email: string | null;
+          openingHours: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "logoRow";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        certificates: Array<{
+          _id: string;
+          title: string | null;
+          description: string | null;
+          url: string | null;
+          fileUrl: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "newsList";
+        eyebrow: string | null;
+        title: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        articles: Array<{
+          _id: string;
+          _type: "newsArticle";
+          title: string | null;
+          slug: string | null;
+          publishedAt: string | null;
+          excerpt: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          category: string | null;
+        }>;
+      }
+    | {
+        _key: string;
+        _type: "productCatalog";
+        title: string | null;
+        intro: string | null;
+      }
+    | {
+        _key: string;
+        _type: "productGrid";
+        eyebrow: string | null;
+        title: string | null;
+        intro: string | null;
+        limit: number | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+        products: Array<{
+          _id: string;
+          _type: "product";
+          title: string | null;
+          slug: string | null;
+          shortDescription: string | null;
+          image: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+          group: string | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "richText";
+        content: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: "span";
+                _key: string;
+              }>;
+              style?: "blockquote" | "h2" | "h3" | "lead" | "normal";
+              listItem?: "bullet" | "number";
+              markDefs: Array<{
+                _key: string;
+                _type: "linkAnnotation";
+                linkType: "external" | "internal" | "path" | null;
+                internal:
+                  | {
+                      _type: "industry";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "newsArticle";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "page";
+                      slug: string | null;
+                    }
+                  | {
+                      _type: "product";
+                      slug: string | null;
+                    }
+                  | null;
+                path: string | null;
+                url: string | null;
+                label: null;
+              }> | null;
+              level?: number;
+              _type: "block";
+              _key: string;
+            }
+          | {
+              _key: string;
+              _type: "imageWithAlt";
+              asset?: SanityImageAssetReference;
+              media?: unknown;
+              hotspot: SanityImageHotspot | null;
+              crop?: SanityImageCrop;
+              alt: string | null;
+              url: string | null;
+              width: number | null;
+              height: number | null;
+              lqip: string | null;
+            }
+        > | null;
+      }
+    | {
+        _key: string;
+        _type: "testimonials";
+        eyebrow: string | null;
+        title: string | null;
+        items: Array<{
+          _id: string;
+          quote: string | null;
+          name: string | null;
+          role: string | null;
+          company: string | null;
+          logo: {
+            url: string | null;
+            alt: string | null;
+            width: number | null;
+            height: number | null;
+            lqip: string | null;
+            hotspot: SanityImageHotspot | null;
+          } | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "textWithImage";
+        eyebrow: string | null;
+        title: string | null;
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "normal";
+          listItem?: "bullet";
+          markDefs: Array<{
+            _key: string;
+            _type: "linkAnnotation";
+            linkType: "external" | "internal" | "path" | null;
+            internal:
+              | {
+                  _type: "industry";
+                  slug: string | null;
+                }
+              | {
+                  _type: "newsArticle";
+                  slug: string | null;
+                }
+              | {
+                  _type: "page";
+                  slug: string | null;
+                }
+              | {
+                  _type: "product";
+                  slug: string | null;
+                }
+              | null;
+            path: string | null;
+            url: string | null;
+            label: null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        image: {
+          url: string | null;
+          alt: string | null;
+          width: number | null;
+          height: number | null;
+          lqip: string | null;
+          hotspot: SanityImageHotspot | null;
+        } | null;
+        imagePosition: "left" | "right" | null;
+        cta: {
+          label: string | null;
+          linkType: "external" | "internal" | "path" | null;
+          path: string | null;
+          url: string | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+        } | null;
+      }
+  > | null;
+  featuredProducts: Array<{
+    _id: string;
+    _type: "product";
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    group: string | null;
+  }> | null;
+  industryProducts: Array<{
+    _id: string;
+    _type: "product";
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    group: string | null;
+  }>;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: productQuery
+// Query: *[_type == "product" && language == $language && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    shortDescription,    "images": images[]{ _key,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    description[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    properties[]{ _key, key, value },    "datasheetUrl": datasheet.asset->url,    "group": productGroup->{ title, "slug": slug.current },    "industries": industries[]->{ _id, title, "slug": slug.current },    "materials": materials[]->{ _id, title },    "relatedProducts": relatedProducts[]->{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },    "sameGroup": *[_type == "product" && language == $language && defined(^.productGroup) && productGroup._ref == ^.productGroup._ref && _id != ^._id] | order(title asc)[0...4]{   _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
+export type ProductQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  shortDescription: string | null;
+  images: Array<{
+    _key: string;
+    url: string | null;
+    alt: string | null;
+    width: number | null;
+    height: number | null;
+    lqip: string | null;
+    hotspot: SanityImageHotspot | null;
+  }> | null;
+  description: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h2" | "h3" | "lead" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs: Array<{
+          _key: string;
+          _type: "linkAnnotation";
+          linkType: "external" | "internal" | "path" | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+          path: string | null;
+          url: string | null;
+          label: null;
+        }> | null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "imageWithAlt";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot: SanityImageHotspot | null;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        url: string | null;
+        width: number | null;
+        height: number | null;
+        lqip: string | null;
+      }
+  > | null;
+  properties: Array<{
+    _key: string;
+    key: string | null;
+    value: string | null;
+  }> | null;
+  datasheetUrl: string | null;
+  group: {
+    title: string | null;
+    slug: string | null;
+  } | null;
+  industries: Array<{
+    _id: string;
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  materials: Array<{
+    _id: string;
+    title: string | null;
+  }> | null;
+  relatedProducts: Array<{
+    _id: string;
+    _type: "product";
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    group: string | null;
+  }> | null;
+  sameGroup: Array<{
+    _id: string;
+    _type: "product";
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    group: string | null;
+  }>;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: newsArticleQuery
+// Query: *[_type == "newsArticle" && language == $language && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    publishedAt,    excerpt,    image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },    "category": category->title,    body[]{   ...,  _type == "block" => {    ...,    markDefs[]{      ...,      _type == "linkAnnotation" => { _key, _type,   label,  linkType,  path,  url,  "internal": internal->{ _type, "slug": slug.current } }    }  },  _type == "imageWithAlt" => { _key, _type,   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot } },    "moreNews": *[_type == "newsArticle" && language == $language && _id != ^._id] | order(publishedAt desc)[0...3]{   _id,  _type,  title,  "slug": slug.current,  publishedAt,  excerpt,  image{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "category": category->title },    seo{   title,  description,  "image": image.asset->url,  noIndex }  }
+export type NewsArticleQueryResult = {
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  publishedAt: string | null;
+  excerpt: string | null;
+  image: {
+    url: string | null;
+    alt: string | null;
+    width: number | null;
+    height: number | null;
+    lqip: string | null;
+    hotspot: SanityImageHotspot | null;
+  } | null;
+  category: string | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h2" | "h3" | "lead" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs: Array<{
+          _key: string;
+          _type: "linkAnnotation";
+          linkType: "external" | "internal" | "path" | null;
+          internal:
+            | {
+                _type: "industry";
+                slug: string | null;
+              }
+            | {
+                _type: "newsArticle";
+                slug: string | null;
+              }
+            | {
+                _type: "page";
+                slug: string | null;
+              }
+            | {
+                _type: "product";
+                slug: string | null;
+              }
+            | null;
+          path: string | null;
+          url: string | null;
+          label: null;
+        }> | null;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        _key: string;
+        _type: "imageWithAlt";
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot: SanityImageHotspot | null;
+        crop?: SanityImageCrop;
+        alt: string | null;
+        url: string | null;
+        width: number | null;
+        height: number | null;
+        lqip: string | null;
+      }
+  > | null;
+  moreNews: Array<{
+    _id: string;
+    _type: "newsArticle";
+    title: string | null;
+    slug: string | null;
+    publishedAt: string | null;
+    excerpt: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    category: string | null;
+  }>;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
+// Source: src/sanity/queries.ts
+// Variable: catalogQuery
+// Query: {    "products": *[_type == "product" && language == $language] | order(title asc){        _id,  _type,  title,  "slug": slug.current,  shortDescription,  "image": images[0]{   "url": asset->url,  alt,  "width": asset->metadata.dimensions.width,  "height": asset->metadata.dimensions.height,  "lqip": asset->metadata.lqip,  hotspot },  "group": productGroup->title,      "groupSlug": productGroup->slug.current,      "industrySlugs": industries[]->slug.current,      "materialSlugs": materials[]->slug.current    },    "groups": *[_type == "productGroup" && language == $language] | order(order asc, title asc){ title, "slug": slug.current },    "industries": *[_type == "industry" && language == $language] | order(title asc){ title, "slug": slug.current },    "materials": *[_type == "material" && language == $language] | order(title asc){ title, "slug": slug.current }  }
+export type CatalogQueryResult = {
+  products: Array<{
+    _id: string;
+    _type: "product";
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+    image: {
+      url: string | null;
+      alt: string | null;
+      width: number | null;
+      height: number | null;
+      lqip: string | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    group: string | null;
+    groupSlug: string | null;
+    industrySlugs: Array<string | null> | null;
+    materialSlugs: Array<string | null> | null;
+  }>;
+  groups: Array<{
+    title: string | null;
+    slug: string | null;
+  }>;
+  industries: Array<{
+    title: string | null;
+    slug: string | null;
+  }>;
+  materials: Array<{
+    title: string | null;
+    slug: string | null;
+  }>;
+};
+
+// Source: src/sanity/queries.ts
+// Variable: routesQuery
+// Query: *[_type in ["page", "industry", "product", "newsArticle"] && language == $language && defined(slug.current)]{    _type,    "slug": slug.current  }
+export type RoutesQueryResult = Array<
+  | {
+      _type: "industry";
+      slug: string;
+    }
+  | {
+      _type: "newsArticle";
+      slug: string;
+    }
+  | {
+      _type: "page";
+      slug: string;
+    }
+  | {
+      _type: "product";
+      slug: string;
+    }
+>;
 
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    "\n  *[_id == $id][0]{\n    title,\n    description,\n    companyName,\n    orgNumber,\n    address,\n    phone,\n    email,\n    socialLinks[]{ _key, platform, url }\n  }\n": SiteSettingsQueryResult;
-    '\n  *[_id == $id][0]{\n    mainMenu[]{\n      _key,\n      label,\n      link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n      groups[]{ _key, title, links[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n    },\n    headerCta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    footerGroups[]{ _key, title, links[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } },\n    legalLinks[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  }\n': NavigationQueryResult;
-    '\n  *[_id == $id][0]{\n    modules[]{ \n  _key,\n  _type,\n  _type == "hero" => {\n    eyebrow,\n    title,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    ctas[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "richText" => {\n    content[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n }\n  },\n  _type == "textWithImage" => {\n    eyebrow,\n    title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    imagePosition,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "cardGrid" => {\n    eyebrow,\n    title,\n    intro,\n    columns,\n    cards[]{ _key, title, text, image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }, link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n  },\n  _type == "featureList" => {\n    eyebrow,\n    title,\n    intro,\n    items[]{ _key, icon, title, text }\n  },\n  _type == "ctaBanner" => {\n    title,\n    text,\n    tone,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n  }\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': FrontPageQueryResult;
-    '\n  *[_type == "page" && language == $language && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    modules[]{ \n  _key,\n  _type,\n  _type == "hero" => {\n    eyebrow,\n    title,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    ctas[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "richText" => {\n    content[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n }\n  },\n  _type == "textWithImage" => {\n    eyebrow,\n    title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    imagePosition,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "cardGrid" => {\n    eyebrow,\n    title,\n    intro,\n    columns,\n    cards[]{ _key, title, text, image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }, link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n  },\n  _type == "featureList" => {\n    eyebrow,\n    title,\n    intro,\n    items[]{ _key, icon, title, text }\n  },\n  _type == "ctaBanner" => {\n    title,\n    text,\n    tone,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n  }\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': PageQueryResult;
-    '\n  *[_type == "page" && language == $language && defined(slug.current)].slug.current\n': PageSlugsQueryResult;
+    '\n  *[_type == "siteSettings" && _id == $id][0]{\n    title,\n    description,\n    companyName,\n    orgNumber,\n    address,\n    phone,\n    email,\n    socialLinks[]{ _key, platform, url }\n  }\n': SiteSettingsQueryResult;
+    '\n  *[_type == "navigation" && _id == $id][0]{\n    mainMenu[]{\n      _key,\n      label,\n      link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n      groups[]{ _key, title, links[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n    },\n    headerCta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    footerGroups[]{ _key, title, links[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } },\n    legalLinks[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  }\n': NavigationQueryResult;
+    '\n  *[_type == "frontPage" && _id == $id && language == $language][0]{\n    modules[]{ \n  _key,\n  _type,\n  _type == "hero" => {\n    eyebrow,\n    title,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    ctas[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "richText" => {\n    content[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n }\n  },\n  _type == "textWithImage" => {\n    eyebrow,\n    title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    imagePosition,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "cardGrid" => {\n    eyebrow,\n    title,\n    intro,\n    columns,\n    cards[]{ _key, title, text, image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }, link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n  },\n  _type == "featureList" => {\n    eyebrow,\n    title,\n    intro,\n    items[]{ _key, icon, title, text }\n  },\n  _type == "ctaBanner" => {\n    title,\n    text,\n    tone,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n  },\n  _type == "productGrid" => {\n    eyebrow,\n    title,\n    intro,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "products": select(\n      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      products[]->{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n }\n    )\n  },\n  _type == "productCatalog" => {\n    title,\n    intro\n  },\n  _type == "newsList" => {\n    eyebrow,\n    title,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  publishedAt,\n  excerpt,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "category": category->title\n }\n  },\n  _type == "contactPeople" => {\n    eyebrow,\n    title,\n    intro,\n    showCustomerService,\n    "selectedPeople": people[]->{ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n },\n    "departments": select(\n      count(departments) > 0 => departments[]->{ _id, title },\n      *[_type == "department" && language == $language] | order(order asc){ _id, title }\n    ),\n    "people": *[_type == "person" && language == $language] | order(order asc, name asc){ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n }\n  },\n  _type == "locations" => {\n    eyebrow,\n    title,\n    "items": select(\n      count(items) > 0 => items[]->{ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n },\n      *[_type == "location" && language == $language] | order(title asc){ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n }\n    )\n  },\n  _type == "testimonials" => {\n    eyebrow,\n    title,\n    "items": items[]->{ _id, quote, name, role, company, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  },\n  _type == "logoRow" => {\n    eyebrow,\n    title,\n    intro,\n    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  }\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': FrontPageQueryResult;
+    '\n  *[_type == "page" && language == $language && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    modules[]{ \n  _key,\n  _type,\n  _type == "hero" => {\n    eyebrow,\n    title,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    ctas[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "richText" => {\n    content[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n }\n  },\n  _type == "textWithImage" => {\n    eyebrow,\n    title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    imagePosition,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "cardGrid" => {\n    eyebrow,\n    title,\n    intro,\n    columns,\n    cards[]{ _key, title, text, image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }, link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n  },\n  _type == "featureList" => {\n    eyebrow,\n    title,\n    intro,\n    items[]{ _key, icon, title, text }\n  },\n  _type == "ctaBanner" => {\n    title,\n    text,\n    tone,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n  },\n  _type == "productGrid" => {\n    eyebrow,\n    title,\n    intro,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "products": select(\n      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      products[]->{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n }\n    )\n  },\n  _type == "productCatalog" => {\n    title,\n    intro\n  },\n  _type == "newsList" => {\n    eyebrow,\n    title,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  publishedAt,\n  excerpt,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "category": category->title\n }\n  },\n  _type == "contactPeople" => {\n    eyebrow,\n    title,\n    intro,\n    showCustomerService,\n    "selectedPeople": people[]->{ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n },\n    "departments": select(\n      count(departments) > 0 => departments[]->{ _id, title },\n      *[_type == "department" && language == $language] | order(order asc){ _id, title }\n    ),\n    "people": *[_type == "person" && language == $language] | order(order asc, name asc){ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n }\n  },\n  _type == "locations" => {\n    eyebrow,\n    title,\n    "items": select(\n      count(items) > 0 => items[]->{ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n },\n      *[_type == "location" && language == $language] | order(title asc){ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n }\n    )\n  },\n  _type == "testimonials" => {\n    eyebrow,\n    title,\n    "items": items[]->{ _id, quote, name, role, company, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  },\n  _type == "logoRow" => {\n    eyebrow,\n    title,\n    intro,\n    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  }\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': PageQueryResult;
+    '\n  *[_type == "industry" && language == $language && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    heroTitle,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    modules[]{ \n  _key,\n  _type,\n  _type == "hero" => {\n    eyebrow,\n    title,\n    lead,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    ctas[]{ _key, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "richText" => {\n    content[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n }\n  },\n  _type == "textWithImage" => {\n    eyebrow,\n    title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    imagePosition,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n  },\n  _type == "cardGrid" => {\n    eyebrow,\n    title,\n    intro,\n    columns,\n    cards[]{ _key, title, text, image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }, link{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n } }\n  },\n  _type == "featureList" => {\n    eyebrow,\n    title,\n    intro,\n    items[]{ _key, icon, title, text }\n  },\n  _type == "ctaBanner" => {\n    title,\n    text,\n    tone,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n  },\n  _type == "productGrid" => {\n    eyebrow,\n    title,\n    intro,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "products": select(\n      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n      products[]->{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n }\n    )\n  },\n  _type == "productCatalog" => {\n    title,\n    intro\n  },\n  _type == "newsList" => {\n    eyebrow,\n    title,\n    limit,\n    cta{ \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n },\n    "articles": *[_type == "newsArticle" && language == $language && (!defined(^.category) || category._ref == ^.category._ref)] | order(publishedAt desc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  publishedAt,\n  excerpt,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "category": category->title\n }\n  },\n  _type == "contactPeople" => {\n    eyebrow,\n    title,\n    intro,\n    showCustomerService,\n    "selectedPeople": people[]->{ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n },\n    "departments": select(\n      count(departments) > 0 => departments[]->{ _id, title },\n      *[_type == "department" && language == $language] | order(order asc){ _id, title }\n    ),\n    "people": *[_type == "person" && language == $language] | order(order asc, name asc){ \n  _id,\n  name,\n  role,\n  phone,\n  email,\n  area,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "departmentId": department._ref\n }\n  },\n  _type == "locations" => {\n    eyebrow,\n    title,\n    "items": select(\n      count(items) > 0 => items[]->{ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n },\n      *[_type == "location" && language == $language] | order(title asc){ \n  _id,\n  title,\n  street,\n  postalCode,\n  city,\n  phone,\n  email,\n  openingHours\n }\n    )\n  },\n  _type == "testimonials" => {\n    eyebrow,\n    title,\n    "items": items[]->{ _id, quote, name, role, company, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  },\n  _type == "logoRow" => {\n    eyebrow,\n    title,\n    intro,\n    "certificates": certificates[]->{ _id, title, description, url, "fileUrl": file.asset->url, logo{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n } }\n  }\n },\n    "featuredProducts": featuredProducts[]->{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n    "industryProducts": *[_type == "product" && language == $language && references(^._id)] | order(title asc){ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': IndustryQueryResult;
+    '\n  *[_type == "product" && language == $language && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    shortDescription,\n    "images": images[]{ _key, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    description[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    properties[]{ _key, key, value },\n    "datasheetUrl": datasheet.asset->url,\n    "group": productGroup->{ title, "slug": slug.current },\n    "industries": industries[]->{ _id, title, "slug": slug.current },\n    "materials": materials[]->{ _id, title },\n    "relatedProducts": relatedProducts[]->{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n    "sameGroup": *[_type == "product" && language == $language && defined(^.productGroup) && productGroup._ref == ^.productGroup._ref && _id != ^._id] | order(title asc)[0...4]{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': ProductQueryResult;
+    '\n  *[_type == "newsArticle" && language == $language && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    publishedAt,\n    excerpt,\n    image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n    "category": category->title,\n    body[]{ \n  ...,\n  _type == "block" => {\n    ...,\n    markDefs[]{\n      ...,\n      _type == "linkAnnotation" => { _key, _type, \n  label,\n  linkType,\n  path,\n  url,\n  "internal": internal->{ _type, "slug": slug.current }\n }\n    }\n  },\n  _type == "imageWithAlt" => { _key, _type, \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n }\n },\n    "moreNews": *[_type == "newsArticle" && language == $language && _id != ^._id] | order(publishedAt desc)[0...3]{ \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  publishedAt,\n  excerpt,\n  image{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "category": category->title\n },\n    seo{ \n  title,\n  description,\n  "image": image.asset->url,\n  noIndex\n }\n  }\n': NewsArticleQueryResult;
+    '\n  {\n    "products": *[_type == "product" && language == $language] | order(title asc){\n      \n  _id,\n  _type,\n  title,\n  "slug": slug.current,\n  shortDescription,\n  "image": images[0]{ \n  "url": asset->url,\n  alt,\n  "width": asset->metadata.dimensions.width,\n  "height": asset->metadata.dimensions.height,\n  "lqip": asset->metadata.lqip,\n  hotspot\n },\n  "group": productGroup->title\n,\n      "groupSlug": productGroup->slug.current,\n      "industrySlugs": industries[]->slug.current,\n      "materialSlugs": materials[]->slug.current\n    },\n    "groups": *[_type == "productGroup" && language == $language] | order(order asc, title asc){ title, "slug": slug.current },\n    "industries": *[_type == "industry" && language == $language] | order(title asc){ title, "slug": slug.current },\n    "materials": *[_type == "material" && language == $language] | order(title asc){ title, "slug": slug.current }\n  }\n': CatalogQueryResult;
+    '\n  *[_type in ["page", "industry", "product", "newsArticle"] && language == $language && defined(slug.current)]{\n    _type,\n    "slug": slug.current\n  }\n': RoutesQueryResult;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

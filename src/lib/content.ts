@@ -13,13 +13,27 @@ import { client } from "@/sanity/lib/client";
 import { singletonId } from "@/sanity/lib/singletons";
 import { SANITY_TAG } from "@/sanity/lib/tags";
 import {
+  catalogQuery,
   frontPageQuery,
+  industryQuery,
   navigationQuery,
+  newsArticleQuery,
   pageQuery,
-  pageSlugsQuery,
+  productQuery,
+  routesQuery,
   siteSettingsQuery,
 } from "@/sanity/queries";
-import type { FrontPage, Navigation, Page, SiteSettings } from "@/sanity/types";
+import type {
+  Catalog,
+  FrontPage,
+  Industry,
+  Navigation,
+  NewsArticle,
+  Page,
+  Product,
+  Routes,
+  SiteSettings,
+} from "@/sanity/types";
 
 import { markets, type MarketId } from "./markets";
 
@@ -86,9 +100,7 @@ export async function getFrontPage(market: MarketId): Promise<FrontPage> {
   if (!isSanityConfigured) return fallbackFrontPages[market];
   const data = await client.fetch(
     frontPageQuery,
-    {
-      id: singletonId("frontPage", language(market)),
-    },
+    { id: singletonId("frontPage", language(market)), language: language(market) },
     noFetchCache,
   );
   return data?.modules?.length ? data : fallbackFrontPages[market];
@@ -105,14 +117,54 @@ export async function getPage(market: MarketId, slug: string): Promise<Page | nu
   return data ?? fallback;
 }
 
-/** Alle sideadresser i et marked, til `generateStaticParams`. */
-export async function getPageSlugs(market: MarketId): Promise<string[]> {
+export async function getIndustry(market: MarketId, slug: string): Promise<Industry | null> {
   "use cache";
-  cacheTag(SANITY_TAG, "page");
+  cacheTag(SANITY_TAG, "industry", `industry:${market}:${slug}`);
   applyCacheLife();
 
-  const fallback = fallbackPages[market].flatMap((page) => page.slug ?? []);
+  if (!isSanityConfigured) return null;
+  return client.fetch(industryQuery, { language: language(market), slug }, noFetchCache);
+}
+
+export async function getProduct(market: MarketId, slug: string): Promise<Product | null> {
+  "use cache";
+  cacheTag(SANITY_TAG, "product", `product:${market}:${slug}`);
+  applyCacheLife();
+
+  if (!isSanityConfigured) return null;
+  return client.fetch(productQuery, { language: language(market), slug }, noFetchCache);
+}
+
+export async function getNewsArticle(market: MarketId, slug: string): Promise<NewsArticle | null> {
+  "use cache";
+  cacheTag(SANITY_TAG, "newsArticle", `newsArticle:${market}:${slug}`);
+  applyCacheLife();
+
+  if (!isSanityConfigured) return null;
+  return client.fetch(newsArticleQuery, { language: language(market), slug }, noFetchCache);
+}
+
+/** Produkter og filtervalg til produktkatalogen. Filtreringen skjer i `lib/catalog.ts`. */
+export async function getCatalog(market: MarketId): Promise<Catalog> {
+  "use cache";
+  cacheTag(SANITY_TAG, "product");
+  applyCacheLife();
+
+  if (!isSanityConfigured) return { products: [], groups: [], industries: [], materials: [] };
+  return client.fetch(catalogQuery, { language: language(market) }, noFetchCache);
+}
+
+/** Alle adresser i et marked (sider, bransjer, produkter, nyheter), til `generateStaticParams`. */
+export async function getRoutes(market: MarketId): Promise<Routes> {
+  "use cache";
+  cacheTag(SANITY_TAG);
+  applyCacheLife();
+
+  const fallback: Routes = fallbackPages[market].flatMap((page) =>
+    page.slug ? [{ _type: "page" as const, slug: page.slug }] : [],
+  );
   if (!isSanityConfigured) return fallback;
-  const slugs = await client.fetch(pageSlugsQuery, { language: language(market) }, noFetchCache);
-  return [...new Set([...slugs, ...fallback])];
+  const routes = await client.fetch(routesQuery, { language: language(market) }, noFetchCache);
+  const known = new Set(routes.map((route) => `${route._type}:${route.slug}`));
+  return [...routes, ...fallback.filter((route) => !known.has(`${route._type}:${route.slug}`))];
 }

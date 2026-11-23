@@ -3,8 +3,13 @@ import { defineField, defineType } from "sanity";
 
 import { referenceFilterByLanguage } from "../../lib/referenceFilter";
 
-/** Dokumenttyper en intern lenke kan peke på. Utvides i fase 3. */
-export const linkableTypes = [{ type: "page" }];
+/** Dokumenttyper en intern lenke kan peke på. Adressen bygges i `src/lib/routes.ts`. */
+export const linkableTypes = [
+  { type: "page" },
+  { type: "industry" },
+  { type: "product" },
+  { type: "newsArticle" },
+];
 
 /** Felt for hvor lenken peker. Deles av `link` og `linkAnnotation`. */
 const targetFields = [
@@ -68,8 +73,8 @@ const targetFields = [
 
 /**
  * Lenke med etikett. Intern lenke peker på et dokument i samme språk, så den
- * ikke brytes når en side får ny adresse. Sti brukes for sider som ennå ikke
- * finnes som dokumenter (bransjer, produkter og kontakt kommer i fase 3).
+ * ikke brytes når en side får ny adresse. Sti brukes for adresser som ikke
+ * finnes som dokumenter.
  */
 export const link = defineType({
   name: "link",
