@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/*
+ * Designtokens fra den grafiske profilen på stok.dk.
+ * Se docs/04-grafisk-profil.md.
+ */
+@theme {
+  --color-stok-blue: #00405f;
+  --color-stok-blue-dark: #002e45;
+  --color-stok-green: #82c341;
+  --color-stok-green-dark: #5e9a24;
+  --color-stok-light: #f0f5fa;
+  --color-stok-grey: #f6f6f6;
+  --color-stok-text: #4a4a4a;
+
+  --font-heading: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-meta: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+
+  --container-page: 87.5rem; /* 1400 px, som stok.dk */
+}
+
+@layer base {
+  html {
+    color: var(--color-stok-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-stok-blue);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-stok-green);
+    outline-offset: 2px;
+  }
+}

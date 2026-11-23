@@ -18,7 +18,7 @@
 
 | Område | Valg | Begrunnelse |
 |---|---|---|
-| Rammeverk | Next.js, siste stabile versjon, App Router, TypeScript | Krav fra oppdraget. Server Components gir lite JavaScript til klienten |
+| Rammeverk | Next.js 16 med App Router, Cache Components og TypeScript | Krav fra oppdraget. Server Components gir lite JavaScript til klienten |
 | Innhold | Sanity, siste stabile Studio | Krav fra oppdraget |
 | Studio | Innebygd i Next-appen på `/studio` | Ett repo og én deploy. Enkelt for en PoC |
 | Datahenting | `next-sanity` med GROQ og `defineLive` | Offisiell integrasjon med caching og live-oppdatering |
@@ -32,7 +32,7 @@
 | Kode | Privat repo på Kantegas GitHub | Beslutning B12 |
 | Kodekvalitet | ESLint, Prettier, TypeScript strict | Standard oppsett |
 | Pakkehåndtering | pnpm | Raskt og vanlig |
-| Markeder og språk | Markedsprefiks i URL (`/no`, `/is`) med Next.js-middleware. Ett Sanity-dataset med språkfelt per dokument | Én kodebase og én Studio for begge markedene |
+| Markeder og språk | Markedsprefiks i URL (`/no`, `/is`) med `proxy.ts` (tidligere middleware) og `next/root-params`. Ett Sanity-dataset med språkfelt per dokument | Én kodebase og én Studio for begge markedene |
 | Produktfiltre | Filtrering i GROQ på serveren, styrt av URL-parametere | Delbare URL-er og lite JavaScript i nettleseren |
 
 ## Mappestruktur (forslag)
@@ -48,7 +48,7 @@ stok-poc/
 │   │   │   ├── bransjer/[slug]/
 │   │   │   ├── produkter/   Katalog, gruppe og produkt
 │   │   │   └── nyheter/
-│   │   ├── studio/[[...tool]]/  Sanity Studio
+│   │   ├── (studio)/studio/ Sanity Studio med egen rot-layout
 │   │   └── api/draft-mode/  Aktivering av forhåndsvisning
 │   ├── components/
 │   │   ├── modules/         Én komponent per sidemodul

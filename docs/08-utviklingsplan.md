@@ -8,15 +8,22 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - Opprette Sanity-prosjekt, privat GitHub-repo hos Kantega og Vercel-prosjekt
 - **Leveranse:** Godkjent plan
 
-## Fase 1: Fundament (ca. 1–2 dager)
+## Fase 1: Fundament (ca. 1–2 dager) – utviklet, ikke deployet
 
-- Sette opp Next.js med TypeScript, Tailwind, ESLint og Prettier
-- Legge inn designtokens, fonter og logo
-- Bygge grunnlayout: header med mega-meny, bunntekst, mobilmeny
-- Sette opp Sanity Studio på `/studio` med `siteSettings` og `navigation`
-- Sette opp markedsruting (`/no`, `/is`), språkfelt i Sanity og markedsvelger
-- Deploye til Vercel
-- **Leveranse:** Tom side med STOK-profil, meny og bunntekst styrt fra Sanity
+- [x] Sette opp Next.js med TypeScript, Tailwind, ESLint og Prettier
+- [x] Legge inn designtokens, fonter og logo
+- [x] Bygge grunnlayout: header med mega-meny, bunntekst, mobilmeny
+- [x] Sette opp Sanity Studio på `/studio` med `siteSettings` og `navigation`
+- [x] Sette opp markedsruting (`/no`, `/is`), språkfelt i Sanity og markedsvelger
+- [ ] Deploye til Vercel (venter på Sanity-prosjekt, GitHub-repo og Vercel-prosjekt hos Kantega)
+- **Leveranse:** Side med STOK-profil, meny og bunntekst styrt fra Sanity
+
+**Merknader fra fase 1:**
+
+- Nettsiden bruker reserveinnhold (`src/content/fallback.ts`) til Sanity-prosjektet er opprettet.
+- Lenker i menyen er stier i fase 1. Interne referanser til dokumenter kommer i fase 2.
+- 404-sider får riktig statuskode og `noindex`, men rendres i nettleseren på grunn av Cache Components. Vurderes på nytt når catch-all-ruten henter sider fra Sanity i fase 2.
+- Islandske UI-tekster og menypunkter må kvalitetssikres.
 
 ## Fase 2: Sidebygger og moduler (ca. 3–4 dager)
 
