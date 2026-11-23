@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Nunito, Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import { market as getMarketParam } from "next/root-params";
+import { stegaClean } from "next-sanity";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { LivePreview } from "@/components/preview/LivePreview";
 import { getSiteSettings } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { isMarket, marketIds, markets } from "@/lib/markets";
@@ -30,7 +32,7 @@ export function generateStaticParams() {
 export async function generateMetadata(): Promise<Metadata> {
   const market = await getMarketParam();
   if (!isMarket(market)) return {};
-  const settings = await getSiteSettings(market);
+  const settings = stegaClean(await getSiteSettings(market));
   return {
     title: {
       default: settings.title ?? "STOK Emballage",
@@ -64,6 +66,7 @@ export default async function SiteLayout({ children }: LayoutProps<"/[market]">)
           {children}
         </main>
         <Footer market={market} />
+        <LivePreview />
       </body>
     </html>
   );

@@ -9,7 +9,9 @@ Nettsiden cacher innhold fra Sanity i opptil én time. Når en redaktør publise
 3. Ruten sjekker signaturen og kaller `revalidateTag("sanity", { expire: 0 })`.
 4. Neste besøk på en side henter innholdet på nytt fra Sanity.
 
-Klienten henter fra Sanitys API direkte (`useCdn: false`). Via API-CDN-et kunne revalideringen fått det gamle innholdet og cachet det på nytt i opptil én time.
+Fra fase 4 revaliderer Sanity Live cachen når noe publiseres (se [11-forhandsvisning.md](11-forhandsvisning.md)). Sanity Live virker bare når noen har siden åpen, så webhooken er et sikkerhetsnett.
+
+Klienten henter publisert innhold fra API-CDN-et med `cacheMode: "noStale"`. Da gir CDN-et aldri utdatert innhold, og revalideringen cacher ikke gammelt innhold på nytt.
 
 Vi revaliderer alt innhold ved hver endring. Menyer og lenker viser adressene til andre dokumenter, så en målrettet revalidering ville lett gått glipp av sider som påvirkes. For en nettside av denne størrelsen koster det lite.
 
@@ -48,16 +50,9 @@ Publiser en endring i Studio. Under Webhooks → Attempts log i Sanity skal kall
 
 ## Lokal utvikling
 
-Sanity kan ikke nå `localhost`, så webhooken virker bare mot en deployet side. Lokalt holder innholdet seg i minnet til dev-serveren startes på nytt:
-
-```bash
-# Stopp med Ctrl+C og start igjen
-pnpm dev
-```
+Sanity kan ikke nå `localhost`, så webhooken virker bare mot en deployet side. Lokalt oppdaterer Sanity Live innholdet når du har siden åpen i nettleseren.
 
 Vil du teste webhooken lokalt, kan du åpne en tunnel (f.eks. `cloudflared tunnel --url http://localhost:3000`) og bruke tunnel-URL-en i en egen webhook.
-
-I fase 4 vurderer vi Sanity Live og Presentation-verktøyet. De gir forhåndsvisning og live-oppdatering i Studio, også lokalt.
 
 ## Feilsøking
 

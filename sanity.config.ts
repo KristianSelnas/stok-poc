@@ -3,11 +3,13 @@
 import { documentInternationalization } from "@sanity/document-internationalization";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
+import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 
 import { markets } from "./src/lib/markets";
 import { apiVersion, dataset, projectId, studioBasePath } from "./src/sanity/env";
 import { singletonId } from "./src/sanity/lib/singletons";
+import { presentationResolve } from "./src/sanity/presentation";
 import { schemaTypes, singletonTypes, translatableTypes } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure";
 
@@ -57,6 +59,16 @@ export default defineConfig({
   },
   plugins: [
     structureTool({ structure }),
+    // Forhåndsvisning med klikk-for-å-redigere. Nettsiden og Studio ligger på
+    // samme domene, så adressene er relative.
+    presentationTool({
+      title: "Forhåndsvisning",
+      resolve: presentationResolve,
+      previewUrl: {
+        initial: "/no",
+        previewMode: { enable: "/api/draft-mode/enable" },
+      },
+    }),
     documentInternationalization({
       supportedLanguages: languages,
       schemaTypes: [...translatableTypes],
