@@ -32,8 +32,11 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!isMarket(market)) return {};
   const settings = await getSiteSettings(market);
   return {
-    title: { default: settings.title, template: `%s | ${settings.title}` },
-    description: settings.description,
+    title: {
+      default: settings.title ?? "STOK Emballage",
+      template: `%s | ${settings.title ?? "STOK Emballage"}`,
+    },
+    description: settings.description ?? undefined,
     // PoC-en skal ikke indekseres (se docs/06-teknisk-arkitektur.md).
     robots: { index: false, follow: false },
     alternates: {

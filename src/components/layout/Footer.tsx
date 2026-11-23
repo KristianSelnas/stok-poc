@@ -1,11 +1,8 @@
-import Link from "next/link";
-
-import { getNavigation, getSiteSettings } from "@/lib/content";
+import { applyCacheLife, getNavigation, getSiteSettings } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
-import { isExternal, resolveHref } from "@/lib/links";
 import { marketPath, type MarketId } from "@/lib/markets";
-import type { Link as SanityLink } from "@/sanity/types";
 
+import { CmsLink } from "../ui/CmsLink";
 import { Logo } from "./Logo";
 
 const socialLabels = {
@@ -15,23 +12,12 @@ const socialLabels = {
   youtube: "YouTube",
 } as const;
 
-function FooterLink({ link, market }: { link: SanityLink; market: MarketId }) {
-  const href = resolveHref(link, market);
-  if (!href) return null;
-  const className = "hover:text-stok-green hover:underline";
-  return isExternal(link) ? (
-    <a href={href} className={className} target="_blank" rel="noopener noreferrer">
-      {link.label}
-    </a>
-  ) : (
-    <Link href={href} className={className}>
-      {link.label}
-    </Link>
-  );
-}
+const footerLinkClass = "hover:text-stok-green hover:underline";
 
 export async function Footer({ market }: { market: MarketId }) {
   "use cache";
+  // Komponenten caches for å kunne bruke dagens dato. Levetiden må følge innholdet.
+  applyCacheLife();
   const [navigation, settings] = await Promise.all([getNavigation(market), getSiteSettings(market)]);
   const t = getDictionary(market);
   const year = new Date().getFullYear();
@@ -79,12 +65,12 @@ export async function Footer({ market }: { market: MarketId }) {
               {settings.socialLinks.map((social) => (
                 <li key={social._key}>
                   <a
-                    href={social.url}
+                    href={social.url ?? undefined}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-stok-green"
                   >
-                    {socialLabels[social.platform]}
+                    {social.platform ? socialLabels[social.platform] : social.url}
                   </a>
                 </li>
               ))}
@@ -98,9 +84,9 @@ export async function Footer({ market }: { market: MarketId }) {
               {group.title}
             </h2>
             <ul className="space-y-2">
-              {group.links.map((link) => (
+              {(group.links ?? []).map((link) => (
                 <li key={link._key}>
-                  <FooterLink link={link} market={market} />
+                  <CmsLink link={link} market={market} className={footerLinkClass} />
                 </li>
               ))}
             </ul>
@@ -117,7 +103,7 @@ export async function Footer({ market }: { market: MarketId }) {
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {navigation.legalLinks.map((link) => (
                 <li key={link._key}>
-                  <FooterLink link={link} market={market} />
+                  <CmsLink link={link} market={market} className={footerLinkClass} />
                 </li>
               ))}
             </ul>

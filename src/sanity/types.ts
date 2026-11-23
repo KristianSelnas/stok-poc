@@ -1,48 +1,31 @@
 /**
- * Typer for resultatene av GROQ-spørringene i fase 1.
- * Erstattes av Sanity TypeGen i fase 2.
+ * Typer avledet fra resultatene av GROQ-spørringene. Grunnlaget genereres av
+ * Sanity TypeGen i `sanity.types.ts` (kjør `pnpm typegen` etter endringer i
+ * skjema eller spørringer).
  */
+import type {
+  FrontPageQueryResult,
+  NavigationQueryResult,
+  PageQueryResult,
+  SiteSettingsQueryResult,
+} from "./sanity.types";
 
-export type Link = {
-  label: string;
-  linkType?: "path" | "external";
-  path?: string;
-  url?: string;
-};
+export type SiteSettings = NonNullable<SiteSettingsQueryResult>;
+export type Navigation = NonNullable<NavigationQueryResult>;
+export type FrontPage = NonNullable<FrontPageQueryResult>;
+export type Page = NonNullable<PageQueryResult>;
 
-export type LinkGroup = {
-  _key: string;
-  title: string;
-  links: (Link & { _key: string })[];
-};
+export type Module = NonNullable<Page["modules"]>[number];
+export type ModuleType = Module["_type"];
+export type ModuleOf<T extends ModuleType> = Extract<Module, { _type: T }>;
 
-export type MenuItem = {
-  _key: string;
-  label: string;
-  link?: Link;
-  groups?: LinkGroup[];
-};
+export type Link = NonNullable<ModuleOf<"textWithImage">["cta"]>;
+export type Image = NonNullable<ModuleOf<"textWithImage">["image"]>;
+export type Seo = NonNullable<Page["seo"]>;
 
-export type SocialLink = {
-  _key: string;
-  platform: "linkedin" | "facebook" | "instagram" | "youtube";
-  url: string;
-};
+export type RichTextContent = NonNullable<ModuleOf<"richText">["content"]>;
+export type SimpleTextContent = NonNullable<ModuleOf<"textWithImage">["body"]>;
 
-export type SiteSettings = {
-  title: string;
-  description?: string;
-  companyName?: string;
-  orgNumber?: string;
-  address?: string;
-  phone?: string;
-  email?: string;
-  socialLinks?: SocialLink[];
-};
-
-export type Navigation = {
-  mainMenu: MenuItem[];
-  headerCta?: Link;
-  footerGroups?: LinkGroup[];
-  legalLinks?: (Link & { _key: string })[];
-};
+export type MenuItem = NonNullable<Navigation["mainMenu"]>[number];
+export type LinkGroup = NonNullable<MenuItem["groups"]>[number];
+export type SocialLink = NonNullable<SiteSettings["socialLinks"]>[number];

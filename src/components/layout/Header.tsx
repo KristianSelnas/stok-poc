@@ -8,9 +8,9 @@ import { Logo } from "./Logo";
 import { MainNav } from "./MainNav";
 import type { MarketOption, NavItem, NavLink } from "./nav-types";
 
-function toNavLink(link: SanityLink | undefined, market: MarketId, key: string): NavLink | undefined {
+function toNavLink(link: SanityLink | null | undefined, market: MarketId, key: string): NavLink | undefined {
   const href = resolveHref(link, market);
-  if (!link || !href) return undefined;
+  if (!link?.label || !href) return undefined;
   return { key, label: link.label, href, external: isExternal(link) };
 }
 
@@ -18,14 +18,14 @@ export async function Header({ market }: { market: MarketId }) {
   const [navigation, settings] = await Promise.all([getNavigation(market), getSiteSettings(market)]);
   const t = getDictionary(market);
 
-  const items: NavItem[] = navigation.mainMenu.map((item) => ({
+  const items: NavItem[] = (navigation.mainMenu ?? []).map((item) => ({
     key: item._key,
-    label: item.label,
+    label: item.label ?? "",
     link: toNavLink(item.link, market, `${item._key}-link`),
     groups: (item.groups ?? []).map((group) => ({
       key: group._key,
-      title: group.title,
-      links: group.links.flatMap((link) => toNavLink(link, market, link._key) ?? []),
+      title: group.title ?? "",
+      links: (group.links ?? []).flatMap((link) => toNavLink(link, market, link._key) ?? []),
     })),
   }));
 
