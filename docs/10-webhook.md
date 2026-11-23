@@ -9,6 +9,8 @@ Nettsiden cacher innhold fra Sanity i opptil én time. Når en redaktør publise
 3. Ruten sjekker signaturen og kaller `revalidateTag("sanity", { expire: 0 })`.
 4. Neste besøk på en side henter innholdet på nytt fra Sanity.
 
+Klienten henter fra Sanitys API direkte (`useCdn: false`). Via API-CDN-et kunne revalideringen fått det gamle innholdet og cachet det på nytt i opptil én time.
+
 Vi revaliderer alt innhold ved hver endring. Menyer og lenker viser adressene til andre dokumenter, så en målrettet revalidering ville lett gått glipp av sider som påvirkes. For en nettside av denne størrelsen koster det lite.
 
 ## Oppsett

@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "SANITY_REVALIDATE_SECRET mangler" }, { status: 500 });
   }
 
-  // Tredje argument venter litt, så Sanitys CDN har fått med seg endringen før vi henter på nytt.
+  // Tredje argument venter litt, så Content Lake har fått med seg endringen før vi henter på nytt.
   const { isValidSignature, body } = await parseBody<WebhookPayload>(request, secret, true);
   if (!isValidSignature) {
     return NextResponse.json({ message: "Ugyldig signatur" }, { status: 401 });
