@@ -30,9 +30,10 @@ Nettsiden henter alt innhold fra Sanity og krever `NEXT_PUBLIC_SANITY_PROJECT_ID
 1. PoC-en bruker prosjektet `up8wp88l` og datasettet `production`. Be om tilgang på [sanity.io/manage](https://www.sanity.io/manage).
 2. Legg til `http://localhost:3000` som CORS-origin med «Allow credentials».
 3. Fyll inn `NEXT_PUBLIC_SANITY_PROJECT_ID` og `NEXT_PUBLIC_SANITY_DATASET` i `.env.local`.
-4. Start `pnpm dev` og åpne <http://localhost:3000/studio>.
+4. For forhåndsvisning av kladder: lag et lesetoken (Viewer) og legg det i `SANITY_API_READ_TOKEN`.
+5. Start `pnpm dev` og åpne <http://localhost:3000/studio>.
 
-Endringer fra Studio vises på en deployet side via webhook (se [docs/10-webhook.md](docs/10-webhook.md)). Lokalt starter du `pnpm dev` på nytt for å hente ferskt innhold.
+Publiserte endringer vises med en gang via Sanity Live, også lokalt. Webhooken er et sikkerhetsnett (se [docs/10-webhook.md](docs/10-webhook.md)). Forhåndsvisning av kladder i Studio er beskrevet i [docs/11-forhandsvisning.md](docs/11-forhandsvisning.md).
 
 ## Kommandoer
 
@@ -54,15 +55,19 @@ Endringer fra Studio vises på en deployet side via webhook (se [docs/10-webhook
 src/
 ├── app/
 │   ├── (site)/[market]/     Nettsiden. [market] er «no» eller «is»
-│   └── (studio)/studio/     Sanity Studio
+│   ├── (studio)/studio/     Sanity Studio
+│   └── api/                 Draft Mode og webhook
 ├── components/
 │   ├── layout/              Header, mega-meny, bunntekst, markedsvelger
 │   ├── modules/             Én komponent per sidemodul (hero, kortrutenett …)
+│   ├── preview/             Sanity Live, Visual Editing og forhåndsvisningsbanner
 │   └── ui/                  Knapper, bilder, lenker og layoutkomponenter
 ├── lib/                     Markeder, UI-tekster, datahenting
 ├── proxy.ts                 Sender besøkende til riktig marked
 └── sanity/
     ├── schemaTypes/         Dokumenttyper, moduler og objekter
+    ├── lib/                 Klient, Sanity Live og lesetoken
+    ├── presentation.ts      Kobler adresser og dokumenter i Presentation-verktøyet
     ├── structure.ts         Venstremenyen i Studio
     ├── queries.ts           GROQ-spørringer
     ├── sanity.types.ts      Generert av TypeGen (ikke rediger)

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { stegaClean } from "next-sanity";
 import { Suspense } from "react";
 
 import { Modules } from "@/components/modules/Modules";
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }: PageProps<"/[market]/[...slug
       ("shortDescription" in doc && doc.shortDescription) ||
       ("excerpt" in doc && doc.excerpt) ||
       undefined;
-    if (description) metadata.description = description;
+    if (description) metadata.description = stegaClean(description);
   }
   return metadata;
 }

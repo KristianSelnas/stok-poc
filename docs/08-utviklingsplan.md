@@ -67,13 +67,14 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - bewifood.com har bare to aktuelle nyheter. To nyheter fra stok.dk er oversatt til norsk.
 - Kundesitater og sertifikater har ingen innhold ennå. Sitatene på stok.dk er fra danske kunder.
 
-## Fase 4: Redaktøropplevelse (ca. 2 dager)
+## Fase 4: Redaktøropplevelse (ca. 2 dager) – påbegynt
 
-- Draft Mode og Presentation-verktøyet
-- Strukturert Studio-meny og forhåndsvisning av moduler
-- Validering og hjelpetekster
+- [x] Draft Mode og Presentation-verktøyet (se [11-forhandsvisning.md](11-forhandsvisning.md))
+- [x] Live-oppdatering med Sanity Live, både i Presentation-verktøyet og for publisert innhold
+- [x] Strukturert Studio-meny (gjort i fase 1–3)
+- [ ] Forhåndsvisningsbilder for moduler i «Legg til modul»
+- [ ] Gå gjennom validering og hjelpetekster
 - [x] Webhook-revalidering (gjort i fase 2)
-- Live-oppdatering i Presentation-verktøyet
 - **Leveranse:** Redaktøren kan lage og forhåndsvise sider på egen hånd
 
 ## Fase 5: Innhold (ca. 2 dager, parallelt med fase 3–4)
