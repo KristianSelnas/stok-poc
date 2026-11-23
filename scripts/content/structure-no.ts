@@ -18,7 +18,7 @@ import {
   richText,
   simple,
   textWithImage,
-} from "../../src/content/fallback/builders";
+} from "./builders";
 import type { Industry, Page } from "../../src/sanity/types";
 
 export type IndustryContent = Pick<

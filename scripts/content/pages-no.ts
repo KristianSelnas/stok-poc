@@ -20,7 +20,7 @@ import {
 } from "./builders";
 
 /*
- * Norsk reserveinnhold. Tekstene bygger på bewifood.com og stok.dk, skrevet
+ * Norsk startinnhold. Tekstene bygger på bewifood.com og stok.dk, skrevet
  * om for STOK Emballage i Norge. Alt må kvalitetssikres av STOK før lansering.
  */
 

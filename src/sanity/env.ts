@@ -4,10 +4,7 @@ export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
 
-/**
- * Uten prosjekt-ID bruker nettsiden reserveinnhold fra `src/content/fallback/`,
- * så den kan kjøres lokalt uten Sanity.
- */
+/** Uten prosjekt-ID stopper bygget, og Studio viser en melding om oppsettet. */
 export const isSanityConfigured = projectId.length > 0;
 
 export const studioBasePath = "/studio";

@@ -15,7 +15,7 @@ import {
 } from "./builders";
 
 /*
- * Islandsk reserveinnhold (beslutning B14 og B15). Tekstene er oversatt
+ * Islandsk startinnhold (beslutning B14 og B15). Tekstene er oversatt
  * maskinelt fra norsk og må kvalitetssikres av STOK.
  */
 

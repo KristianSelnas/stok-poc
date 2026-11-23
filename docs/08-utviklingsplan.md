@@ -2,7 +2,7 @@
 
 Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene forutsetter én utvikler og må justeres når omfanget er avklart.
 
-## Fase 0: Avklaring (pågår)
+## Fase 0: Avklaring – ferdig
 
 - Avklare omfang, innhold og tilganger (se [09-beslutninger-og-sporsmal.md](09-beslutninger-og-sporsmal.md))
 - Opprette Sanity-prosjekt, privat GitHub-repo hos Kantega og Vercel-prosjekt
@@ -20,7 +20,6 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 
 **Merknader fra fase 1:**
 
-- Nettsiden bruker reserveinnhold (`src/content/fallback/`) til Sanity-prosjektet er opprettet.
 - Lenker i menyen er stier i fase 1. Interne referanser til dokumenter kommer i fase 2.
 - Islandske UI-tekster og menypunkter må kvalitetssikres.
 - Vercel-prosjektet bruker de samme fire miljøvariablene som `.env.local` (se `.env.example`). Vi bruker ikke Sanity-integrasjonen i Vercel.
@@ -38,11 +37,11 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 
 **Merknader fra fase 2:**
 
-- Reserveinnholdet dekker forside, Løsninger, Om oss, Bærekraft og Åpenhetsloven på norsk, og forside og Um okkur på islandsk. Det er typet mot TypeGen-typene, så det følger skjemaet.
+- Startinnholdet i `scripts/content/base.ts` dekker forside, Løsninger, Om oss, Bærekraft og Åpenhetsloven på norsk, og forside og Um okkur på islandsk. Det er typet mot TypeGen-typene, så det følger skjemaet.
 - Bildene i `public/images/innhold/` er hentet fra bewifood.com (beslutning B7).
 - Sider som ikke finnes, viser 404-siden med `noindex`, men statuskoden er 200. Med Cache Components sendes det statiske skallet før siden vet at innholdet mangler. Next anbefaler å sjekke adressen i `proxy.ts` hvis vi trenger ekte 404-status. Vurderes i fase 6.
 - Menylenker til bransjer, produkter, nyheter og kontakt er stier og gir 404 til fase 3.
-- Sanity-prosjektet `up8wp88l` er koblet til. Reserveinnholdet er importert med `pnpm seed` (`scripts/seed-sanity.ts`), og siden henter nå innhold og bilder fra Sanity.
+- Sanity-prosjektet `up8wp88l` er koblet til. Startinnholdet er importert med `pnpm seed` (`scripts/seed-sanity.ts`), og siden henter innhold og bilder fra Sanity. Nettsiden har ikke lenger noe reserveinnhold, så den krever Sanity.
 - Sanity-kall bruker `cache: "no-store"`, så bare `use cache` styrer cachingen. Uten det la Next svarene i fetch-cachen i 15 minutter, også på tvers av bygg.
 - Webhook-revalidering er satt opp tidlig (`/api/revalidate`, se [10-webhook.md](10-webhook.md)). Innhold caches i én time og tømmes når noe publiseres.
 

@@ -1,6 +1,6 @@
 /**
  * Felles hjelpere for importskriptene: gjør innhold i GROQ-form (slik
- * reserveinnholdet og innholdsfilene er skrevet) om til Sanity-dokumenter.
+ * startinnholdet og innholdsfilene er skrevet) om til Sanity-dokumenter.
  */
 import { createReadStream } from "node:fs";
 import { basename, join } from "node:path";

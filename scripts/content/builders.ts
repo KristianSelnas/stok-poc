@@ -1,8 +1,8 @@
 import type { Image, Link, ModuleOf, RichTextContent, SimpleTextContent } from "@/sanity/types";
 
 /*
- * Hjelpere som bygger reserveinnhold i samme form som GROQ-resultatene.
- * TypeScript sjekker innholdet mot de genererte typene, så reserveinnholdet
+ * Hjelpere som bygger startinnhold i samme form som GROQ-resultatene.
+ * TypeScript sjekker innholdet mot de genererte typene, så startinnholdet
  * følger skjemaet når det endres.
  */
 

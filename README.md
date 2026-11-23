@@ -17,17 +17,15 @@ Krav: Node.js 24 og pnpm.
 
 ```bash
 pnpm install
-cp .env.example .env.local   # fyll inn Sanity-verdier hvis du har dem
+cp .env.example .env.local   # fyll inn Sanity-verdiene
 pnpm dev
 ```
 
 Åpne <http://localhost:3000>. Du blir sendt videre til `/no`, eller til `/is` hvis nettleseren foretrekker islandsk.
 
-### Uten Sanity
+### Sanity
 
-Når `NEXT_PUBLIC_SANITY_PROJECT_ID` mangler, bruker nettsiden reserveinnhold fra `src/content/fallback/`. Studio på `/studio` viser da en melding om at Sanity ikke er koblet til.
-
-### Med Sanity
+Nettsiden henter alt innhold fra Sanity og krever `NEXT_PUBLIC_SANITY_PROJECT_ID`. Uten den stopper bygget, og Studio på `/studio` viser en melding om at Sanity ikke er koblet til.
 
 1. PoC-en bruker prosjektet `up8wp88l` og datasettet `production`. Be om tilgang på [sanity.io/manage](https://www.sanity.io/manage).
 2. Legg til `http://localhost:3000` som CORS-origin med «Allow credentials».
@@ -47,7 +45,7 @@ Endringer fra Studio vises på en deployet side via webhook (se [docs/10-webhook
 | `pnpm typecheck`    | Genererer rutetyper og kjører TypeScript                            |
 | `pnpm format`       | Formaterer koden med Prettier                                       |
 | `pnpm typegen`      | Genererer typer fra Sanity-skjema og GROQ                           |
-| `pnpm seed`         | Legger reserveinnholdet (fase 2) inn i Sanity                       |
+| `pnpm seed`         | Legger startinnholdet (fase 2) inn i Sanity                         |
 | `pnpm seed:content` | Legger innholdet for fase 3 inn i Sanity (`--dry-run`, `--replace`) |
 
 ## Struktur
@@ -61,7 +59,6 @@ src/
 │   ├── layout/              Header, mega-meny, bunntekst, markedsvelger
 │   ├── modules/             Én komponent per sidemodul (hero, kortrutenett …)
 │   └── ui/                  Knapper, bilder, lenker og layoutkomponenter
-├── content/fallback/        Reserveinnhold når Sanity ikke er koblet til
 ├── lib/                     Markeder, UI-tekster, datahenting
 ├── proxy.ts                 Sender besøkende til riktig marked
 └── sanity/

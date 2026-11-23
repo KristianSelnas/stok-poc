@@ -8,7 +8,7 @@ import { pageLink, pathLink } from "./builders";
  * bekreftes av STOK. Islandske tekster må kvalitetssikres.
  */
 
-export const fallbackSiteSettings: Record<MarketId, SiteSettings> = {
+export const baseSiteSettings: Record<MarketId, SiteSettings> = {
   no: {
     title: "STOK Emballage",
     description:
@@ -37,7 +37,7 @@ let n = 0;
 const k = (prefix: string) => `${prefix}-${++n}`;
 const keyed = <T extends object>(value: T) => ({ _key: k("nav"), ...value });
 
-export const fallbackNavigation: Record<MarketId, Navigation> = {
+export const baseNavigation: Record<MarketId, Navigation> = {
   no: {
     mainMenu: [
       {

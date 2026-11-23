@@ -16,7 +16,7 @@ import {
   productCatalog,
   simple,
   textWithImage,
-} from "../../src/content/fallback/builders";
+} from "./builders";
 import type { IndustryContent, PageContent } from "./structure-no";
 
 const contactCta = ctaBanner({

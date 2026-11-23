@@ -23,8 +23,8 @@ import { join } from "node:path";
 
 import { getCliClient } from "sanity/cli";
 
-import { blocksFromJson, type JsonBlock, remoteImage } from "../src/content/fallback/builders";
-import { fallbackPages } from "../src/content/fallback";
+import { blocksFromJson, type JsonBlock, remoteImage } from "./content/builders";
+import { basePages } from "./content/base";
 import { slugify } from "../src/lib/slugify";
 import { documentPath } from "../src/lib/routes";
 import { markets, type MarketId } from "../src/lib/markets";
@@ -234,7 +234,7 @@ function pathIndex(
       const slug = (doc.slug as { current?: string } | undefined)?.current;
       return slug ? [{ type: doc._type, slug }] : [];
     }),
-    ...fallbackPages[marketId].flatMap((page) => (page.slug ? [{ type: "page", slug: page.slug }] : [])),
+    ...basePages[marketId].flatMap((page) => (page.slug ? [{ type: "page", slug: page.slug }] : [])),
   ];
   for (const { type, slug } of known) {
     const path = documentPath(type, slug, marketId);

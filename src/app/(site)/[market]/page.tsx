@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const market = await getMarketParam();
   if (!isMarket(market)) return {};
   const frontPage = await getFrontPage(market);
-  return buildMetadata({ seo: frontPage.seo, market, path: "/" });
+  return buildMetadata({ seo: frontPage?.seo, market, path: "/" });
 }
 
 /** Forsiden, bygget av moduler fra dokumentet `frontPage` i Sanity. */
@@ -19,6 +19,7 @@ export default async function FrontPage() {
   const market = await getMarketParam();
   if (!isMarket(market)) notFound();
   const frontPage = await getFrontPage(market);
+  if (!frontPage) notFound();
 
   return <Modules modules={frontPage.modules} market={market} path={marketPath(market)} />;
 }

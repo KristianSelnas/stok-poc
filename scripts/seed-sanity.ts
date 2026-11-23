@@ -1,5 +1,5 @@
 /**
- * Legger reserveinnholdet fra `src/content/fallback/` inn i Sanity.
+ * Legger startinnholdet fra `scripts/content/base.ts` inn i Sanity.
  *
  * Skriptet laster opp bildene fra `public/images/innhold/` og lager eller
  * erstatter forside, sider, navigasjon og innstillinger for begge markeder.
@@ -14,11 +14,11 @@
 import { getCliClient } from "sanity/cli";
 
 import {
-  fallbackFrontPages,
-  fallbackNavigation,
-  fallbackPages,
-  fallbackSiteSettings,
-} from "../src/content/fallback";
+  baseFrontPages,
+  baseNavigation,
+  basePages,
+  baseSiteSettings,
+} from "./content/base";
 import { markets, type MarketId } from "../src/lib/markets";
 import { docId, DocumentConverter, type SanityDocument } from "./lib/convert";
 
@@ -34,9 +34,9 @@ async function buildDocuments(): Promise<SanityDocument[]> {
     console.log(`\n${markets[marketId].label} (${language})`);
 
     const singletons = [
-      ["siteSettings", fallbackSiteSettings[marketId]],
-      ["navigation", fallbackNavigation[marketId]],
-      ["frontPage", fallbackFrontPages[marketId]],
+      ["siteSettings", baseSiteSettings[marketId]],
+      ["navigation", baseNavigation[marketId]],
+      ["frontPage", baseFrontPages[marketId]],
     ] as const;
 
     for (const [type, data] of singletons) {
@@ -44,9 +44,9 @@ async function buildDocuments(): Promise<SanityDocument[]> {
       documents.push({ ...body, _id: `${type}-${language}`, _type: type, language });
     }
 
-    for (const page of fallbackPages[marketId]) {
+    for (const page of basePages[marketId]) {
       if (!page.slug) continue;
-      const { _id: _fallbackId, slug, ...rest } = page;
+      const { _id: _localId, slug, ...rest } = page;
       const body = await converter.convertObject(rest, language);
       documents.push({
         ...body,
