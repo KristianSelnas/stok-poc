@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1001.5 73 744 744">
+  <defs>
+    <clipPath id="v"><rect x="1000" y="0" width="290" height="900"/></clipPath>
+  </defs>
+  <rect x="1034" y="97" width="679" height="696" rx="66" fill="#fff" stroke="#88bd23" stroke-width="24"/>
+  <g id="o" fill="#88bd23">
+    <path clip-path="url(#v)" fill-rule="evenodd" d="M1081 445a294 307 0 1 0 588 0a294 307 0 1 0-588 0ZM1196 445a179 180 0 1 0 358 0a179 180 0 1 0-358 0Z"/>
+    <ellipse cx="1290" cy="220" rx="53" ry="68"/>
+    <ellipse cx="1290" cy="670" rx="53" ry="68"/>
+  </g>
+  <use href="#o" transform="matrix(-1 0 0 1 2750 0)"/>
+</svg>
