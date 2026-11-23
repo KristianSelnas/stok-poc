@@ -41,4 +41,6 @@
 
 ### Teknisk
 
+- Venter på Drift: Vercels GitHub-app må godkjennes for repoet `kantega/stok-poc` før vi kan deploye (eier av GitHub-organisasjonen må godkjenne forespørselen).
+
 7. Hvilket domene skal PoC-en ligge på?

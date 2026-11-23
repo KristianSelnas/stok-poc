@@ -15,7 +15,7 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - [x] Bygge grunnlayout: header med mega-meny, bunntekst, mobilmeny
 - [x] Sette opp Sanity Studio på `/studio` med `siteSettings` og `navigation`
 - [x] Sette opp markedsruting (`/no`, `/is`), språkfelt i Sanity og markedsvelger
-- [ ] Deploye til Vercel (venter på Sanity-prosjekt, GitHub-repo og Vercel-prosjekt hos Kantega)
+- [ ] Deploye til Vercel (venter på at Drift godkjenner Vercels GitHub-app for `kantega/stok-poc`)
 - **Leveranse:** Side med STOK-profil, meny og bunntekst styrt fra Sanity
 
 **Merknader fra fase 1:**
