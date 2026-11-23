@@ -43,15 +43,27 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - Sanity-kall bruker `cache: "no-store"`, så bare `use cache` styrer cachingen. Uten det la Next svarene i fetch-cachen i 15 minutter, også på tvers av bygg.
 - Webhook-revalidering er satt opp tidlig (`/api/revalidate`, se [10-webhook.md](10-webhook.md)). Innhold caches i én time og tømmes når noe publiseres.
 
-## Fase 3: Innholdstyper og produktkatalog (ca. 4–5 dager)
+## Fase 3: Innholdstyper og produktkatalog (ca. 4–5 dager) – utviklet, venter på import
 
-- `industry` og `service` med egne ruter
-- Produktkatalog: `product`, `productGroup`, `material`, oversikt med filtre og produktside
-- Automatiske relasjoner (bransjefliser, relaterte produkter)
-- `person` og `department` med kontaktside
-- `newsArticle` med oversikt og artikkelside
-- `testimonial`, `location`, `certificate` og tilhørende moduler
+- [x] `industry` med egen rute (`/no/bransjer/<slug>`, `/is/atvinnugreinar/<slug>`). Tjenester lages som vanlige sider
+- [x] Produktkatalog: `product`, `productGroup`, `material`, oversikt med filtre og produktside
+- [x] Automatiske relasjoner: produkter på bransjesider, andre produkter i samme gruppe på produktsider
+- [x] `person`, `department` og `location` med kontaktside
+- [x] `newsArticle` og `newsCategory` med oversikt og artikkelside
+- [x] `testimonial` og `certificate` med modulene Kundesitater og Logorad (uten innhold ennå)
+- [x] Importskript for innholdet (`pnpm seed:content`)
 - **Leveranse:** Alle sidetyper i PoC-en fungerer
+
+**Merknader fra fase 3:**
+
+- Alle undersider går gjennom én catch-all-rute, og `src/lib/routes.ts` bestemmer dokumenttype ut fra adressen.
+- Adressen leses inne i en Suspense-grense, slik Next anbefaler for raske navigasjoner. Ved navigasjon vises en plassholder (`PageSkeleton`) til innholdet er klart. Sidene er fortsatt forhåndsrendret: innholdet ligger i samme HTML-svar som plassholderen og byttes inn med en gang.
+- Innholdet ligger i `scripts/content/`: produkter og kontakter som JSON generert fra bewifood.com, bransjer og sider som TypeScript.
+- 18 norske produkter i 12 grupper og 6 islandske produkter. Relaterte produkter mangler på bewifood.com, så produktsiden viser andre produkter i samme gruppe.
+- Kontaktpersoner er hentet fra bewifood.com (13 norske, 19 islandske), uten bilder. Kortene viser initialer.
+- Bransjen «Landbruk og industri» finnes ikke på bewifood.com. Teksten er skrevet for PoC-en.
+- bewifood.com har bare to aktuelle nyheter. To nyheter fra stok.dk er oversatt til norsk.
+- Kundesitater og sertifikater har ingen innhold ennå. Sitatene på stok.dk er fra danske kunder.
 
 ## Fase 4: Redaktøropplevelse (ca. 2 dager)
 

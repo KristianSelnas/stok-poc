@@ -1,0 +1,189 @@
+{
+  "customerService": {
+    "phone": "+354 535 5555",
+    "email": "bewi-iceland@bewifood.com"
+  },
+  "departments": [
+    {
+      "key": "sala-og-innkaup",
+      "title": "Sala og innkaup",
+      "order": 1
+    },
+    {
+      "key": "lager",
+      "title": "Lager",
+      "order": 2
+    },
+    {
+      "key": "bokhald",
+      "title": "Bókhald",
+      "order": 3
+    }
+  ],
+  "people": [
+    {
+      "name": "Hilmar Þór Hilmarsson JR",
+      "role": "Framkvæmdastjóri / MD",
+      "phone": null,
+      "email": "hilmar.hilmarsson@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 0
+    },
+    {
+      "name": "Anna Sigga Magnúsdóttir",
+      "role": "Sala og innkaup",
+      "phone": null,
+      "email": "Anna.Magnusdottir@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 1
+    },
+    {
+      "name": "Ásgeir Guðmundsson",
+      "role": "Sölustjóri sjávarútvegur",
+      "phone": null,
+      "email": "Asgeir.Gudmundsson@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 2
+    },
+    {
+      "name": "Hafþór Hallbergsson",
+      "role": "Sölustjóri kjötiðnaður",
+      "phone": null,
+      "email": "Hafthor.Hallbergsson@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 3
+    },
+    {
+      "name": "Kjartan Bragason",
+      "role": "Sölumaður / Kjötiðnaðarmeistari",
+      "phone": null,
+      "email": "Kjartan.Bragason@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 4
+    },
+    {
+      "name": "Magni Þór Samsonarson",
+      "role": "Innkaupastjóri / Sölumaður",
+      "phone": null,
+      "email": "Magni.Samsonarson@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 5
+    },
+    {
+      "name": "Soffía Árnadóttir",
+      "role": "Sölustjóri",
+      "phone": null,
+      "email": "soffia.arnadottir@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 6
+    },
+    {
+      "name": "Sigurður Stefánsson",
+      "role": "Innkaupafulltrúi/Purchase",
+      "phone": null,
+      "email": "sigurdur.stefansson@bewifood.com",
+      "department": "sala-og-innkaup",
+      "order": 7
+    },
+    {
+      "name": "Elínborg Sigvaldadóttir",
+      "role": "Bókhald og reikningagerð",
+      "phone": null,
+      "email": "ebs@saltkaup.is",
+      "department": "bokhald",
+      "order": 8
+    },
+    {
+      "name": "Inga Rán Ármann",
+      "role": "Bókhald / Accounting",
+      "phone": null,
+      "email": "inga.armann@bewifood.com",
+      "department": "bokhald",
+      "order": 9
+    },
+    {
+      "name": "Louise Hamilton",
+      "role": "Innkaupafulltrúi",
+      "phone": null,
+      "email": "Louise.Hamilton@bewifood.com",
+      "department": "bokhald",
+      "order": 10
+    },
+    {
+      "name": "Friðgeir Pétur Friðgeirsson",
+      "role": "Bókhald/Accounting",
+      "phone": null,
+      "email": "fridgeir.fridgeirsson@bewifood.com",
+      "department": "bokhald",
+      "order": 11
+    },
+    {
+      "name": "Viktor Bergmann Bjarkason",
+      "role": "CFO",
+      "phone": null,
+      "email": "viktor.bjarkason@bewifood.com",
+      "department": "bokhald",
+      "order": 12
+    },
+    {
+      "name": "Ólafur Örn Pálmarsson",
+      "role": "Accounting / Aðalbókari",
+      "phone": null,
+      "email": "olafur.palmarsson@bewifood.com",
+      "department": "bokhald",
+      "order": 13
+    },
+    {
+      "name": "Darri Páll Einarsson",
+      "role": "Lagerstarfsmaður",
+      "phone": null,
+      "email": "Lager.iceland@bewifood.com",
+      "department": "lager",
+      "order": 14
+    },
+    {
+      "name": "Halldór Rafn Hannesson",
+      "role": "Lagerstjóri umbúðarlagers",
+      "phone": null,
+      "email": "Lager.iceland@bewifood.com",
+      "department": "lager",
+      "order": 15
+    },
+    {
+      "name": "Jón Rúnar Axelsson Kvaran",
+      "role": "Lagerstarfsmaður",
+      "phone": null,
+      "email": "Lager.iceland@bewifood.com",
+      "department": "lager",
+      "order": 16
+    },
+    {
+      "name": "Óskar Guðmundsson",
+      "role": "Lagerstafsmaður",
+      "phone": null,
+      "email": "Lager.iceland@bewifood.com",
+      "department": "lager",
+      "order": 17
+    },
+    {
+      "name": "Bjarni Már Valdimarsson",
+      "role": "Lagerstarfsmaður",
+      "phone": null,
+      "email": "Lager.iceland@bewifood.com",
+      "department": "lager",
+      "order": 18
+    }
+  ],
+  "locations": [
+    {
+      "slug": "hafnarfjordur",
+      "title": "STOK Emballage Ísland",
+      "street": "Cuxhavengata 1",
+      "postalCode": "220",
+      "city": "Hafnarfjörður",
+      "phone": "+354 535 5555",
+      "email": "bewi-iceland@bewifood.com",
+      "openingHours": "Virka daga 8:00-16:00"
+    }
+  ]
+}

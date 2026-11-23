@@ -16,9 +16,8 @@ Løsninger                          /losninger
 │   ├── Rådgivning                 /tjenester/radgivning
 │   └── Optimering                 /tjenester/optimering
 └── Alle produkter                 /produkter
-Produkter                          /produkter
-└── Produktgruppe                  /produkter/[gruppe]
-    └── Produkt                    /produkter/[gruppe]/[produkt]
+Produkter                          /produkter            (katalog med filtre)
+└── Produkt                        /produkter/[produkt]
 Bærekraft                          /baerekraft
 Nyheter                            /nyheter
 Om oss                             /om-oss
@@ -27,7 +26,20 @@ Om oss                             /om-oss
 [Kontakt oss]                      /kontakt
 ```
 
-«Bransjer» og «Tjenester» er grupper i mega-menyen, ikke egne sider. Endelig liste over bransjer og produktgrupper avhenger av hva STOK Norge vil løfte fram.
+«Bransjer» og «Tjenester» er grupper i mega-menyen, ikke egne sider. Tjenester som Rådgivning og Optimering lages som vanlige sider (`page`) med adresser som `tjenester/radgivning`. Produktgrupper er filtre i katalogen, ikke egne sider. Endelig liste over bransjer og produktgrupper avhenger av hva STOK Norge vil løfte fram.
+
+## Adresser per dokumenttype
+
+Alle undersider går gjennom én catch-all-rute. Prefiksene er definert i `src/lib/routes.ts`.
+
+| Type | Norge | Island |
+|---|---|---|
+| Side | `/no/<slug>` | `/is/<slug>` |
+| Bransje | `/no/bransjer/<slug>` | `/is/atvinnugreinar/<slug>` |
+| Produkt | `/no/produkter/<slug>` | `/is/vorur/<slug>` |
+| Nyhet | `/no/nyheter/<slug>` | `/is/frettir/<slug>` |
+
+Oversiktssidene (`/no/produkter`, `/no/nyheter`) er vanlige sider med modulene Produktkatalog og Nyhetsliste.
 
 ## Forside
 

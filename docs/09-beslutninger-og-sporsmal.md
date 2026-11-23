@@ -34,13 +34,18 @@
 3. Finnes det kontaktpersoner hos STOK som kan kvalitetssikre de norske og islandske tekstene?
 4. Har STOK rettigheter til bildene på bewifood.com, og kan vi bruke dem i en offentlig demo?
 5. Hvor ligger produktdataene i dag (ERP, PIM eller bare på nettsiden)?
+6. Hvilken e-post skal kundeservice ha? Innstillingene bruker kundeservice@bewifood.com, men STOK oppgir kundeservice@stok.no i artikkelen om navneskiftet.
+7. Kan vi bruke bilder av kontaktpersonene? De er hentet fra bewifood.com uten bilder, så kortene viser initialer. Én person (Vidar Undebakke) mangler e-post på bewifood.com.
+8. Skal bransjen «Landbruk og industri» være med? Den finnes ikke på bewifood.com, og teksten er skrevet for PoC-en.
+9. Har STOK flere norske nyheter? bewifood.com har bare to aktuelle nyheter. To nyheter fra stok.dk er oversatt til norsk for å fylle opp listen.
+10. Finnes det norske kundesitater og sertifikater vi kan bruke? Modulene Kundesitater og Logorad er klare, men har ikke innhold. Sitatene på stok.dk er fra danske kunder.
 
 ### Merkevare og design
 
-6. Finnes det en profilmanual og logo i SVG?
+11. Finnes det en profilmanual og logo i SVG?
 
 ### Teknisk
 
 - Venter på Drift: Vercels GitHub-app må godkjennes for repoet `kantega/stok-poc` før vi kan deploye (eier av GitHub-organisasjonen må godkjenne forespørselen).
 
-7. Hvilket domene skal PoC-en ligge på?
+12. Hvilket domene skal PoC-en ligge på?

@@ -60,7 +60,10 @@ export const frontPageNo: FrontPage = {
       eyebrow: "Emballasje og rådgivning",
       title: "Vi skaper verdi gjennom emballasjeløsninger",
       lead: "STOK Emballage hjelper norske virksomheter med riktig emballasje, sikker levering og mindre svinn. BEWI Food er nå en del av STOK.",
-      image: image("traler.jpg", "Tråler til havs i grov sjø"),
+      image: image(
+        "papp-pa-pall.jpg",
+        "En medarbeider hos STOK kjører truck med en pall flat papp i testsenteret",
+      ),
       ctas: [pageLink("Se våre løsninger", "losninger"), pathLink("Kontakt oss", "/kontakt")],
     }),
     featureList({

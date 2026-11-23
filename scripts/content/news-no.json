@@ -1,0 +1,227 @@
+{
+  "language": "nb",
+  "categories": [
+    {
+      "slug": "selskap",
+      "title": "Selskapsnyheter"
+    },
+    {
+      "slug": "baerekraft",
+      "title": "Bærekraft"
+    },
+    {
+      "slug": "tjenester",
+      "title": "Produkter og tjenester"
+    }
+  ],
+  "articles": [
+    {
+      "slug": "esg-hos-stok",
+      "title": "ESG hos STOK",
+      "publishedAt": "2026-06-30",
+      "category": "baerekraft",
+      "excerpt": "All emballasje har en miljøpåvirkning. Slik jobber STOK med å redusere den, dokumentere den og forberede kundene på nye EU-krav.",
+      "image": {
+        "url": "https://bewifood.com/wp-content/uploads/2026/06/coast-dk1-scaled.jpg",
+        "alt": "Kystlandskap"
+      },
+      "body": [
+        {
+          "h": "Ansvarlig emballasje med fokus på reduksjon og dokumentasjon"
+        },
+        {
+          "p": "Hos STOK vet vi at all emballasje har en miljøpåvirkning. Derfor arbeider vi målrettet med å redusere belastningen på klima og ressurser, både i våre egne aktiviteter og på tvers av hele verdikjeden."
+        },
+        {
+          "p": "Når vi gir råd til kundene våre, handler det om å unngå overemballering, redusere materialforbruket og velge løsninger med dokumentert lavere miljøpåvirkning. Men ansvarlig emballasje starter i kundedialogen og utvikles i leverandørleddet."
+        },
+        {
+          "h": "Ansvar i hele verdikjeden"
+        },
+        {
+          "p": "Vi stiller økende krav til leverandørene våre for å sikre at materialer og produkter overholder gjeldende lovgivning og internasjonale ESG-standarder. Det gjelder både forhold som klima, miljø, arbeidsforhold og forretningsetikk, samt dokumentasjon av produkters opprinnelse og sammensetning."
+        },
+        {
+          "p": "Vi arbeider systematisk med:"
+        },
+        {
+          "ul": [
+            "Leverandørkrav og Code of Conduct.",
+            "Innhenting og validering av produktdata.",
+            "Risikovurdering av leverandører og materialer."
+          ]
+        },
+        {
+          "p": "Dette er avgjørende for å kunne støtte kundenes compliance-arbeid og sikre gjennomsiktighet i verdikjeden."
+        },
+        {
+          "h": "Klar for ny regulering"
+        },
+        {
+          "p": "Kravene til emballasje og dokumentasjon utvikler seg raskt. Hos STOK Emballage arbeider vi aktivt med de viktigste EU-reguleringene, blant annet:"
+        },
+        {
+          "ul": [
+            "EUDR (EU Deforestation Regulation): krav til sporbarhet og dokumentasjon for at relevante råvarer ikke bidrar til avskoging.",
+            "PPWR (Packaging and Packaging Waste Regulation): kommende krav til design, gjenvinnbarhet og reduksjon av emballasje.",
+            "EPR (Utvidet produsentansvar): ansvar for innsamling, gjenvinning og rapportering."
+          ]
+        },
+        {
+          "p": "Vi sikrer at relevante data samles inn upstream i verdikjeden, slik at kundene våre får et solid grunnlag for sin egen rapportering og compliance."
+        },
+        {
+          "h": "Sammen om bedre løsninger"
+        },
+        {
+          "p": "Vi arbeider løpende med å redusere vårt eget CO₂-avtrykk i administrasjon, lagre og produksjon, men vårt største bidrag ligger i de valgene vi tar sammen med kundene og leverandørene våre."
+        },
+        {
+          "p": "Med mer enn 40 års erfaring innen emballasjeoptimering utvikler vi løsninger som reduserer miljøpåvirkningen, uten å gå på kompromiss med funksjonalitet, kvalitet eller beskyttelse under transport og lagring."
+        },
+        {
+          "p": "På den måten bidrar vi til en mer ansvarlig og fremtidssikret bruk av emballasje."
+        },
+        {
+          "p": "På siden kan du lese mer om arbeidet vårt med ESG, fra klimatiltak og produktdata til leverandørstyring og håndtering av produsentansvar. Siden er under oppbygging og utvikles løpende."
+        }
+      ],
+      "source": "https://bewifood.com/news/esg-hos-stok/"
+    },
+    {
+      "slug": "bewi-food-blir-til-stok",
+      "title": "BEWI Food blir til STOK – en styrket nordisk emballasjeaktør",
+      "publishedAt": "2026-04-13",
+      "category": "selskap",
+      "excerpt": "BEWI Food skifter navn til STOK etter fusjonen med danske STOK Emballage. Kundene møter de samme menneskene, med et bredere sortiment.",
+      "image": {
+        "url": "https://bewifood.com/wp-content/uploads/2026/04/stok-emballage-langeskov-1.png",
+        "alt": "STOK Emballage sitt hovedkontor i Langeskov"
+      },
+      "body": [
+        {
+          "p": "BEWI Food skifter navn til STOK etter å ha blitt fusjonert inn i danske STOK Emballage."
+        },
+        {
+          "p": "Navnet blir nytt og produktsortimentet bredere, men kundene kjenner – mennesker, kvalitet og leveranser – forblir uendret."
+        },
+        {
+          "p": "Med BEWI Foods ledende posisjon i norsk mat- og sjømatindustri, og STOKs omfattende distribusjonsnettverk og brede produktportefølje, får vi et selskap med større kapasitet og flere tjenester enn tidligere."
+        },
+        {
+          "p": "Oppkjøpet danner en av Nord-Europas ledende aktører innen emballasjeløsninger, med svært sterke posisjoner i Norge, Danmark, Island og Grønland."
+        },
+        {
+          "p": "«Oppkjøpet av BEWI Food posisjonerer oss som regionens foretrukne partner for emballasjeløsninger, og akselererer i stor grad vår ambisiøse vekst mot å bli en internasjonalt ledende leverandør av emballasjeløsninger», sier Martin Fredriksen, CEO i STOK."
+        },
+        {
+          "h": "Hvem er STOK?"
+        },
+        {
+          "p": "STOK Emballage er et dansk emballasjekonsern og Nordens største fullservice-partner innen emballasje."
+        },
+        {
+          "p": "Gjennom flere tiår har selskapet bygget seg opp til å bli en ledende leverandør av emballasje, maskinløsninger, lagerløsninger og rådgivningstjenester. I dag har STOK kunder på tvers av mat og drikke, industri, helse, forbruker og e‑handel."
+        },
+        {
+          "h": "Bare fordeler for kundene"
+        },
+        {
+          "p": "For kundene betyr sammenslåingen større valgfrihet, mer ekspertise og bedre helhetlige løsninger – levert av Nordens sterkeste emballasjepartner."
+        },
+        {
+          "p": "Budskapet er enkelt: Ingenting blir vanskeligere – alt blir litt bedre."
+        },
+        {
+          "ul": [
+            "Du vil fortsatt møte de samme menneskene som før.",
+            "Produktene du allerede bruker, fortsetter som før – men utvalget blir større.",
+            "STOKs bredere sortiment gir kundene tilgang til et av Nord-Europas mest omfattende tilbud av emballasje- og maskinløsninger."
+          ]
+        },
+        {
+          "p": "Med andre ord: Navnet endrer seg, men tjenestene, kvaliteten og leveransene består."
+        },
+        {
+          "h": "Har du spørsmål?"
+        },
+        {
+          "p": "Alle kontaktpunkter videreføres som før. Har du spørsmål, ta kontakt med din faste kontaktperson, eller send oss en mail på kundeservice@stok.no"
+        }
+      ],
+      "source": "https://bewifood.com/news/bewi-food-blir-til-stok-en-styrket-nordisk-emballasjeaktor/"
+    },
+    {
+      "slug": "stok-group-fullforer-kjopet-av-bewi-food",
+      "title": "STOK Group har fullført kjøpet av BEWI Food",
+      "publishedAt": "2025-07-02",
+      "category": "selskap",
+      "excerpt": "Med BEWI Food på plass blir STOK Group en av de ledende leverandørene av emballasjeløsninger i Nord-Europa, med samlet omsetning på nesten 200 millioner euro.",
+      "image": {
+        "url": "https://images.squarespace-cdn.com/content/v1/60089582baecc769508eaa4e/ae56b4a0-bdd1-430c-b3ac-80bcac3c1413/DSC06707.jpg",
+        "alt": "Lager hos STOK Emballage"
+      },
+      "body": [
+        {
+          "p": "STOK Group har fullført kjøpet av BEWI Food, som ble skilt ut fra BEWIs handelsvirksomhet for emballasje. Det samlede selskapet blir en av de ledende leverandørene av emballasjeløsninger i Nord-Europa."
+        },
+        {
+          "p": "BEWI Food har et sterkt navn innen emballasje til mat, med et eget tilbud til sjømatnæringen. Selskapet betjener faste kunder fra lagre i Norge og på Island. Til sammen omsetter selskapene for nesten 200 millioner euro."
+        },
+        {
+          "h": "Dette betyr det for kundene"
+        },
+        {
+          "ul": [
+            "Tilgang til STOKs sortiment med over 3000 emballasjeprodukter.",
+            "Testfasiliteter for transport og emballasje.",
+            "Næringsmiddelgodkjent lager i Norge, med planer om flere sertifiserte lagre."
+          ]
+        },
+        {
+          "quote": "Oppkjøpet gjør det samlede selskapet til regionens foretrukne partner for emballasjeløsninger. – Martin Frederiksen, administrerende direktør i STOK Group"
+        },
+        {
+          "h": "Om STOK Group"
+        },
+        {
+          "p": "STOK ble grunnlagt i 1978 og har hovedkontor i Langeskov i Danmark. Selskapet eies av fond rådgitt av Alvarez & Marsal Capital Europe, sammen med familien Stok og ledelsen."
+        }
+      ],
+      "source": "https://www.stok.dk/stokgroup/bewi-food"
+    },
+    {
+      "slug": "eumos-sertifisert-testsenter",
+      "title": "Testsenter med EUMOS-sertifisering",
+      "publishedAt": "2025-01-29",
+      "category": "tjenester",
+      "excerpt": "STOKs testsenter er EUMOS-sertifisert. Kundene kan teste og dokumentere at lasten står stabilt under transport, og bruke mindre strekkfilm.",
+      "image": {
+        "url": "https://images.squarespace-cdn.com/content/v1/60089582baecc769508eaa4e/c6128493-ab72-4af6-bf58-ce088dc3d8a6/DSC05395.jpg",
+        "alt": "Testutstyr i STOKs testsenter"
+      },
+      "body": [
+        {
+          "p": "STOK har et EUMOS-sertifisert testsenter der kundene kan teste hvordan lasten oppfører seg under transport. Kravene til dokumentasjon av lastsikring øker, og testene gir svar på hva som faktisk virker."
+        },
+        {
+          "p": "EUMOS-sertifiseringen viser at lasten oppfyller strenge krav til sikkerhet og stabilitet. Resultatene kan kundene dokumentere overfor egne kunder og samarbeidspartnere."
+        },
+        {
+          "h": "Tre områder testene hjelper med"
+        },
+        {
+          "ul": [
+            "**Sikker transport.** Riktig lastsikring hindrer at varer forskyver seg eller faller under transport.",
+            "**Mindre strekkfilm.** Riktig bruk av strekkfilm gir lavere forbruk uten at stabiliteten blir dårligere. Det sparer penger og CO₂.",
+            "**Færre transportskader.** Mindre skade gir mindre svinn, færre erstatningskrav og færre forsinkelser."
+          ]
+        },
+        {
+          "p": "Vil du vite mer om testene? Kontakt oss for en uforpliktende prat."
+        }
+      ],
+      "source": "https://www.stok.dk/testcenter"
+    }
+  ]
+}

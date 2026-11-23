@@ -4,7 +4,7 @@ import { market as getMarketParam } from "next/root-params";
 
 import { Modules } from "@/components/modules/Modules";
 import { getFrontPage } from "@/lib/content";
-import { isMarket } from "@/lib/markets";
+import { isMarket, marketPath } from "@/lib/markets";
 import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,5 +20,5 @@ export default async function FrontPage() {
   if (!isMarket(market)) notFound();
   const frontPage = await getFrontPage(market);
 
-  return <Modules modules={frontPage.modules} market={market} />;
+  return <Modules modules={frontPage.modules} market={market} path={marketPath(market)} />;
 }

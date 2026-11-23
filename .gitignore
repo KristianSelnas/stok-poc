@@ -49,3 +49,6 @@ next-env.d.ts
 
 # Sanity TypeGen (mellomfil, genereres av pnpm typegen)
 src/sanity/schema.json
+
+# Midlertidige filer (bildeforslag o.l.)
+/tmp/

@@ -1,0 +1,978 @@
+{
+  "language": "nb",
+  "productGroups": [
+    {
+      "slug": "eske",
+      "title": "Esker og kasser",
+      "order": 1
+    },
+    {
+      "slug": "kar",
+      "title": "Kar",
+      "order": 2
+    },
+    {
+      "slug": "brett",
+      "title": "Brett",
+      "order": 3
+    },
+    {
+      "slug": "sekk",
+      "title": "Sekker",
+      "order": 4
+    },
+    {
+      "slug": "film",
+      "title": "Film",
+      "order": 5
+    },
+    {
+      "slug": "spann-og-dunker",
+      "title": "Spann og dunker",
+      "order": 6
+    },
+    {
+      "slug": "transport",
+      "title": "Transport",
+      "order": 7
+    },
+    {
+      "slug": "honeycomb",
+      "title": "Honeycomb",
+      "order": 8
+    },
+    {
+      "slug": "temperaturkontrollert",
+      "title": "Temperaturkontrollert",
+      "order": 9
+    },
+    {
+      "slug": "avfall",
+      "title": "Avfall",
+      "order": 10
+    },
+    {
+      "slug": "pakkemaskiner",
+      "title": "Pakkemaskiner",
+      "order": 11
+    },
+    {
+      "slug": "annet",
+      "title": "Annet",
+      "order": 12
+    }
+  ],
+  "materials": [
+    {
+      "slug": "hdpe",
+      "title": "HDPE"
+    },
+    {
+      "slug": "kartong",
+      "title": "Kartong"
+    },
+    {
+      "slug": "lldpe",
+      "title": "LLDPE"
+    },
+    {
+      "slug": "pp",
+      "title": "PP"
+    }
+  ],
+  "products": [
+    {
+      "slug": "fiskekasse",
+      "title": "Fiskekasse",
+      "shortDescription": "Gjenbrukbare fiskekasser for tungt bruk",
+      "group": "eske",
+      "materials": ["hdpe"],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0293-100-000_jpg-copy.jpg",
+          "alt": "Fiskekasse"
+        }
+      ],
+      "description": [
+        {
+          "h": "En kraftig lagrings- og transportløsning for fiskeindustrien"
+        },
+        {
+          "p": "Pers box har høy bæreevne og slagstyrke. Den river, kollapser eller knuser ikke, holder formen når den er fullastet, og er stødig når den stables. En pålitelig og effektiv pakke- og transportløsning, designet spesielt for fiskeindustrien. Næringsmiddelgodkjent."
+        },
+        {
+          "p": "De solide håndtakene gir et fast grep og de glatte overflatene er enkle å rengjøre. Kassene er vann-, mugg- og råtebestandig. Tilgjengelig med eller uten drenering. Firmanavn, logo eller lignende kan graveres eller varmestemples på kassen. Flere farger tilgjengelig på forespørsel."
+        },
+        {
+          "p": "HDPE-bokser kan gjenbrukes om og om igjen. HDPE er resirkulerbart, og tester viser at det kan resirkuleres ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "74 x 44 x 17.3"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "2.82 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "HDPE"
+        },
+        {
+          "key": "Stk. pr pall",
+          "value": "42"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/fish-box/?lang=no"
+    },
+    {
+      "slug": "pers-box",
+      "title": "Pers box",
+      "shortDescription": "Gjenbrukbare fiskekasser for tung bruk.",
+      "group": "eske",
+      "materials": ["hdpe"],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0280-3-scaled.jpg",
+          "alt": "Pers box"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0280-100-000_jpg-copy.jpg",
+          "alt": "Pers box"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0285-100-000_jpg-copy.jpg",
+          "alt": "Pers box"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0290-100-000_jpg-copy.jpg",
+          "alt": "Pers box"
+        }
+      ],
+      "description": [
+        {
+          "h": "Slagkraftige lagrings- og transportkasser for fiskeindustrien"
+        },
+        {
+          "p": "Pers box har høy bæreevne og slagstyrke. Den river, kollapser eller knuser ikke, holder formen når den er fullastet, og er stødig når den stables. En pålitelig og effektiv pakke- og transportløsning, designet spesielt for fiskeindustrien. Næringsmiddelgodkjent."
+        },
+        {
+          "p": "De solide håndtakene gir et fast grep og de glatte overflatene er enkle å rengjøre. Kassene er vann-, mugg- og råtebestandig. Tilgjengelig med eller uten drenering. Firmanavn, logo eller lignende kan graveres eller varmestemples på kassen. Flere farger tilgjengelig på forespørsel."
+        },
+        {
+          "p": "HDPE-bokser kan gjenbrukes om og om igjen. HDPE er resirkulerbart, og tester viser at det kan resirkuleres ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "84.4 x 51.4 x 19 / 84.5 x 51.5 x 26.9 / 80 x 40 x 19"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "3.95 kg / 5.3 kg / 2.65 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "HDPE"
+        },
+        {
+          "key": "Stk. pr pall",
+          "value": "20 / 16 / 36"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/pers-box/?lang=no"
+    },
+    {
+      "slug": "fiskekar",
+      "title": "Fiskekar",
+      "shortDescription": "Gjenbrukbart fiskekar for tungt bruk.",
+      "group": "kar",
+      "materials": ["hdpe"],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/0336-000-000_jpg-copy.jpg",
+          "alt": "Fiskekar"
+        }
+      ],
+      "description": [
+        {
+          "h": "Laget for de tøffe forholdene i fiskeindustrien"
+        },
+        {
+          "p": "Dette tøffe fiskekaret er laget for linefiske. Det har høy bæreevne, slagstyrke og holder formen når det er fullastet."
+        },
+        {
+          "p": "Fiskekaret er designet for fiskeindustrien, med tykke vegger og 8 gummiføtter for ekstra grep, selv under tøffe forhold. Den er vann-, mugg- og råtebestandig, hygienisk og enkel å rengjøre."
+        },
+        {
+          "p": "Vi jobber alltid for å holde råvarer i sløyfen så lenge som mulig, og å redusere totalbruken av råvarer. Fiskekaret vårt kan gjenbrukes om og om igjen. Den er laget av resirkulerbar HDPE og tester viser at den kan resirkuleres ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "nd 56 h 35"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "6.6 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "HDPE"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "36"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/longline-tub/?lang=no"
+    },
+    {
+      "slug": "kartong-for-saltfisk",
+      "title": "Kartong for saltfisk",
+      "shortDescription": "Kartonger i høyeste kvalitet for pakking av saltfisk og saltfiskfilet. Produsert i massivpapp og leveres med trykk i høy kvalitet.",
+      "group": "eske",
+      "materials": ["kartong"],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/fp00504241-base-1923164-lid.jpg",
+          "alt": "Kartong for saltfisk"
+        }
+      ],
+      "description": [
+        {
+          "h": "Kartonger i høyeste kvalitet for pakking av saltfisk og saltfiskfilet."
+        },
+        {
+          "p": "Kartongene for pakking av saltfisk og saltfiskfilet er produsert i massivpapp og leveres med trykk i høy kvalitet. Massivpappen er laminert, noe som betyr at den kan produseres med de nøyaktige egenskapene som hvert enkelt marked krever. Saltfisken kan legges direkte ned i bunnen, som er godkjent for direkte kontakt med matvarer. Trykket vi leverer er laminert med utvendig PE som gir en fantastisk flott og glanset overflate, samtidig som vi oppnår unik beskyttelse både av trykket og lokket."
+        },
+        {
+          "p": "Kartongen har doble langsider i bunnen og doble kortsider på lokket, dette gjør den svært kraftig med tanke på stablestyrke."
+        },
+        {
+          "p": "Kartongen er ellers PE-belagt på begge sider både på lokk og bunn, noe som gir unik beskyttelse mot saltlake og fukt."
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/kartong-for-saltfisk/?lang=no"
+    },
+    {
+      "slug": "nordic-bags",
+      "title": "Nordic Bags",
+      "shortDescription": "Nordic Bag er merkevaren på sekker som har den best egnede kvaliteten for fryst HG, og vi har jobbet med denne typen emballasje i over 20 år. Sekkene er konstruert spesielt for Nordic Pakkemaskin og Nordic Sveisemaskin.",
+      "group": "sekk",
+      "materials": [],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/MG_3625.jpg",
+          "alt": "Nordic Bags"
+        }
+      ],
+      "description": [
+        {
+          "h": "Dette er en unik og sterk type sekk for pakking av HG, reker og ellers alt som fryses i vertikal- eller horisontalfryser om bord eller på land."
+        },
+        {
+          "p": "Sekken har polypropylenvev på innsiden og papir på utsiden."
+        },
+        {
+          "p": "Standardstørrelser for blokker på 25, 30, 50 og 75 kg lagerføres i alle store havner i Norge. Vi produserer også alle andre størrelser på bestilling. Sekkene kan leveres med rederiets trykk og i flere farger."
+        },
+        {
+          "h": "Artikkelnr: 502"
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/nordic-bags/?lang=no"
+    },
+    {
+      "slug": "filetbrett",
+      "title": "Filetbrett",
+      "shortDescription": "Slitesterke brett som er lett å rengjøre",
+      "group": "brett",
+      "materials": ["lldpe"],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7002-000-100_jpg-copy.jpg",
+          "alt": "Filetbrett"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7005-000-100_jpg-copy.jpg",
+          "alt": "Filetbrett"
+        }
+      ],
+      "description": [
+        {
+          "h": "Våre filetbrett kan resirkuleres. En bærekraftig løsning."
+        },
+        {
+          "p": "Designet primært for bruk til fiskefileter og for å tåle intense arbeidsforhold som fiskeindustrien. De slitesterke brettene har høy slagkraft, solid styrke og stabilitet. Går ikke i stykker eller splinter og skader filetene/produkte."
+        },
+        {
+          "p": "Filetbrettene er enkle å rengjøre, kan desinfiseres med vann eller damp, og hindrer bakterievekst. Motstandsdyktige mot syre, alkali, korrosjon og UV-lys."
+        },
+        {
+          "p": "Våre filetbrett kan resirkuleres, noe som gjør de til en bærekraftig løsning."
+        },
+        {
+          "p": "Næringsmiddelgodkjent. Andre farger tilgjengelig på forespørsel."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "34 x 30 x 0.8 / 50 x 30 x 0.8"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "0.53 kg / 0.81 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "LLDPE"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "300"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/fillet-tray/?lang=no"
+    },
+    {
+      "slug": "fleksible-filmer",
+      "title": "Fleksible filmer",
+      "shortDescription": "Komplett utvalg av fleksible filmer for thermoforming, MAP-pakking, skålpakking og skin-pack.",
+      "group": "film",
+      "materials": [],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/KARUSELL-shutterstock_1131611801.jpg",
+          "alt": "Fleksible filmer"
+        }
+      ],
+      "description": [
+        {
+          "h": "Filmene vi leverer har ekstremt gode optiske og tekniske egenskaper, blant annet unike forme- og sveiseegenskaper."
+        },
+        {
+          "p": "Vi har over 100 års erfaring med emballasje for alle typer næringsmidler, og har vært med fiskeri- og havbruksindustrien fra den spede begynnelsen og frem til i dag. Markedsapparatet vårt har bred kompetanse og erfaring innenfor prosessering av næringsmidler."
+        },
+        {
+          "p": "Filmene tilbys med flexo sandwich-print eller digitaltrykk, alt etter kundens ønske og spesifikasjoner."
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/fleksible-filmer/?lang=no"
+    },
+    {
+      "slug": "pallekarmer",
+      "title": "Pallekarmer",
+      "shortDescription": "Pallekarmer 120 x 80 cm for bulkpakking av fersk fisk.",
+      "group": "transport",
+      "materials": [],
+      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/30203-PALLET-COLLARS-KARM-VARIATIONS.jpg",
+          "alt": "Pallekarmer"
+        }
+      ],
+      "description": [
+        {
+          "h": "Pallekarmer 120 x 80 cm for bulkpakking av fersk fisk."
+        },
+        {
+          "p": "Pallekarmer 120 x 80 cm for bulkpakking av fersk fisk. En vanlig enhet er på 320 kg, men den kan også gjøres mindre for å frakte fisk med mindre press."
+        },
+        {
+          "p": "Pallekarmer 120 x 100 cm for pakking av saltede rygger."
+        },
+        {
+          "p": "Vi har panteordning for karmer i utlandet og kjøper ofte brukte karmer i Norge."
+        },
+        {
+          "p": "Denne løsningen er unik med tanke på logistikk og miljø, ettersom vi leverer en full load til kunden, som kan pakke over 12 fulle loads med fisk ut i samme bil!"
+        },
+        {
+          "h": "Artikkelnr: 30203"
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/pallekarmer/?lang=no"
+    },
+    {
+      "slug": "pakkemaskin-a1",
+      "title": "Pakkemaskin A1",
+      "shortDescription": "Helautomatisk pakking av frosne fiskeblokker – på havet eller på land. Pakker og lukker Nordic Bags i alle størrelser, fra 12 til 75 kg.",
+      "group": "pakkemaskiner",
+      "materials": [],
+      "industries": ["fisk-og-sjomat"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/Pakkemaskin-A1.jpg",
+          "alt": "Pakkemaskin A1"
+        }
+      ],
+      "description": [
+        {
+          "h": "Helautomatisk pakking av frosne fiskeblokker – på havet eller på land."
+        },
+        {
+          "p": "Pakker og lukker Nordic Bags i alle størrelser, fra 12 til 75 kg. Ingen tilleggsprodukter nødvendig. Sekkens åpning sveises i maskinen."
+        },
+        {
+          "p": "En solid maskin som er utviklet, testet og brukt av fartøy som har drevet med ombordfrysing siden 2007."
+        },
+        {
+          "p": "Maskinene er under stadig utvikling i samarbeid med erfarne fiskere og fabrikksjefer."
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": "https://bewifood.com/wp-content/uploads/2021/10/APPENDIX-NORDIC-MACHINES-202150.pdf",
+      "sourceUrl": "https://bewifood.com/products/pakkemaskin-a1/?lang=no"
+    },
+    {
+      "slug": "matkasse",
+      "title": "Matkasse",
+      "shortDescription": "Stablebare transportkasser, foretrukket av kjøttindustrien.",
+      "group": "eske",
+      "materials": ["hdpe"],
+      "industries": ["naeringsmiddel"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6723-310-200b_jpg.jpg",
+          "alt": "Matkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7162-100-100-2-copy.jpg",
+          "alt": "Matkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7164-100-400_jpg-copy.jpg",
+          "alt": "Matkasse"
+        }
+      ],
+      "description": [
+        {
+          "h": "Den holdbare, effektive transportløsningen for kjøtt, fisk og annen mat"
+        },
+        {
+          "p": "Kassene har høy bæreevne og slagstyrke. En sikker, pålitelig og effektiv kasse- og transportløsning, ideell for kjøtt- og fiskeindustrien, samt andre sektorer med krevende forhold. Alle kassene er næringsmiddelgodkjent."
+        },
+        {
+          "p": "Designet for jevn stabling. HDPE er vann-, mugg- og råtebestandig og kan brukes til frysing. De glatte overflatene er enkle å rengjøre. Firmanavn, logo eller lignende kan graveres eller varmestemples på kassen."
+        },
+        {
+          "p": "Vi jobber alltid for å holde råvarer i sløyfen så lenge som mulig, for å redusere totalbruken av råvarer. Våre HDPE-kasser kan gjenbrukes om og om igjen. HDPE er resirkulerbart – tester viser at det kan resirkuleres og gjenbrukes ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Farge",
+          "value": "-"
+        },
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "- / 60 x 40 x 14.5 / 60 x 40 x 22.5"
+        },
+        {
+          "key": "Inv. dimensioner (cm)",
+          "value": "- / 53 x 34 x 14.5 / 49 x 34 x 21.5"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "1.2 kg / 1.65 kg / 2.3 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "HDPE"
+        },
+        {
+          "key": "Stk. pr pall",
+          "value": "84 / 64 / 40"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/matkasse/?lang=no"
+    },
+    {
+      "slug": "brodkasser",
+      "title": "Brødkasser",
+      "shortDescription": "Stablebare transportbokser, designet for bakeriindustrien.",
+      "group": "eske",
+      "materials": ["hdpe"],
+      "industries": ["naeringsmiddel"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6721-000-200-scaled.jpg",
+          "alt": "Brødkasser"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6723-100-200_JPG-copy.jpg",
+          "alt": "Brødkasser"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6723-200-400_jpg-copy.jpg",
+          "alt": "Brødkasser"
+        }
+      ],
+      "description": [
+        {
+          "h": "Emballasje- og transportløsningen du kan stole på"
+        },
+        {
+          "p": "Våre brødkasser har høy kapasitet og er laget for daglig bruk. De er slitesterke og tåler støt og slag. En pålitelig og effektiv løsning for pakking, lagring og transport. Alle våre brødkasser er næringsmiddelgodkjent."
+        },
+        {
+          "p": "Kassene har solide håndtak, er stødige når de stables, med glatte overflater som er enkle å rengjøre. Firmanavn, logo eller lignende kan graveres eller varmestemples på kassen."
+        },
+        {
+          "p": "Vi jobber alltid for å holde råvarer i sløyfen så lenge som mulig, for å redusere totalforbruket av råvarer. Våre HDPE-kasser kan gjenbrukes om og om igjen. HDPE er resirkulerbart – tester viser at det kan resirkuleres og gjenbrukes ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Farger",
+          "value": "- / Sort"
+        },
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "62 x 40 x 13 / 60 x 40 x 14,5 / 60 x 40 x 14.5"
+        },
+        {
+          "key": "Inv. dimensjoner (cm)",
+          "value": "58 x 37.5 x 10 / 57 x 36 x 12.2"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "1.34 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "HDPE"
+        },
+        {
+          "key": "Stk. pr pall",
+          "value": "76 / 64"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/bread-box/?lang=no"
+    },
+    {
+      "slug": "spann-dunker",
+      "title": "Spann & dunker",
+      "shortDescription": "Multifunksjonelle dunker og spann for nesten alle produkter",
+      "group": "spann-og-dunker",
+      "materials": ["pp", "lldpe"],
+      "industries": ["naeringsmiddel"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3065-scaled.jpg",
+          "alt": "Spann & dunker"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3066-scaled.jpg",
+          "alt": "Spann & dunker"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3250.jpg",
+          "alt": "Spann & dunker"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3270.jpg",
+          "alt": "Spann & dunker"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3510.jpg",
+          "alt": "Spann & dunker"
+        }
+      ],
+      "description": [
+        {
+          "h": "Et bredt utvalg, alt fra tynnveggede spann til store, robuste flerbrukdunker"
+        },
+        {
+          "p": "Våre tynnveggede spann minimerer emballasjevekten og brukes i flere industrier til mange forskjellige produkter. De har utmerket topplastingsytelse, høy stablebarhet for kompakt pakking, for enkel lagring og transport, noe som bidrar til lavere kostnader."
+        },
+        {
+          "p": "Vi tilbyr både lette, solide flerbruksspann, samt store robuste dunker med lokk. En god og effektiv løsning for mat og andre produkter som ofte transporteres i store mengder."
+        },
+        {
+          "p": "Vi jobber for å holde råvarer i sløyfen så lenge som mulig, å redusere totalbruken av råvarer. Både spannene og dunkene er hygieniske, vaskbare og kan gjenbrukes om og om igjen."
+        },
+        {
+          "p": "Alle spann og dunker er næringsmiddelgodkjent og har lokk. Andre farger er tilgjengelig ved forespørsel."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimensjon (cm)",
+          "value": "h 23, nd bunn/topp 29,5/25,1 / h 31,1, nd topp/bunn 29,5/25,1 / nd 29 / h 30,6, nd topp/bunn 31,3/26,5 / h 38,8, nd topp/bunn 31,1/26,5 / nd 31.2 / h 41,3, nd topp/bunn 37,6/31 / nd 37 / h 54, nd topp/bunn 40/34,5 / nd 39.9 / h 69,5, nd topp/bunn 48,5/42,9 / nd 48.7"
+        },
+        {
+          "key": "Vekt",
+          "value": "0.34 kg / 0.46 kg / 0.084 kg / 0.725 kg / 0.769 kg / 0.24 kg / 1 kg / 0.215 kg / 1.63 kg / 0.41 kg / 3.39 kg / 0.7 kg"
+        },
+        {
+          "key": "Materiale",
+          "value": "PP / LLDPE"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "220 Stk. / 3520 Stk. / 216 Stk. / 162 Stk. / 486 Stk. / 180 Stk. / 900 Stk. / 60 Stk. / 400 Stk. / 24 Stk. / 150 Stk."
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/drums-pails/?lang=no"
+    },
+    {
+      "slug": "kvantum-brett",
+      "title": "Kvantum brett",
+      "shortDescription": "Tynnvegget brett for flerbruk. Designet for næringsmiddelindustrien.",
+      "group": "brett",
+      "materials": [],
+      "industries": ["naeringsmiddel"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3040.jpeg",
+          "alt": "Kvantum brett"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3041.jpeg",
+          "alt": "Kvantum brett"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3043.jpg",
+          "alt": "Kvantum brett"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/3073-white.jpg",
+          "alt": "Kvantum brett"
+        }
+      ],
+      "description": [
+        {
+          "h": "Designet for næringsmiddelindustrien for enklere lagring og transport"
+        },
+        {
+          "p": "Et tynnvegget brettet som minimerer emballasjevekten uten å gå på akkord med mat- og forbrukerforskrifter – alle kvantum-brett er næringsmiddelgodkjent."
+        },
+        {
+          "p": "Brettene er designet for næringsmiddelindustrien og kan brukes til en rekke formål. De har en førsteklasses kompakt stabling, for enkel lagring og transport, som redusere kostnadene."
+        },
+        {
+          "p": "Vi jobber for å holde råvarer i sløyfen så lenge som mulig, å redusere totalbruken av råvarer. Kvantum-brettene er hygieniske, vaskbare og kan gjenbrukes om og om igjen."
+        },
+        {
+          "p": "Andre farger er tilgjengelig på forespørsel. Lokk er også tilgjengelig."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Lager/forespørsel",
+          "value": "Forespørsel"
+        },
+        {
+          "key": "Ekst. dimensjon (cm)",
+          "value": "38 x 28 x 0.5 / 38 x 28 x 10 / 32 x 25 x 0.8 / 20.8 x 14.6 x 0.46 / 38 x 28"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "0.146 kg / 0.208 kg / 0.143 kg / 0.09 kg / -"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "1440 / 720 / 1640 / 7200 / 1800"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/qvantum-tray/?lang=no"
+    },
+    {
+      "slug": "stablebar-transportkasse",
+      "title": "Stablebar transportkasse",
+      "shortDescription": "Stablebar transportkasse, ideell for lagring.",
+      "group": "eske",
+      "materials": [],
+      "industries": ["transport-og-lagring"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6700-6703-6704-gutt-copy.jpg",
+          "alt": "Stablebar transportkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6702-000-400-copy.jpg",
+          "alt": "Stablebar transportkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6705-101-200.jpg",
+          "alt": "Stablebar transportkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6705-201-200.jpg",
+          "alt": "Stablebar transportkasse"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6703-001-400-copy.jpg",
+          "alt": "Stablebar transportkasse"
+        }
+      ],
+      "description": [
+        {
+          "h": "Slitesterke kasser for jevn stabling"
+        },
+        {
+          "p": "Den stablebare transportkassen er en pålitelig og effektiv oppbevarings- og transportløsning. Alle kasser har høy bæreevne og slagstyrke og håndtakene gjør det enkelt å få et fast grep. Kassene er laget for jevn stabling. De faller ikke sammen eller knuser, og holder formen når de er fullastet."
+        },
+        {
+          "p": "HDPE er vann-, mugg- og råtebestandig, hygienisk og lett å rengjøre. Alle kassene er næringsmiddelgodkjent. Firmanavn, logo eller lignende kan graveres eller varmestemples på esken. Andre farger tilgjengelig på forespørsel. Flere typer lokk."
+        },
+        {
+          "p": "Vi jobber alltid for å holde råvarer i sløyfen så lenge som mulig, for å redusere totalbruken av råvarer. Våre HDPE-kasser kan gjenbrukes om og om igjen. HDPE er også resirkulerbart – tester viser at det kan resirkuleres ti ganger eller mer uten vesentlig forringelse."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Farge",
+          "value": "Nøytral, blå, rød & grå / - / Rød / Rød og grå / Hvit / Hvit og grå / Nøytral"
+        },
+        {
+          "key": "Ytre dimensjoner (cm)",
+          "value": "60 x 40 x 28.5 cm / 60 x 40 x 14.7 cm / 60 x 40 x 0.85 cm / 40 x 30 x 14.7 cm / 40 x 30 x 28.5 cm / 40 x 30 cm / 60 x 40 cm / 60 X 40 X 28.5"
+        },
+        {
+          "key": "Inv. dimensioner (cm)",
+          "value": "55 x 35 x 27.5 cm / 55 x 35 x 13.5 cm / 54.5 x 34.5 x 0.7 cm / 36.6 x 26.6 x 13.5 cm / 36.6 x 26.6 x 27.5 cm / - / 55 X 35 X 27.5"
+        },
+        {
+          "key": "Vekt",
+          "value": "1.85 kg / 1.6 kg / 1.27 kg / 0.81 kg / 0.29 kg / 0.69 kg / 1.85 KG"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "32 ST / 64 ST / 100 ST / 120 ST / 600 ST / 300 ST / -"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/stacking-and-transport-box/?lang=no"
+    },
+    {
+      "slug": "trillebrett",
+      "title": "Trillebrett",
+      "shortDescription": "Kraftige trillebrett for flytting av store gjenstander",
+      "group": "annet",
+      "materials": [],
+      "industries": ["transport-og-lagring"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7185-2.jpg",
+          "alt": "Trillebrett"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/7185-4.jpg",
+          "alt": "Trillebrett"
+        }
+      ],
+      "description": [
+        {
+          "h": "Gjør flytting av bokser og tunge klumpete gjenstander enklere"
+        },
+        {
+          "p": "Trillebrett for generell bruk, spesielt egnet for standard 60 x 40 transportkasser. Trillebrettet avlaster større løft, lettere å manøvrere enn håndtrucker og krever ikke at lastene lenes bakover og balanseres."
+        },
+        {
+          "p": "De solide trillebrettene har slag-, varme-, kjemisk- og slitestyrke, samt dimensjonsstabilitet, strekkfasthet, overflatehardhet og stivhet."
+        },
+        {
+          "p": "Velg mellom trillebrett for maks belastning 150 kg eller maks belastning 250 kg med 4 svingbare nylon/gummi hjul eller 2+2 nylon/gummi hjul og svinghjul med brems."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre DIMENSJON (CM)",
+          "value": "60 x 40"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "2.15 kg / 3.5 kg"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "36 / 30"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/dollies/?lang=no"
+    },
+    {
+      "slug": "avfallsbeholdere",
+      "title": "Avfallsbeholdere",
+      "shortDescription": "Sertifisert for pakking og transport av farlig gods",
+      "group": "avfall",
+      "materials": [],
+      "industries": ["transport-og-lagring"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6415.jpg",
+          "alt": "Avfallsbeholdere"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6416.jpg",
+          "alt": "Avfallsbeholdere"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/03/6417.jpg",
+          "alt": "Avfallsbeholdere"
+        }
+      ],
+      "description": [
+        {
+          "h": "UN 4H2 godkjente Avfallsbeholdere for sikker håndtering av medisinske produkter og annet farlig gods"
+        },
+        {
+          "p": "Våre avfallsbeholdere minimerer risikoen for farlige utslipp, og reduserer risikoen for ulykker ved lagring og transport av farlig gods."
+        },
+        {
+          "p": "Primært designet for medisinsk industri, men brukes også til annet farlig gods. De er FN-godkjente, noe som betyr at de er designet, testet og sertifisert for å frakte flytende eller faste farlige materialer, slik at de kan transporteres trygt."
+        },
+        {
+          "p": "Avfallsbeholderne er designet for å stables inni hverandre når tomme."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ytre dimension (cm)",
+          "value": "29.4 x 39.4 x 39 / 29.4 x 39.4 x 53 / 30 x 40"
+        },
+        {
+          "key": "Vekt (kg)",
+          "value": "0.95 kg / 1.2 kg / 0.37 kg"
+        },
+        {
+          "key": "Stk. pr. pall",
+          "value": "200 / 184 / 200/ 184"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/waste-containers/?lang=no"
+    },
+    {
+      "slug": "honeycomb",
+      "title": "Honeycomb",
+      "shortDescription": "Vårt hovedprodukt er honeycomb-paneler. Vi lager panelene av papir, kraftliner, og testliner, som omslutter en kjerne med en cellestruktur. Derfor kalles det honeycomb.",
+      "group": "honeycomb",
+      "materials": [],
+      "industries": ["beskyttende-emballasje"],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/04/Cellpack-H-96-300x300-1.jpg",
+          "alt": "Honeycomb"
+        }
+      ],
+      "description": [
+        {
+          "h": "100 % resirkulerbart og biologisk nedbrytbart."
+        },
+        {
+          "p": "Kjernen og overflatepapiret limes sammen med et vannbasert, biologisk nedbrytbart lim, slik at det ferdige produktet er 100 prosent resirkulerbart og biologisk nedbrytbart."
+        },
+        {
+          "p": "Cellestrukturen, og måten honeycomb-panelene er konstruert på, gjør emballasjepanelene lette og solide. Den strukturelle styrken avhenger av to faktorer: tykkelsen på lineren, og hvor kompakt kjernen (cellestrukturen) er."
+        },
+        {
+          "p": "Vi kan produsere panelene med forskjellig kvalitet på lineren, dog vanligvis mellom 135 og 750 gram per m2. På samme vis kommer kjernen med forskjellige hulrom, vanligvis mellom 10 og 20 mm. Høyden på Honeycomb-panelene varierer mellom 10 og 110 mm. Våre emballasjedesignere har lang erfaring i å velge materialer, slik at produktet får nøyaktig de egenskapene våre kunder krever."
+        },
+        {
+          "p": "Honeycomb-panelene skjæres og tilpasses etter behov og kravspesifikasjoner."
+        }
+      ],
+      "properties": [],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/produkter/honeycomb/?lang=no"
+    },
+    {
+      "slug": "sherpa-systems",
+      "title": "Sherpa Systems",
+      "shortDescription": "Temperatur kontrollert emballasje fra +2 til +25 °C",
+      "group": "temperaturkontrollert",
+      "materials": [],
+      "industries": [],
+      "images": [
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/22L-Sherpa-Packing-scaled.jpg",
+          "alt": "Sherpa Systems"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/22L-Sherpa-1-scaled.jpg",
+          "alt": "Sherpa Systems"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/sherpa-11.png",
+          "alt": "Sherpa Systems"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/sherpa-12.png",
+          "alt": "Sherpa Systems"
+        },
+        {
+          "url": "https://bewifood.com/wp-content/uploads/2021/10/sherpa-13.png",
+          "alt": "Sherpa Systems"
+        }
+      ],
+      "description": [
+        {
+          "h": "Optimal fleksibilitet med utskiftbare kjøleelementer"
+        },
+        {
+          "p": "Sherpa-løsningene gir deg et bredt spekter, fra +2 til +8 grader (Express) og +15 til +25 grader (Ambient) – eller begge deler med Universal-løsningen. Konfigurasjonen av kjøleelementene bestemmer temperaturområdet."
+        },
+        {
+          "p": "Siden kjøleelementene er vannbaserte, har de et smeltepunkt på 0 grader C. En kombinasjon av frosne og herdede elementer må brukes for å sikre den ideelle temperaturen inne i emballasjen. Så du må være forsiktig når du kondisjonerer elementene. Følg instruksjonene på pakkemønsteret med frosne og avkjølte elementer."
+        },
+        {
+          "p": "Bruk av vann som kjølemiddel gjør Sherpa-produkter relativt store og tunge. På den annen side har de en veldig gunstig pris."
+        }
+      ],
+      "properties": [
+        {
+          "key": "Description",
+          "value": "Sherpa Express / Sherpa Ambient / Sherpa Universal"
+        },
+        {
+          "key": "Temperature range",
+          "value": "+2 - +8 grader / +15 - +25 grader / +2 - +8 samt +15 - +25 grader"
+        },
+        {
+          "key": "Volume",
+          "value": "4 - 25 liter / 3 - 792 liter / 2 - 792 liter"
+        },
+        {
+          "key": "Duration",
+          "value": "48 timer / 48, 72 og 96 timer / 48, 72, 96 og 120 timer"
+        }
+      ],
+      "datasheetUrl": null,
+      "sourceUrl": "https://bewifood.com/products/sherpa-systems/?lang=no"
+    }
+  ]
+}
