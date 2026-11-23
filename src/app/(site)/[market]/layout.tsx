@@ -10,6 +10,7 @@ import { LivePreview } from "@/components/preview/LivePreview";
 import { getSiteSettings } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { isMarket, marketIds, markets } from "@/lib/markets";
+import { allowIndexing, siteUrl } from "@/lib/site";
 
 import "../../globals.css";
 
@@ -34,16 +35,14 @@ export async function generateMetadata(): Promise<Metadata> {
   if (!isMarket(market)) return {};
   const settings = stegaClean(await getSiteSettings(market));
   return {
+    metadataBase: new URL(siteUrl),
     title: {
       default: settings.title ?? "STOK Emballage",
       template: `%s | ${settings.title ?? "STOK Emballage"}`,
     },
     description: settings.description ?? undefined,
-    // PoC-en skal ikke indekseres (se docs/06-teknisk-arkitektur.md).
-    robots: { index: false, follow: false },
-    alternates: {
-      languages: Object.fromEntries(Object.values(markets).map((m) => [m.language, `/${m.id}`])),
-    },
+    // PoC-en skal ikke indekseres (se `allowIndexing` i lib/site.ts).
+    robots: allowIndexing ? undefined : { index: false, follow: false },
   };
 }
 

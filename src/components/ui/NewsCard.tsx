@@ -7,8 +7,21 @@ import type { NewsCard as NewsCardData } from "@/sanity/types";
 
 import { ContentImage } from "./ContentImage";
 
-/** Nyhetskort med bilde, dato, kategori, tittel og ingress. Hele kortet er klikkbart. */
-export function NewsCard({ article, market }: { article: NewsCardData; market: MarketId }) {
+type HeadingLevel = "h2" | "h3";
+
+/**
+ * Nyhetskort med bilde, dato, kategori, tittel og ingress. Hele kortet er klikkbart.
+ * Tittelen er H3 under en seksjonsoverskrift, og H2 når listen ikke har overskrift.
+ */
+export function NewsCard({
+  article,
+  market,
+  headingLevel: Heading = "h3",
+}: {
+  article: NewsCardData;
+  market: MarketId;
+  headingLevel?: HeadingLevel;
+}) {
   const href = documentHref("newsArticle", article.slug, market);
 
   return (
@@ -28,7 +41,7 @@ export function NewsCard({ article, market }: { article: NewsCardData; market: M
           )}
           {article.category && <span> · {article.category}</span>}
         </p>
-        <h3 className="mt-2 text-xl">
+        <Heading className="mt-2 text-xl">
           {href ? (
             <Link href={href} className="after:absolute after:inset-0">
               {article.title}
@@ -36,19 +49,27 @@ export function NewsCard({ article, market }: { article: NewsCardData; market: M
           ) : (
             article.title
           )}
-        </h3>
+        </Heading>
         {article.excerpt && <p className="mt-2 line-clamp-3">{article.excerpt}</p>}
       </div>
     </article>
   );
 }
 
-export function NewsCardGrid({ articles, market }: { articles: NewsCardData[]; market: MarketId }) {
+export function NewsCardGrid({
+  articles,
+  market,
+  headingLevel,
+}: {
+  articles: NewsCardData[];
+  market: MarketId;
+  headingLevel?: HeadingLevel;
+}) {
   return (
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {articles.map((article) => (
         <li key={article._id}>
-          <NewsCard article={article} market={market} />
+          <NewsCard article={article} market={market} headingLevel={headingLevel} />
         </li>
       ))}
     </ul>

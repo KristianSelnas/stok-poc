@@ -19,6 +19,7 @@ import {
   productQuery,
   routesQuery,
   siteSettingsQuery,
+  sitemapQuery,
 } from "@/sanity/queries";
 import type {
   Catalog,
@@ -30,6 +31,7 @@ import type {
   Product,
   Routes,
   SiteSettings,
+  Sitemap,
 } from "@/sanity/types";
 
 import { markets, type MarketId } from "./markets";
@@ -170,4 +172,13 @@ export async function getRoutes(market: MarketId): Promise<Routes> {
   applyCacheLife();
 
   return fetchSanity(routesQuery, { language: language(market) });
+}
+
+/** Alle indekserbare adresser i begge markeder, til sitemap.xml. */
+export async function getSitemap(): Promise<Sitemap> {
+  "use cache";
+  cacheTag(SANITY_TAG);
+  applyCacheLife();
+
+  return fetchSanity(sitemapQuery, {});
 }

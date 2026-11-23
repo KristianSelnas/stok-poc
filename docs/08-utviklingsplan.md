@@ -86,14 +86,21 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - Laste opp bilder
 - **Leveranse:** Siden oppleves som en ekte nettside
 
-## Fase 6: Kvalitet og demo (ca. 1–2 dager)
+## Fase 6: Kvalitet og demo (ca. 1–2 dager) – påbegynt
 
-- Kontaktskjema
-- SEO: metadata, sitemap, robots, JSON-LD, `noindex` på demo
-- Tilgjengelighetssjekk (axe, tastatur, kontrast) og Lighthouse
-- Responsiv test på mobil, nettbrett og desktop
-- Kort brukerveiledning for redaktører
+- [ ] ~~Kontaktskjema~~ (trengs ikke i demoen)
+- [x] SEO: metadata, sitemap, robots, JSON-LD, `noindex` på demo
+- [x] Tilgjengelighetssjekk (axe, tastatur, kontrast) og Lighthouse
+- [x] Responsiv test på mobil, nettbrett og desktop
+- [ ] Kort brukerveiledning for redaktører
 - **Leveranse:** Demo for STOK
+
+**Merknader fra fase 6:**
+
+- Resultater og rettinger står i [12-seo-og-tilgjengelighet.md](12-seo-og-tilgjengelighet.md).
+- Grønn tekstfarge er gjort mørkere (`#4A7A1C`) for å nå kontrastkravet. Det bør godkjennes sammen med B13.
+- Ekte 404-status er vurdert og utsatt (se 12-seo-og-tilgjengelighet.md).
+- Vercel trenger ingen nye miljøvariabler nå. `NEXT_PUBLIC_SITE_URL` settes når PoC-en får eget domene, og `SITE_ALLOW_INDEXING=true` ved lansering.
 
 ## Samlet estimat
 

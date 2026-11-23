@@ -180,6 +180,18 @@ const modulesFields = /* groq */ `
   }
 `;
 
+/**
+ * Oversettelser av dokumentet, koblet med `@sanity/document-internationalization`.
+ * Brukes til `hreflang` i metadata og sitemap.
+ */
+const translationsField = /* groq */ `
+  "translations": *[_type == "translation.metadata" && references(^._id)][0].translations[]{
+    "language": coalesce(language, _key),
+    "type": value->_type,
+    "slug": value->slug.current
+  }
+`;
+
 const seoFields = /* groq */ `
   title,
   description,
@@ -227,6 +239,7 @@ export const pageQuery = defineQuery(`
     title,
     "slug": slug.current,
     modules[]{ ${modulesFields} },
+    ${translationsField},
     seo{ ${seoFields} }
   }
 `);
@@ -242,6 +255,7 @@ export const industryQuery = defineQuery(`
     modules[]{ ${modulesFields} },
     "featuredProducts": featuredProducts[]->{ ${productCardFields} },
     "industryProducts": *[_type == "product" && language == $language && references(^._id)] | order(title asc){ ${productCardFields} },
+    ${translationsField},
     seo{ ${seoFields} }
   }
 `);
@@ -261,6 +275,7 @@ export const productQuery = defineQuery(`
     "materials": materials[]->{ _id, title },
     "relatedProducts": relatedProducts[]->{ ${productCardFields} },
     "sameGroup": *[_type == "product" && language == $language && defined(^.productGroup) && productGroup._ref == ^.productGroup._ref && _id != ^._id] | order(title asc)[0...4]{ ${productCardFields} },
+    ${translationsField},
     seo{ ${seoFields} }
   }
 `);
@@ -276,6 +291,7 @@ export const newsArticleQuery = defineQuery(`
     "category": category->title,
     body[]{ ${blockFields} },
     "moreNews": *[_type == "newsArticle" && language == $language && _id != ^._id] | order(publishedAt desc)[0...3]{ ${newsCardFields} },
+    ${translationsField},
     seo{ ${seoFields} }
   }
 `);
@@ -300,5 +316,25 @@ export const routesQuery = defineQuery(`
   *[_type in ["page", "industry", "product", "newsArticle"] && language == $language && defined(slug.current)]{
     _type,
     "slug": slug.current
+  }
+`);
+
+/**
+ * Alle indekserbare adresser i begge markeder, til sitemap.xml. Dokumenter med
+ * «Skjul for søkemotorer» (`seo.noIndex`) er utelatt.
+ */
+export const sitemapQuery = defineQuery(`
+  {
+    "frontPages": *[_type == "frontPage" && defined(language) && seo.noIndex != true]{
+      language,
+      _updatedAt
+    },
+    "documents": *[_type in ["page", "industry", "product", "newsArticle"] && defined(language) && defined(slug.current) && seo.noIndex != true]{
+      _type,
+      language,
+      _updatedAt,
+      "slug": slug.current,
+      ${translationsField}
+    }
   }
 `);

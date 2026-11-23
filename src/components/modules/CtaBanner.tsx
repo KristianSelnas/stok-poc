@@ -28,7 +28,7 @@ export function CtaBanner({ module, market }: CtaBannerProps) {
         >
           <div className={`p-8 md:p-12 lg:p-16 ${style.text}`}>
             <h2 className={`text-3xl md:text-4xl ${style.text}`}>{title}</h2>
-            {text && <p className="mt-4 max-w-xl text-lg opacity-90">{text}</p>}
+            {text && <p className="mt-4 max-w-xl text-lg">{text}</p>}
             {cta && <CmsLink link={cta} market={market} className={buttonClasses(style.button, "mt-8")} />}
           </div>
           {hasImage && (

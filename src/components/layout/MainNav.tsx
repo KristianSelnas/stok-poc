@@ -96,28 +96,36 @@ export function MainNav({ items, cta, markets, labels }: MainNavProps) {
     setMobileOpen(false);
   }
 
-  // Lukk mega-menyen ved Escape eller klikk utenfor.
+  // Lukk mega-menyen ved Escape, klikk utenfor eller når fokus forlater menypunktet.
+  // Escape sender fokus tilbake til knappen som åpnet panelet.
   useEffect(() => {
     if (!openKey && !mobileOpen) return;
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
-      const key = openKey;
+      const triggerId = openKey ? `${idPrefix}-trigger-${openKey}` : `${idPrefix}-mobile-toggle`;
       setOpenKey(null);
       setMobileOpen(false);
-      if (key) document.getElementById(`${idPrefix}-trigger-${key}`)?.focus();
+      document.getElementById(triggerId)?.focus();
     }
     function onPointerDown(event: PointerEvent) {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setOpenKey(null);
       }
     }
+    function onFocusIn(event: FocusEvent) {
+      // Knappen og panelet ligger i samme element (li eller div).
+      const item = openKey && document.getElementById(`${idPrefix}-trigger-${openKey}`)?.parentElement;
+      if (item && !item.contains(event.target as Node)) setOpenKey(null);
+    }
 
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("focusin", onFocusIn);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("focusin", onFocusIn);
     };
   }, [openKey, mobileOpen, idPrefix]);
 
@@ -267,6 +275,7 @@ export function MainNav({ items, cta, markets, labels }: MainNavProps) {
 
       {/* Mobil */}
       <button
+        id={`${idPrefix}-mobile-toggle`}
         type="button"
         aria-expanded={mobileOpen}
         aria-controls={`${idPrefix}-mobile`}

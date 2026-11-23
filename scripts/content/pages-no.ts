@@ -130,7 +130,7 @@ export const frontPageNo: FrontPage = {
   ],
 };
 
-export const pagesNo: Page[] = [
+export const pagesNo: Omit<Page, "translations">[] = [
   {
     _id: "fallback-no-losninger",
     title: "Løsninger",

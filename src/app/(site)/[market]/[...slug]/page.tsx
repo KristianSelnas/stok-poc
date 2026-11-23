@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { stegaClean } from "next-sanity";
 import { Suspense } from "react";
 
 import { Modules } from "@/components/modules/Modules";
@@ -8,10 +7,12 @@ import { IndustryPage } from "@/components/templates/IndustryPage";
 import { NewsArticlePage } from "@/components/templates/NewsArticlePage";
 import { ProductPage } from "@/components/templates/ProductPage";
 import { PageSkeleton } from "@/components/ui/PageSkeleton";
-import { getIndustry, getNewsArticle, getPage, getProduct, getRoutes } from "@/lib/content";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getIndustry, getNewsArticle, getPage, getProduct, getRoutes, getSiteSettings } from "@/lib/content";
 import { isMarket, marketIds, marketPath, type MarketId } from "@/lib/markets";
 import { buildMetadata } from "@/lib/metadata";
-import { documentPath, resolveRoute } from "@/lib/routes";
+import { documentPath, resolveRoute, translationPaths } from "@/lib/routes";
+import { newsArticleJsonLd, productJsonLd } from "@/lib/structuredData";
 import type { Industry, NewsArticle, Page as PageDocument, Product } from "@/sanity/types";
 
 /**
@@ -59,17 +60,21 @@ export async function generateMetadata({ params }: PageProps<"/[market]/[...slug
   const doc = loaded.doc;
   if (!doc) return {};
   const path = documentPath(loaded.type, loaded.slug, market) ?? `/${loaded.slug}`;
-  const metadata = buildMetadata({ seo: doc.seo, title: doc.title, market, path });
-  // Bruk ingress eller kort beskrivelse når SEO-beskrivelsen mangler.
-  if (!metadata.description) {
-    const description =
+  return buildMetadata({
+    seo: doc.seo,
+    title: doc.title,
+    // Bruk ingress eller kort beskrivelse når SEO-beskrivelsen mangler.
+    fallbackDescription:
       ("lead" in doc && doc.lead) ||
       ("shortDescription" in doc && doc.shortDescription) ||
       ("excerpt" in doc && doc.excerpt) ||
-      undefined;
-    if (description) metadata.description = stegaClean(description);
-  }
-  return metadata;
+      undefined,
+    fallbackImage:
+      ("image" in doc && doc.image?.url) || ("images" in doc && doc.images?.[0]?.url) || undefined,
+    market,
+    path,
+    alternates: translationPaths(doc.translations),
+  });
 }
 
 /**
@@ -95,9 +100,19 @@ async function DocumentPage({ params, searchParams }: PageProps<"/[market]/[...s
     case "industry":
       return <IndustryPage industry={loaded.doc} market={market} />;
     case "product":
-      return <ProductPage product={loaded.doc} market={market} />;
+      return (
+        <>
+          <JsonLd data={productJsonLd(loaded.doc, await getSiteSettings(market), market)} />
+          <ProductPage product={loaded.doc} market={market} />
+        </>
+      );
     case "newsArticle":
-      return <NewsArticlePage article={loaded.doc} market={market} />;
+      return (
+        <>
+          <JsonLd data={newsArticleJsonLd(loaded.doc, await getSiteSettings(market), market)} />
+          <NewsArticlePage article={loaded.doc} market={market} />
+        </>
+      );
     case "page":
       return (
         <Modules

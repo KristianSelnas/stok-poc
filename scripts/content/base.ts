@@ -15,7 +15,7 @@ export const baseFrontPages: Record<MarketId, FrontPage> = {
   is: frontPageIs,
 };
 
-export const basePages: Record<MarketId, Page[]> = {
+export const basePages: Record<MarketId, Omit<Page, "translations">[]> = {
   no: pagesNo,
   is: pagesIs,
 };

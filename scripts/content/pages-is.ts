@@ -82,7 +82,7 @@ export const frontPageIs: FrontPage = {
   ],
 };
 
-export const pagesIs: Page[] = [
+export const pagesIs: Omit<Page, "translations">[] = [
   {
     _id: "fallback-is-um-okkur",
     title: "Um okkur",

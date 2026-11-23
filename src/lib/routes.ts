@@ -1,4 +1,4 @@
-import type { MarketId } from "./markets";
+import { marketForLanguage, marketPath, markets, type MarketId } from "./markets";
 
 /**
  * Adresseprefiks per dokumenttype og marked. Generelle sider (`page`) har
@@ -42,4 +42,25 @@ export function resolveRoute(market: MarketId, segments: string[]): ResolvedRout
     }
   }
   return { type: "page", slug: segments.join("/") };
+}
+
+export type Translation = {
+  language: string;
+  type: string | null;
+  slug: string | null;
+};
+
+/**
+ * Adresser til oversettelsene av et dokument, med språk som nøkkel, f.eks.
+ * `{ nb: "/no/om-oss", is: "/is/um-okkur" }`. Brukes til `hreflang`.
+ */
+export function translationPaths(translations: Translation[] | null | undefined): Record<string, string> {
+  const paths: Record<string, string> = {};
+  for (const translation of translations ?? []) {
+    const market = marketForLanguage(translation.language);
+    if (!market || !translation.type) continue;
+    const path = documentPath(translation.type, translation.slug, market);
+    if (path) paths[markets[market].language] = marketPath(market, path);
+  }
+  return paths;
 }

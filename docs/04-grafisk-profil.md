@@ -8,6 +8,7 @@ Verdiene er hentet fra stilarkene på stok.dk 23. november 2026. Vi bør få bek
 |---|---|---|---|
 | Primær (mørk blå) | `#00405F` | `--accent-hsl`, H3-farge | Overskrifter, header, mørke flater |
 | Sekundær (grønn) | `#82C341` | `--darkAccent-hsl`, `.btn` | Knapper, ikoner, aksenter |
+| Mørk grønn (tekst) | `#4A7A1C` | Ikke på stok.dk | Stikktitler og etiketter på lys bakgrunn. Gir minst 4,7:1 |
 | Lys bakgrunn | `#F0F5FA` | `--lightAccent-hsl` | Seksjonsbakgrunner |
 | Tekst | `#4A4A4A` | `--black-hsl` | Brødtekst |
 | Hvit | `#FFFFFF` | `--white-hsl` | Bakgrunn, tekst på mørk flate |

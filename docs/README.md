@@ -18,3 +18,4 @@ Proof of concept (PoC) på ny nettløsning for STOK Norge, tidligere BEWI Food. 
 | [08-utviklingsplan.md](08-utviklingsplan.md) | Faser, leveranser og rekkefølge |
 | [09-beslutninger-og-sporsmal.md](09-beslutninger-og-sporsmal.md) | Avklarte beslutninger og åpne spørsmål |
 | [10-webhook.md](10-webhook.md) | Revalidering av innhold når redaktører publiserer |
+| [12-seo-og-tilgjengelighet.md](12-seo-og-tilgjengelighet.md) | SEO, axe, tastatur, Lighthouse og responsiv test (fase 6) |

@@ -19,7 +19,7 @@ export function NewsList({ module, market }: { module: ModuleOf<"newsList">; mar
       <Container>
         <SectionHeader eyebrow={module.eyebrow} title={module.title} />
         {articles.length ? (
-          <NewsCardGrid articles={articles} market={market} />
+          <NewsCardGrid articles={articles} market={market} headingLevel={module.title ? "h3" : "h2"} />
         ) : (
           <p className="rounded-3xl bg-stok-light p-8">{t.noNews}</p>
         )}

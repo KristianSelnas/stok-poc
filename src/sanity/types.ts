@@ -13,6 +13,7 @@ import type {
   ProductQueryResult,
   RoutesQueryResult,
   SiteSettingsQueryResult,
+  SitemapQueryResult,
 } from "./sanity.types";
 
 export type SiteSettings = NonNullable<SiteSettingsQueryResult>;
@@ -48,3 +49,7 @@ export type ProductCard = NonNullable<ModuleOf<"productGrid">["products"]>[numbe
 export type NewsCard = NonNullable<ModuleOf<"newsList">["articles"]>[number];
 export type Person = NonNullable<ModuleOf<"contactPeople">["people"]>[number];
 export type Location = NonNullable<ModuleOf<"locations">["items"]>[number];
+
+// Fase 6: SEO
+
+export type Sitemap = SitemapQueryResult;
