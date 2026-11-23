@@ -8,14 +8,14 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - Opprette Sanity-prosjekt, privat GitHub-repo hos Kantega og Vercel-prosjekt
 - **Leveranse:** Godkjent plan
 
-## Fase 1: Fundament (ca. 1–2 dager) – utviklet, ikke deployet
+## Fase 1: Fundament (ca. 1–2 dager) – ferdig
 
 - [x] Sette opp Next.js med TypeScript, Tailwind, ESLint og Prettier
 - [x] Legge inn designtokens, fonter og logo
 - [x] Bygge grunnlayout: header med mega-meny, bunntekst, mobilmeny
 - [x] Sette opp Sanity Studio på `/studio` med `siteSettings` og `navigation`
 - [x] Sette opp markedsruting (`/no`, `/is`), språkfelt i Sanity og markedsvelger
-- [ ] Deploye til Vercel (venter på at Drift godkjenner Vercels GitHub-app for `kantega/stok-poc`)
+- [x] Deploye til Vercel: https://stok-poc.vercel.app/no
 - **Leveranse:** Side med STOK-profil, meny og bunntekst styrt fra Sanity
 
 **Merknader fra fase 1:**
@@ -23,6 +23,9 @@ Planen er delt i faser. Hver fase avsluttes med noe som kan vises. Estimatene fo
 - Nettsiden bruker reserveinnhold (`src/content/fallback/`) til Sanity-prosjektet er opprettet.
 - Lenker i menyen er stier i fase 1. Interne referanser til dokumenter kommer i fase 2.
 - Islandske UI-tekster og menypunkter må kvalitetssikres.
+- Vercel-prosjektet bruker de samme fire miljøvariablene som `.env.local` (se `.env.example`). Vi bruker ikke Sanity-integrasjonen i Vercel.
+- Studioet på https://stok-poc.vercel.app/studio er registrert i Sanity-prosjektet. Bare medlemmer av prosjektet `up8wp88l` får tilgang, og medlemmer styres under Members i sanity.io/manage.
+- Webhooken i Sanity må peke på `https://stok-poc.vercel.app/api/revalidate`. Det er ikke testet ennå at publisering tømmer cachen i produksjon.
 
 ## Fase 2: Sidebygger og moduler (ca. 3–4 dager) – utviklet
 
