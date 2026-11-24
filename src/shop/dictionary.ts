@@ -327,6 +327,47 @@ export const t = {
   freeShippingLimit: "Fri frakt fra",
   companyEditNote: "Endringer i adresser og brukere gjøres av kundeservice i denne demoen.",
 
+  // Emballasjeveilederen (fase D)
+  assistantOpen: "Spør emballasjeveilederen",
+  assistantTitle: "Emballasjeveilederen",
+  assistantClose: "Lukk emballasjeveilederen",
+  assistantNew: "Ny samtale",
+  assistantIntro:
+    "Beskriv hva dere skal pakke, sende eller lagre, så finner jeg emballasje i katalogen eller lager en skreddersydd eske.",
+  assistantSuggestions: "Forslag",
+  /** Forslag til spørsmål per bransje (`Customer.industry`). `default` brukes ellers og uten innlogging. */
+  assistantNeedSuggestions: {
+    Netthandel: ["Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt."],
+    "Fisk og sjømat": ["Vi skal sende 20 kg fersk laks med fly. Hva anbefaler dere?"],
+    Bakeri: ["Vi trenger esker til kaker som kundene henter i butikken."],
+    default: [
+      "Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.",
+      "Hvilken fiskekasse passer til 20 kg laks?",
+    ],
+  } as Record<string, string[]>,
+  assistantVariantSuggestion: (orderNumber: string, heightCm: number) =>
+    `Samme som ordre ${orderNumber}, men ${heightCm} cm dype og 500 stk.`,
+  assistantCatalogSuggestion: "Vi trenger tape og strekkfilm til pallene.",
+  assistantInputLabel: "Skriv til emballasjeveilederen",
+  assistantPlaceholder: "F.eks. «Vi skal sende 20 kg laks med fly»",
+  assistantSend: "Send",
+  assistantStop: "Stopp",
+  assistantThinking: "Tenker …",
+  assistantYou: "Du",
+  assistantScripted: "Demo uten AI-tilkobling. Assistenten forstår setningene i forslagene.",
+  assistantDisclaimer: "Assistenten kan ta feil. Du ser over og bekrefter alt før noe sendes.",
+  assistantError: "Assistenten svarer ikke akkurat nå. Prøv igjen om litt.",
+  assistantSuggestedBox: "Forslag til skreddersydd eske",
+  assistantSuggestedProducts: "Forslag fra katalogen",
+  assistantSuggestedVariant: (orderNumber: string) => `Variant av ordre ${orderNumber}`,
+  assistantOpenConfigurator: "Åpne i konfiguratoren",
+  assistantReviewVariant: "Se over og send",
+  assistantAddToCart: "Legg i kurv",
+  assistantAdded: "Lagt i kurven",
+  assistantGoToCart: "Gå til handlekurven",
+  assistantPriceOnRequest: "Pris på forespørsel",
+  assistantGuidePrice: "Veiledende pris. Logg inn for å se avtalepris.",
+
   // Feil
   errorNotOrderable: "Denne varen kan ikke bestilles i nettbutikken.",
   errorQuantity: "Skriv inn et antall større enn 0.",

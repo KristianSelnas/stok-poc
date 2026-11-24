@@ -40,8 +40,16 @@ export function minSidePath(path = ""): string {
 export const orderPath = (orderNumber: string) =>
   `${minSidePath("/ordre")}?ordre=${encodeURIComponent(orderNumber)}`;
 
-export const variantPath = (orderNumber: string, lineId: string) =>
-  `${minSidePath("/variant")}?ordre=${encodeURIComponent(orderNumber)}&linje=${encodeURIComponent(lineId)}`;
+/**
+ * Variantskjemaet for en ordrelinje. `values` fyller ut skjemaet med endringer,
+ * f.eks. fra assistenten (fase D). Feltene har samme navn som i konfiguratoren
+ * (`l`, `b`, `h`, `antall` …).
+ */
+export function variantPath(orderNumber: string, lineId: string, values?: Partial<Record<string, string>>) {
+  const search = new URLSearchParams({ ordre: orderNumber, linje: lineId });
+  for (const [key, value] of Object.entries(values ?? {})) if (value) search.set(key, value);
+  return `${minSidePath("/variant")}?${search.toString()}`;
+}
 
 export const loginPath = (next?: string) =>
   next ? `${shopPath("/logg-inn")}?neste=${encodeURIComponent(next)}` : shopPath("/logg-inn");

@@ -16,6 +16,7 @@
     "remove:products": "sanity exec scripts/remove-sanity-products.ts --with-user-token --"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
     "@sanity/client": "^8.17.0",
     "@sanity/document-internationalization": "^6.3.0",
     "@sanity/icons": "^5.4.0",

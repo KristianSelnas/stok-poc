@@ -86,6 +86,27 @@ export async function quickAddToCart(formData: FormData) {
   await cookieCart.add(variant.sku, roundToBundle(quantity, variant.unitsPerBundle));
 }
 
+/**
+ * Legger forslaget fra emballasjeveilederen i kurven (fase D). Varene og antallet
+ * sjekkes på nytt her, siden forslaget kommer fra nettleseren.
+ */
+export async function addLinesToCart(lines: { sku: string; quantity: number }[]): Promise<ActionState> {
+  if (!Array.isArray(lines) || lines.length === 0 || lines.length > 10) {
+    return { ok: false, message: t.errorGeneric };
+  }
+  for (const line of lines) {
+    const variant = await orderableVariant(String(line?.sku ?? ""));
+    const quantity = Number(line?.quantity);
+    if (!variant) return { ok: false, message: t.errorNotOrderable };
+    if (!Number.isFinite(quantity) || quantity <= 0) return { ok: false, message: t.errorQuantity };
+  }
+  for (const line of lines) {
+    const variant = (await orderableVariant(line.sku))!;
+    await cookieCart.add(variant.sku, roundToBundle(Number(line.quantity), variant.unitsPerBundle));
+  }
+  return { ok: true, message: t.assistantAdded };
+}
+
 export async function updateCartLine(formData: FormData) {
   const sku = text(formData, "sku");
   const variant = await orderableVariant(sku);

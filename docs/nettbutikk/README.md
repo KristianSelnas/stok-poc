@@ -4,7 +4,7 @@ Demo av en nettbutikk for STOK Emballage. Butikken fungerer som en vanlig B2B-ne
 
 Butikken er en egen del av nettstedet under `/no/butikk` og `/no/min-side`, med lenker fra toppmenyen og produktsidene.
 
-**Status:** Fase A (klassisk butikk), fase B (Min side) og fase C (konfigurator) er ferdige. Fase D (AI) er neste.
+**Status:** Fase A (klassisk butikk), fase B (Min side) og fase C (konfigurator) er ferdige. Fase D (AI) pågår.
 
 ## Dokumenter
 
