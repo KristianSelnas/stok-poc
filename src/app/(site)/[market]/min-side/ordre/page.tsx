@@ -297,7 +297,7 @@ async function OrdersContent({ searchParams }: { searchParams: Props["searchPara
   );
 }
 
-/** Ordrehistorikk, og ordredetaljer med `?ordre=10327`. */
+/** Ordrehistorikk, og ordredetaljer med `?ordre=10329`. */
 export default function OrdersPage({ searchParams }: Props) {
   return (
     <Suspense fallback={<MinSideSkeleton />}>

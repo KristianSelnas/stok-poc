@@ -1,30 +1,239 @@
 [
   {
     "orderNumber": "10301",
-    "customerId": "nordlys",
-    "createdAt": "2025-06-01T08:04:00.000Z",
+    "customerId": "havbris",
+    "createdAt": "2025-06-05T10:17:00.000Z",
     "status": "delivered",
     "lines": [
       {
         "id": "l1",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 1200,
-        "unitPrice": 2.4,
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 84,
+        "unitPrice": 216,
         "customSpec": null
       },
       {
         "id": "l2",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 700,
-        "unitPrice": 3.4,
+        "sku": "0280-1",
+        "productSlug": "pers-box",
+        "name": "Pers box 70 L m/drenering",
+        "quantity": 20,
+        "unitPrice": 287,
         "customSpec": null
       },
       {
         "id": "l3",
+        "sku": "9110-2",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
+        "quantity": 30,
+        "unitPrice": 99.8,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-5606",
+    "requestedDeliveryDate": "2025-06-26",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 26878,
+      "shipping": 0,
+      "vat": 6719.5,
+      "gross": 33597.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10302",
+    "customerId": "nordlys",
+    "createdAt": "2025-06-06T07:24:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 72,
+        "unitPrice": 18.5,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 600,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 200
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l3",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1300,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-9100",
+    "requestedDeliveryDate": "2025-06-20",
+    "note": null,
+    "orderedBy": "Amir Haddad",
+    "totals": {
+      "net": 15942,
+      "shipping": 0,
+      "vat": 3985.5,
+      "gross": 19927.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10303",
+    "customerId": "lunde",
+    "createdAt": "2025-06-09T14:24:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 36,
+        "unitPrice": 17.6,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": "2025-06-18",
+    "note": null,
+    "orderedBy": "Sindre Aas",
+    "totals": {
+      "net": 633.6,
+      "shipping": 750,
+      "vat": 345.9,
+      "gross": 1729.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10304",
+    "customerId": "havbris",
+    "createdAt": "2025-07-21T08:27:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 84,
+        "unitPrice": 216,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "0280-1",
+        "productSlug": "pers-box",
+        "name": "Pers box 70 L m/drenering",
+        "quantity": 20,
+        "unitPrice": 287,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "9110-2",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
+        "quantity": 30,
+        "unitPrice": 99.8,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-6919",
+    "requestedDeliveryDate": "2025-08-08",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 26878,
+      "shipping": 0,
+      "vat": 6719.5,
+      "gross": 33597.5
+    },
+    "basedOn": {
+      "orderNumber": "10301",
+      "kind": "reorder"
+    }
+  },
+  {
+    "orderNumber": "10305",
+    "customerId": "nordlys",
+    "createdAt": "2025-07-30T13:50:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
         "sku": null,
         "productSlug": null,
         "quantity": 1400,
@@ -47,162 +256,6 @@
         }
       },
       {
-        "id": "l4",
-        "sku": "5450-6",
-        "productSlug": "flaskeeske",
-        "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm",
-        "quantity": 160,
-        "unitPrice": 13.3,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-6535",
-    "requestedDeliveryDate": "2025-06-17",
-    "note": null,
-    "orderedBy": "Line Moen",
-    "totals": {
-      "net": 21108,
-      "shipping": 0,
-      "vat": 5277,
-      "gross": 26385
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10302",
-    "customerId": "lunde",
-    "createdAt": "2025-06-03T10:05:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "6723-2",
-        "productSlug": "brodkasser",
-        "name": "BEWI Box 26 L, Sort",
-        "quantity": 20,
-        "unitPrice": 108.5,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "3065",
-        "productSlug": "spann-dunker",
-        "name": "BEWI Spann 10 L",
-        "quantity": 50,
-        "unitPrice": 30.6,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": "2025-06-21",
-    "note": null,
-    "orderedBy": "Sindre Aas",
-    "totals": {
-      "net": 3700,
-      "shipping": 750,
-      "vat": 1112.5,
-      "gross": 5562.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10303",
-    "customerId": "havbris",
-    "createdAt": "2025-06-21T09:46:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 216,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 42.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "9130-1",
-        "productSlug": "polybags",
-        "name": "Polybag 600 x 400 mm for isoporkasse",
-        "quantity": 10000,
-        "unitPrice": 0.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 3047,
-        "unitPrice": 14.5,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-7551",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 95825.5,
-      "shipping": 0,
-      "vat": 23956.38,
-      "gross": 119781.88
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10304",
-    "customerId": "nordlys",
-    "createdAt": "2025-07-24T10:53:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
-        "quantity": 350,
-        "unitPrice": 4.6,
-        "customSpec": null
-      },
-      {
         "id": "l2",
         "sku": "9101-1",
         "productSlug": "pakketape",
@@ -210,24 +263,6 @@
         "quantity": 36,
         "unitPrice": 18.5,
         "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "5201-3",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 400 x 300 x 200 mm",
-        "quantity": 240,
-        "unitPrice": 7.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 700,
-        "unitPrice": 3.4,
-        "customSpec": null
       }
     ],
     "deliveryAddress": {
@@ -239,1059 +274,26 @@
       "city": "Heimdal",
       "country": "Norge"
     },
-    "poNumber": "NL-3319",
-    "requestedDeliveryDate": "2025-08-09",
+    "poNumber": "NL-9155",
+    "requestedDeliveryDate": "2025-08-06",
     "note": null,
     "orderedBy": "Line Moen",
     "totals": {
-      "net": 6528,
+      "net": 14386,
       "shipping": 0,
-      "vat": 1632,
-      "gross": 8160
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10305",
-    "customerId": "lunde",
-    "createdAt": "2025-07-28T14:55:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1500,
-        "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
-        "unitPrice": 6.4,
-        "customSpec": {
-          "style": "0427",
-          "innerDimensionsMm": {
-            "length": 250,
-            "width": 250,
-            "height": 100
-          },
-          "board": "E-bølge",
-          "color": "Hvit",
-          "print": {
-            "colors": 1,
-            "description": "Logo på lokket, vindu i PET"
-          },
-          "notes": "Vindu 120 x 120 mm sentrert på lokket"
-        }
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": "2025-08-16",
-    "note": null,
-    "orderedBy": "Kari Lunde",
-    "totals": {
-      "net": 9600,
-      "shipping": 0,
-      "vat": 2400,
-      "gross": 12000
+      "vat": 3596.5,
+      "gross": 17982.5
     },
     "basedOn": null
   },
   {
     "orderNumber": "10306",
-    "customerId": "havbris",
-    "createdAt": "2025-08-01T07:56:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 216,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 42.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "9130-1",
-        "productSlug": "polybags",
-        "name": "Polybag 600 x 400 mm for isoporkasse",
-        "quantity": 10000,
-        "unitPrice": 0.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 3047,
-        "unitPrice": 14.5,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-6265",
-    "requestedDeliveryDate": "2025-08-10",
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 95825.5,
-      "shipping": 0,
-      "vat": 23956.38,
-      "gross": 119781.88
-    },
-    "basedOn": {
-      "orderNumber": "10303",
-      "kind": "reorder"
-    }
-  },
-  {
-    "orderNumber": "10307",
-    "customerId": "nordlys",
-    "createdAt": "2025-09-08T11:02:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 1150,
-        "unitPrice": 2.4,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 550,
-        "unitPrice": 3.4,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-8098",
-    "requestedDeliveryDate": "2025-09-29",
-    "note": null,
-    "orderedBy": "Line Moen",
-    "totals": {
-      "net": 4630,
-      "shipping": 0,
-      "vat": 1157.5,
-      "gross": 5787.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10308",
-    "customerId": "havbris",
-    "createdAt": "2025-09-14T11:25:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 216,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "9140-1",
-        "productSlug": "palleark",
-        "name": "Palleark bølgepapp 1200 x 800 mm",
-        "quantity": 200,
-        "unitPrice": 9,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-vigra",
-      "label": "Anlegg Vigra",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Rørvikvegen 210",
-      "postalCode": "6040",
-      "city": "Vigra",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-5107",
-    "requestedDeliveryDate": "2025-10-02",
-    "note": null,
-    "orderedBy": "Ola Brekke",
-    "totals": {
-      "net": 19944,
-      "shipping": 0,
-      "vat": 4986,
-      "gross": 24930
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10309",
     "customerId": "lunde",
-    "createdAt": "2025-09-22T11:58:00.000Z",
+    "createdAt": "2025-08-03T11:56:00.000Z",
     "status": "delivered",
     "lines": [
       {
         "id": "l1",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1700,
-        "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
-        "unitPrice": 6.4,
-        "customSpec": {
-          "style": "0427",
-          "innerDimensionsMm": {
-            "length": 250,
-            "width": 250,
-            "height": 100
-          },
-          "board": "E-bølge",
-          "color": "Hvit",
-          "print": {
-            "colors": 1,
-            "description": "Logo på lokket, vindu i PET"
-          },
-          "notes": "Vindu 120 x 120 mm sentrert på lokket"
-        }
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Kari Lunde",
-    "totals": {
-      "net": 10880,
-      "shipping": 0,
-      "vat": 2720,
-      "gross": 13600
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10310",
-    "customerId": "havbris",
-    "createdAt": "2025-10-19T08:12:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 216,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "9110-2",
-        "productSlug": "strekkfilm",
-        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
-        "quantity": 30,
-        "unitPrice": 99.8,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "9130-1",
-        "productSlug": "polybags",
-        "name": "Polybag 600 x 400 mm for isoporkasse",
-        "quantity": 10000,
-        "unitPrice": 0.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "0280-1",
-        "productSlug": "pers-box",
-        "name": "Pers box 70 L m/drenering",
-        "quantity": 40,
-        "unitPrice": 287,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-3230",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Ola Brekke",
-    "totals": {
-      "net": 40618,
-      "shipping": 0,
-      "vat": 10154.5,
-      "gross": 50772.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10311",
-    "customerId": "nordlys",
-    "createdAt": "2025-10-21T10:41:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "9101-1",
-        "productSlug": "pakketape",
-        "name": "Pakketape PP 48 mm x 66 m, brun",
-        "quantity": 72,
-        "unitPrice": 18.5,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5450-6",
-        "productSlug": "flaskeeske",
-        "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm",
-        "quantity": 110,
-        "unitPrice": 13.3,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
-        "quantity": 550,
-        "unitPrice": 4.6,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1100,
-        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
-        "unitPrice": 9.8,
-        "customSpec": {
-          "style": "0427",
-          "innerDimensionsMm": {
-            "length": 300,
-            "width": 200,
-            "height": 80
-          },
-          "board": "E-bølge",
-          "color": "Sort",
-          "print": {
-            "colors": 1,
-            "description": "Hvit logo på lokket"
-          },
-          "notes": null
-        }
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-9023",
-    "requestedDeliveryDate": "2025-11-03",
-    "note": null,
-    "orderedBy": "Amir Haddad",
-    "totals": {
-      "net": 16105,
-      "shipping": 0,
-      "vat": 4026.25,
-      "gross": 20131.25
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10312",
-    "customerId": "lunde",
-    "createdAt": "2025-11-25T11:10:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1000,
-        "name": "Brødeske med logo, 400 x 300 x 150 mm",
-        "unitPrice": 11.9,
-        "customSpec": {
-          "style": "0201",
-          "innerDimensionsMm": {
-            "length": 400,
-            "width": 300,
-            "height": 150
-          },
-          "board": "B-bølge",
-          "color": "Hvit",
-          "print": {
-            "colors": 2,
-            "description": "Logo Lunde Bakeri på to sider"
-          },
-          "notes": null
-        }
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": "2025-12-09",
-    "note": null,
-    "orderedBy": "Kari Lunde",
-    "totals": {
-      "net": 11900,
-      "shipping": 0,
-      "vat": 2975,
-      "gross": 14875
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10313",
-    "customerId": "havbris",
-    "createdAt": "2025-11-27T11:24:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 216,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "9110-2",
-        "productSlug": "strekkfilm",
-        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
-        "quantity": 30,
-        "unitPrice": 99.8,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "9130-1",
-        "productSlug": "polybags",
-        "name": "Polybag 600 x 400 mm for isoporkasse",
-        "quantity": 10000,
-        "unitPrice": 0.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "0280-1",
-        "productSlug": "pers-box",
-        "name": "Pers box 70 L m/drenering",
-        "quantity": 40,
-        "unitPrice": 287,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-vigra",
-      "label": "Anlegg Vigra",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Rørvikvegen 210",
-      "postalCode": "6040",
-      "city": "Vigra",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-1834",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 40618,
-      "shipping": 0,
-      "vat": 10154.5,
-      "gross": 50772.5
-    },
-    "basedOn": {
-      "orderNumber": "10310",
-      "kind": "reorder"
-    }
-  },
-  {
-    "orderNumber": "10314",
-    "customerId": "nordlys",
-    "createdAt": "2025-12-06T14:28:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 900,
-        "unitPrice": 2.4,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 650,
-        "unitPrice": 3.4,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-1631",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Amir Haddad",
-    "totals": {
-      "net": 4370,
-      "shipping": 0,
-      "vat": 1092.5,
-      "gross": 5462.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10315",
-    "customerId": "havbris",
-    "createdAt": "2026-01-02T13:04:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 126,
-        "unitPrice": 225,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 4626,
-        "unitPrice": 14.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "0285-0",
-        "productSlug": "pers-box",
-        "name": "Pers box 90 L w/drain.",
-        "quantity": 16,
-        "unitPrice": 399,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 44.3,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-9304",
-    "requestedDeliveryDate": "2026-01-09",
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 128391,
-      "shipping": 0,
-      "vat": 32097.75,
-      "gross": 160488.75
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10316",
-    "customerId": "lunde",
-    "createdAt": "2026-01-26T08:37:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "6723-2",
-        "productSlug": "brodkasser",
-        "name": "BEWI Box 26 L, Sort",
-        "quantity": 16,
-        "unitPrice": 113,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": "2026-02-14",
-    "note": null,
-    "orderedBy": "Kari Lunde",
-    "totals": {
-      "net": 1808,
-      "shipping": 750,
-      "vat": 639.5,
-      "gross": 3197.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10317",
-    "customerId": "nordlys",
-    "createdAt": "2026-02-04T09:45:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5450-6",
-        "productSlug": "flaskeeske",
-        "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm",
-        "quantity": 150,
-        "unitPrice": 13.9,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 500,
-        "unitPrice": 3.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "5201-3",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 400 x 300 x 200 mm",
-        "quantity": 280,
-        "unitPrice": 8.1,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-1509",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Line Moen",
-    "totals": {
-      "net": 6103,
-      "shipping": 0,
-      "vat": 1525.75,
-      "gross": 7628.75
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10318",
-    "customerId": "havbris",
-    "createdAt": "2026-02-19T06:49:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 225,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 2747,
-        "unitPrice": 14.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 44.3,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "0280-1",
-        "productSlug": "pers-box",
-        "name": "Pers box 70 L m/drenering",
-        "quantity": 40,
-        "unitPrice": 299,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-2892",
-    "requestedDeliveryDate": "2026-03-04",
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 97271.5,
-      "shipping": 0,
-      "vat": 24317.88,
-      "gross": 121589.38
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10319",
-    "customerId": "lunde",
-    "createdAt": "2026-03-24T10:01:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "6721",
-        "productSlug": "brodkasser",
-        "name": "BEWI Box 27 L",
-        "quantity": 28,
-        "unitPrice": 113,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Sindre Aas",
-    "totals": {
-      "net": 3164,
-      "shipping": 750,
-      "vat": 978.5,
-      "gross": 4892.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10320",
-    "customerId": "havbris",
-    "createdAt": "2026-04-01T08:50:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 225,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 2747,
-        "unitPrice": 14.5,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 44.3,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "0280-1",
-        "productSlug": "pers-box",
-        "name": "Pers box 70 L m/drenering",
-        "quantity": 40,
-        "unitPrice": 299,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-3942",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 97271.5,
-      "shipping": 0,
-      "vat": 24317.88,
-      "gross": 121589.38
-    },
-    "basedOn": {
-      "orderNumber": "10318",
-      "kind": "reorder"
-    }
-  },
-  {
-    "orderNumber": "10321",
-    "customerId": "nordlys",
-    "createdAt": "2026-04-03T13:23:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
-        "quantity": 475,
-        "unitPrice": 4.8,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 550,
-        "unitPrice": 2.5,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-4246",
-    "requestedDeliveryDate": "2026-04-19",
-    "note": null,
-    "orderedBy": "Line Moen",
-    "totals": {
-      "net": 3655,
-      "shipping": 0,
-      "vat": 913.75,
-      "gross": 4568.75
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10322",
-    "customerId": "havbris",
-    "createdAt": "2026-05-16T11:46:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 126,
-        "unitPrice": 225,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 300,
-        "unitPrice": 44.3,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "0285-0",
-        "productSlug": "pers-box",
-        "name": "Pers box 90 L w/drain.",
-        "quantity": 16,
-        "unitPrice": 399,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 4114,
-        "unitPrice": 14.5,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-7208",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Ingrid Havnes",
-    "totals": {
-      "net": 107677,
-      "shipping": 0,
-      "vat": 26919.25,
-      "gross": 134596.25
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10323",
-    "customerId": "lunde",
-    "createdAt": "2026-05-23T12:28:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1800,
-        "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
-        "unitPrice": 6.4,
-        "customSpec": {
-          "style": "0427",
-          "innerDimensionsMm": {
-            "length": 250,
-            "width": 250,
-            "height": 100
-          },
-          "board": "E-bølge",
-          "color": "Hvit",
-          "print": {
-            "colors": 1,
-            "description": "Logo på lokket, vindu i PET"
-          },
-          "notes": "Vindu 120 x 120 mm sentrert på lokket"
-        }
-      },
-      {
-        "id": "l2",
-        "sku": "3065",
-        "productSlug": "spann-dunker",
-        "name": "BEWI Spann 10 L",
-        "quantity": 95,
-        "unitPrice": 31.9,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
         "sku": null,
         "productSlug": null,
         "quantity": 800,
@@ -1324,76 +326,21 @@
       "country": "Norge"
     },
     "poNumber": null,
-    "requestedDeliveryDate": "2026-06-12",
+    "requestedDeliveryDate": "2025-08-20",
     "note": null,
     "orderedBy": "Kari Lunde",
     "totals": {
-      "net": 24070.5,
+      "net": 9520,
       "shipping": 0,
-      "vat": 6017.63,
-      "gross": 30088.13
+      "vat": 2380,
+      "gross": 11900
     },
     "basedOn": null
   },
   {
-    "orderNumber": "10324",
-    "customerId": "nordlys",
-    "createdAt": "2026-05-26T14:52:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5201-3",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 400 x 300 x 200 mm",
-        "quantity": 260,
-        "unitPrice": 8.1,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
-        "quantity": 450,
-        "unitPrice": 4.8,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "9101-1",
-        "productSlug": "pakketape",
-        "name": "Pakketape PP 48 mm x 66 m, brun",
-        "quantity": 72,
-        "unitPrice": 19.3,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-8799",
-    "requestedDeliveryDate": null,
-    "note": null,
-    "orderedBy": "Amir Haddad",
-    "totals": {
-      "net": 5655.6,
-      "shipping": 0,
-      "vat": 1413.9,
-      "gross": 7069.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10325",
+    "orderNumber": "10307",
     "customerId": "havbris",
-    "createdAt": "2026-06-30T09:50:00.000Z",
+    "createdAt": "2025-09-08T07:49:00.000Z",
     "status": "delivered",
     "lines": [
       {
@@ -1401,17 +348,17 @@
         "sku": "0293-1",
         "productSlug": "fiskekasse",
         "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
-        "unitPrice": 225,
+        "quantity": 168,
+        "unitPrice": 216,
         "customSpec": null
       },
       {
         "id": "l2",
-        "sku": "8014-0",
-        "productSlug": "kartong-laks-25-kg",
-        "name": "Kartong laks 25 kg",
-        "quantity": 4191,
-        "unitPrice": 14.5,
+        "sku": "9110-2",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
+        "quantity": 18,
+        "unitPrice": 99.8,
         "customSpec": null
       }
     ],
@@ -1424,49 +371,71 @@
       "city": "Ellingsøy",
       "country": "Norge"
     },
-    "poNumber": "PO-HB-7121",
-    "requestedDeliveryDate": "2026-07-07",
+    "poNumber": "PO-HB-6858",
+    "requestedDeliveryDate": null,
     "note": null,
-    "orderedBy": "Ola Brekke",
+    "orderedBy": "Ingrid Havnes",
     "totals": {
-      "net": 79669.5,
+      "net": 38084.4,
       "shipping": 0,
-      "vat": 19917.38,
-      "gross": 99586.88
+      "vat": 9521.1,
+      "gross": 47605.5
     },
     "basedOn": null
   },
   {
-    "orderNumber": "10326",
+    "orderNumber": "10308",
     "customerId": "nordlys",
-    "createdAt": "2026-07-05T07:42:00.000Z",
+    "createdAt": "2025-09-11T10:41:00.000Z",
     "status": "delivered",
     "lines": [
       {
         "id": "l1",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
+        "sku": null,
+        "productSlug": null,
         "quantity": 600,
-        "unitPrice": 4.8,
-        "customSpec": null
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 200
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
       },
       {
         "id": "l2",
-        "sku": "5450-6",
-        "productSlug": "flaskeeske",
-        "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm",
-        "quantity": 190,
-        "unitPrice": 13.9,
-        "customSpec": null
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1500,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
       },
       {
         "id": "l3",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 1000,
-        "unitPrice": 3.5,
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 108,
+        "unitPrice": 18.5,
         "customSpec": null
       }
     ],
@@ -1479,29 +448,29 @@
       "city": "Heimdal",
       "country": "Norge"
     },
-    "poNumber": "NL-1629",
-    "requestedDeliveryDate": null,
+    "poNumber": "NL-6565",
+    "requestedDeliveryDate": "2025-10-01",
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 9021,
+      "net": 17988,
       "shipping": 0,
-      "vat": 2255.25,
-      "gross": 11276.25
+      "vat": 4497,
+      "gross": 22485
     },
     "basedOn": null
   },
   {
-    "orderNumber": "10327",
+    "orderNumber": "10309",
     "customerId": "lunde",
-    "createdAt": "2026-07-11T06:04:00.000Z",
+    "createdAt": "2025-09-28T09:57:00.000Z",
     "status": "delivered",
     "lines": [
       {
         "id": "l1",
         "sku": null,
         "productSlug": null,
-        "quantity": 700,
+        "quantity": 900,
         "name": "Brødeske med logo, 400 x 300 x 150 mm",
         "unitPrice": 11.9,
         "customSpec": {
@@ -1519,6 +488,112 @@
           },
           "notes": null
         }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Kari Lunde",
+    "totals": {
+      "net": 10710,
+      "shipping": 0,
+      "vat": 2677.5,
+      "gross": 13387.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10310",
+    "customerId": "havbris",
+    "createdAt": "2025-10-18T11:57:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 84,
+        "unitPrice": 216,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "9130-1",
+        "productSlug": "polybags",
+        "name": "Polybag 600 x 400 mm for isoporkasse",
+        "quantity": 10000,
+        "unitPrice": 0.8,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "8014-0",
+        "productSlug": "kartong-laks-25-kg",
+        "name": "Kartong laks 25 kg",
+        "quantity": 4708,
+        "unitPrice": 14.5,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-hk",
+      "label": "Hovedkontor",
+      "name": "Havbris Sjømat AS",
+      "street": "Storgata 12",
+      "postalCode": "6002",
+      "city": "Ålesund",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-1050",
+    "requestedDeliveryDate": "2025-11-01",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 94410,
+      "shipping": 0,
+      "vat": 23602.5,
+      "gross": 118012.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10311",
+    "customerId": "nordlys",
+    "createdAt": "2025-10-31T06:24:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1100,
+        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
+        "unitPrice": 9.8,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 80
+          },
+          "board": "E-bølge",
+          "color": "Sort",
+          "print": {
+            "colors": 1,
+            "description": "Hvit logo på lokket"
+          },
+          "notes": null
+        }
       },
       {
         "id": "l2",
@@ -1526,14 +601,647 @@
         "productSlug": "pakketape",
         "name": "Pakketape PP 48 mm x 66 m, brun",
         "quantity": 36,
-        "unitPrice": 18.3,
+        "unitPrice": 18.5,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-1886",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Line Moen",
+    "totals": {
+      "net": 11446,
+      "shipping": 0,
+      "vat": 2861.5,
+      "gross": 14307.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10312",
+    "customerId": "lunde",
+    "createdAt": "2025-11-12T12:18:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "3065",
+        "productSlug": "spann-dunker",
+        "name": "BEWI Spann 10 L",
+        "quantity": 75,
+        "unitPrice": 30.6,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 900,
+        "name": "Brødeske med logo, 400 x 300 x 150 mm",
+        "unitPrice": 11.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Hvit",
+          "print": {
+            "colors": 2,
+            "description": "Logo Lunde Bakeri på to sider"
+          },
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": "2025-12-03",
+    "note": null,
+    "orderedBy": "Sindre Aas",
+    "totals": {
+      "net": 13005,
+      "shipping": 0,
+      "vat": 3251.25,
+      "gross": 16256.25
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10313",
+    "customerId": "havbris",
+    "createdAt": "2025-12-02T09:16:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 84,
+        "unitPrice": 216,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "9130-1",
+        "productSlug": "polybags",
+        "name": "Polybag 600 x 400 mm for isoporkasse",
+        "quantity": 10000,
+        "unitPrice": 0.8,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "8014-0",
+        "productSlug": "kartong-laks-25-kg",
+        "name": "Kartong laks 25 kg",
+        "quantity": 4708,
+        "unitPrice": 14.5,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-4612",
+    "requestedDeliveryDate": "2025-12-19",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 94410,
+      "shipping": 0,
+      "vat": 23602.5,
+      "gross": 118012.5
+    },
+    "basedOn": {
+      "orderNumber": "10310",
+      "kind": "reorder"
+    }
+  },
+  {
+    "orderNumber": "10314",
+    "customerId": "nordlys",
+    "createdAt": "2025-12-17T06:00:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 700,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l2",
+        "sku": "9101-2",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, klar",
+        "quantity": 36,
+        "unitPrice": 20.4,
         "customSpec": null
       },
       {
         "id": "l3",
         "sku": null,
         "productSlug": null,
-        "quantity": 1100,
+        "quantity": 300,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 200
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-6152",
+    "requestedDeliveryDate": "2025-12-30",
+    "note": null,
+    "orderedBy": "Line Moen",
+    "totals": {
+      "net": 8384.4,
+      "shipping": 0,
+      "vat": 2096.1,
+      "gross": 10480.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10315",
+    "customerId": "havbris",
+    "createdAt": "2026-01-09T14:54:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 126,
+        "unitPrice": 225,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "7002",
+        "productSlug": "filetbrett",
+        "name": "Filetbrett 5 L",
+        "quantity": 300,
+        "unitPrice": 44.3,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "8014-0",
+        "productSlug": "kartong-laks-25-kg",
+        "name": "Kartong laks 25 kg",
+        "quantity": 2319,
+        "unitPrice": 14.5,
+        "customSpec": null
+      },
+      {
+        "id": "l4",
+        "sku": "9110-2",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
+        "quantity": 30,
+        "unitPrice": 104,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-7102",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Ola Brekke",
+    "totals": {
+      "net": 78385.5,
+      "shipping": 0,
+      "vat": 19596.38,
+      "gross": 97981.88
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10316",
+    "customerId": "lunde",
+    "createdAt": "2026-01-12T13:26:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 800,
+        "name": "Brødeske med logo, 400 x 300 x 150 mm",
+        "unitPrice": 11.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Hvit",
+          "print": {
+            "colors": 2,
+            "description": "Logo Lunde Bakeri på to sider"
+          },
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": "2026-01-25",
+    "note": null,
+    "orderedBy": "Kari Lunde",
+    "totals": {
+      "net": 9520,
+      "shipping": 0,
+      "vat": 2380,
+      "gross": 11900
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10317",
+    "customerId": "nordlys",
+    "createdAt": "2026-01-27T11:34:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1200,
+        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
+        "unitPrice": 9.8,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 80
+          },
+          "board": "E-bølge",
+          "color": "Sort",
+          "print": {
+            "colors": 1,
+            "description": "Hvit logo på lokket"
+          },
+          "notes": null
+        }
+      },
+      {
+        "id": "l2",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 200,
+        "name": "Vineske for 6 flasker, 280 x 190 x 360 mm",
+        "unitPrice": 16.5,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 280,
+            "width": 190,
+            "height": 360
+          },
+          "board": "BC dobbelbølge",
+          "color": "Brun",
+          "print": {
+            "colors": 1,
+            "description": "Logo på to sider"
+          },
+          "notes": "Innredning for 6 flasker à 0,75 l"
+        }
+      },
+      {
+        "id": "l3",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 72,
+        "unitPrice": 19.3,
+        "customSpec": null
+      },
+      {
+        "id": "l4",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1400,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-9804",
+    "requestedDeliveryDate": "2026-02-04",
+    "note": null,
+    "orderedBy": "Amir Haddad",
+    "totals": {
+      "net": 26109.6,
+      "shipping": 0,
+      "vat": 6527.4,
+      "gross": 32637
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10318",
+    "customerId": "havbris",
+    "createdAt": "2026-02-16T12:46:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 126,
+        "unitPrice": 225,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "7002",
+        "productSlug": "filetbrett",
+        "name": "Filetbrett 5 L",
+        "quantity": 600,
+        "unitPrice": 44.3,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-2755",
+    "requestedDeliveryDate": "2026-02-28",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 54930,
+      "shipping": 0,
+      "vat": 13732.5,
+      "gross": 68662.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10319",
+    "customerId": "lunde",
+    "createdAt": "2026-03-12T11:49:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 800,
+        "name": "Brødeske med logo, 400 x 300 x 150 mm",
+        "unitPrice": 11.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Hvit",
+          "print": {
+            "colors": 2,
+            "description": "Logo Lunde Bakeri på to sider"
+          },
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": "2026-03-30",
+    "note": null,
+    "orderedBy": "Kari Lunde",
+    "totals": {
+      "net": 9520,
+      "shipping": 0,
+      "vat": 2380,
+      "gross": 11900
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10320",
+    "customerId": "nordlys",
+    "createdAt": "2026-03-27T06:22:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "9101-2",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, klar",
+        "quantity": 72,
+        "unitPrice": 21.2,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 108,
+        "unitPrice": 19.3,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-7149",
+    "requestedDeliveryDate": "2026-04-04",
+    "note": null,
+    "orderedBy": "Line Moen",
+    "totals": {
+      "net": 3610.8,
+      "shipping": 0,
+      "vat": 902.7,
+      "gross": 4513.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10321",
+    "customerId": "havbris",
+    "createdAt": "2026-03-29T06:11:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 126,
+        "unitPrice": 225,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "7002",
+        "productSlug": "filetbrett",
+        "name": "Filetbrett 5 L",
+        "quantity": 600,
+        "unitPrice": 44.3,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-4000",
+    "requestedDeliveryDate": "2026-04-07",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 54930,
+      "shipping": 0,
+      "vat": 13732.5,
+      "gross": 68662.5
+    },
+    "basedOn": {
+      "orderNumber": "10318",
+      "kind": "reorder"
+    }
+  },
+  {
+    "orderNumber": "10322",
+    "customerId": "lunde",
+    "createdAt": "2026-04-29T12:58:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1900,
         "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
         "unitPrice": 6.4,
         "customSpec": {
@@ -1551,6 +1259,15 @@
           },
           "notes": "Vindu 120 x 120 mm sentrert på lokket"
         }
+      },
+      {
+        "id": "l2",
+        "sku": "3065",
+        "productSlug": "spann-dunker",
+        "name": "BEWI Spann 10 L",
+        "quantity": 100,
+        "unitPrice": 31.9,
+        "customSpec": null
       }
     ],
     "deliveryAddress": {
@@ -1563,21 +1280,21 @@
       "country": "Norge"
     },
     "poNumber": null,
-    "requestedDeliveryDate": "2026-08-01",
+    "requestedDeliveryDate": null,
     "note": null,
-    "orderedBy": "Sindre Aas",
+    "orderedBy": "Kari Lunde",
     "totals": {
-      "net": 16028.8,
+      "net": 15350,
       "shipping": 0,
-      "vat": 4007.2,
-      "gross": 20036
+      "vat": 3837.5,
+      "gross": 19187.5
     },
     "basedOn": null
   },
   {
-    "orderNumber": "10328",
+    "orderNumber": "10323",
     "customerId": "havbris",
-    "createdAt": "2026-08-09T13:58:00.000Z",
+    "createdAt": "2026-05-18T13:05:00.000Z",
     "status": "delivered",
     "lines": [
       {
@@ -1585,7 +1302,7 @@
         "sku": "0293-1",
         "productSlug": "fiskekasse",
         "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 84,
+        "quantity": 168,
         "unitPrice": 225,
         "customSpec": null
       },
@@ -1594,7 +1311,7 @@
         "sku": "8014-0",
         "productSlug": "kartong-laks-25-kg",
         "name": "Kartong laks 25 kg",
-        "quantity": 4191,
+        "quantity": 4669,
         "unitPrice": 14.5,
         "customSpec": null
       }
@@ -1608,52 +1325,273 @@
       "city": "Ellingsøy",
       "country": "Norge"
     },
-    "poNumber": "PO-HB-6844",
-    "requestedDeliveryDate": "2026-08-27",
+    "poNumber": "PO-HB-2383",
+    "requestedDeliveryDate": null,
     "note": null,
-    "orderedBy": "Ola Brekke",
+    "orderedBy": "Ingrid Havnes",
     "totals": {
-      "net": 79669.5,
+      "net": 105500.5,
       "shipping": 0,
-      "vat": 19917.38,
-      "gross": 99586.88
+      "vat": 26375.13,
+      "gross": 131875.63
     },
-    "basedOn": {
-      "orderNumber": "10325",
-      "kind": "reorder"
-    }
+    "basedOn": null
   },
   {
-    "orderNumber": "10329",
+    "orderNumber": "10324",
     "customerId": "nordlys",
-    "createdAt": "2026-08-22T08:19:00.000Z",
+    "createdAt": "2026-05-22T12:21:00.000Z",
     "status": "delivered",
     "lines": [
       {
         "id": "l1",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 1100,
-        "unitPrice": 2.5,
-        "customSpec": null
+        "sku": null,
+        "productSlug": null,
+        "quantity": 300,
+        "name": "Vineske for 6 flasker, 280 x 190 x 360 mm",
+        "unitPrice": 16.5,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 280,
+            "width": 190,
+            "height": 360
+          },
+          "board": "BC dobbelbølge",
+          "color": "Brun",
+          "print": {
+            "colors": 1,
+            "description": "Logo på to sider"
+          },
+          "notes": "Innredning for 6 flasker à 0,75 l"
+        }
       },
       {
         "id": "l2",
-        "sku": "5427-2",
-        "productSlug": "postboks",
-        "name": "Postboks A4 310 x 220 x 60 mm",
-        "quantity": 650,
-        "unitPrice": 3.5,
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 36,
+        "unitPrice": 19.3,
         "customSpec": null
       },
       {
         "id": "l3",
-        "sku": "5450-6",
-        "productSlug": "flaskeeske",
-        "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm",
-        "quantity": 150,
-        "unitPrice": 13.9,
+        "sku": null,
+        "productSlug": null,
+        "quantity": 500,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l4",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1300,
+        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
+        "unitPrice": 9.8,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 80
+          },
+          "board": "E-bølge",
+          "color": "Sort",
+          "print": {
+            "colors": 1,
+            "description": "Hvit logo på lokket"
+          },
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-9232",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Amir Haddad",
+    "totals": {
+      "net": 21834.8,
+      "shipping": 0,
+      "vat": 5458.7,
+      "gross": 27293.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10325",
+    "customerId": "lunde",
+    "createdAt": "2026-06-24T11:57:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "6723-2",
+        "productSlug": "brodkasser",
+        "name": "BEWI Box 26 L, Sort",
+        "quantity": 12,
+        "unitPrice": 113,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "3065",
+        "productSlug": "spann-dunker",
+        "name": "BEWI Spann 10 L",
+        "quantity": 120,
+        "unitPrice": 31.9,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "6721",
+        "productSlug": "brodkasser",
+        "name": "BEWI Box 27 L",
+        "quantity": 12,
+        "unitPrice": 113,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Kari Lunde",
+    "totals": {
+      "net": 6540,
+      "shipping": 0,
+      "vat": 1635,
+      "gross": 8175
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10326",
+    "customerId": "havbris",
+    "createdAt": "2026-06-30T11:15:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0280-1",
+        "productSlug": "pers-box",
+        "name": "Pers box 70 L m/drenering",
+        "quantity": 20,
+        "unitPrice": 299,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "8014-0",
+        "productSlug": "kartong-laks-25-kg",
+        "name": "Kartong laks 25 kg",
+        "quantity": 4742,
+        "unitPrice": 14.5,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 126,
+        "unitPrice": 225,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-4473",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Ola Brekke",
+    "totals": {
+      "net": 103089,
+      "shipping": 0,
+      "vat": 25772.25,
+      "gross": 128861.25
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10327",
+    "customerId": "nordlys",
+    "createdAt": "2026-07-19T14:25:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 600,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l2",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 36,
+        "unitPrice": 19.3,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "9110-1",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 17 my, 300 m",
+        "quantity": 12,
+        "unitPrice": 86.3,
         "customSpec": null
       }
     ],
@@ -1666,22 +1604,80 @@
       "city": "Heimdal",
       "country": "Norge"
     },
-    "poNumber": "NL-5438",
-    "requestedDeliveryDate": "2026-08-29",
+    "poNumber": "NL-7591",
+    "requestedDeliveryDate": null,
     "note": null,
-    "orderedBy": "Amir Haddad",
+    "orderedBy": "Line Moen",
     "totals": {
-      "net": 7110,
+      "net": 5870.4,
       "shipping": 0,
-      "vat": 1777.5,
-      "gross": 8887.5
+      "vat": 1467.6,
+      "gross": 7338
     },
     "basedOn": null
   },
   {
-    "orderNumber": "10330",
+    "orderNumber": "10328",
+    "customerId": "havbris",
+    "createdAt": "2026-08-05T14:27:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0280-1",
+        "productSlug": "pers-box",
+        "name": "Pers box 70 L m/drenering",
+        "quantity": 20,
+        "unitPrice": 299,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "8014-0",
+        "productSlug": "kartong-laks-25-kg",
+        "name": "Kartong laks 25 kg",
+        "quantity": 4742,
+        "unitPrice": 14.5,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 126,
+        "unitPrice": 225,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-2595",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 103089,
+      "shipping": 0,
+      "vat": 25772.25,
+      "gross": 128861.25
+    },
+    "basedOn": {
+      "orderNumber": "10326",
+      "kind": "reorder"
+    }
+  },
+  {
+    "orderNumber": "10329",
     "customerId": "lunde",
-    "createdAt": "2026-09-16T08:03:00.000Z",
+    "createdAt": "2026-08-31T12:37:00.000Z",
     "status": "delivered",
     "lines": [
       {
@@ -1689,9 +1685,41 @@
         "sku": "9101-1",
         "productSlug": "pakketape",
         "name": "Pakketape PP 48 mm x 66 m, brun",
-        "quantity": 36,
+        "quantity": 72,
         "unitPrice": 18.3,
         "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "3065",
+        "productSlug": "spann-dunker",
+        "name": "BEWI Spann 10 L",
+        "quantity": 110,
+        "unitPrice": 31.9,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 800,
+        "name": "Brødeske med logo, 400 x 300 x 150 mm",
+        "unitPrice": 11.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Hvit",
+          "print": {
+            "colors": 2,
+            "description": "Logo Lunde Bakeri på to sider"
+          },
+          "notes": null
+        }
       }
     ],
     "deliveryAddress": {
@@ -1704,21 +1732,296 @@
       "country": "Norge"
     },
     "poNumber": null,
-    "requestedDeliveryDate": "2026-09-25",
+    "requestedDeliveryDate": "2026-09-08",
     "note": null,
     "orderedBy": "Kari Lunde",
     "totals": {
-      "net": 658.8,
-      "shipping": 750,
-      "vat": 352.2,
-      "gross": 1761
+      "net": 14346.6,
+      "shipping": 0,
+      "vat": 3586.65,
+      "gross": 17933.25
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10330",
+    "customerId": "nordlys",
+    "createdAt": "2026-09-09T06:03:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1400,
+        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
+        "unitPrice": 9.8,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 80
+          },
+          "board": "E-bølge",
+          "color": "Sort",
+          "print": {
+            "colors": 1,
+            "description": "Hvit logo på lokket"
+          },
+          "notes": null
+        }
+      },
+      {
+        "id": "l2",
+        "sku": "9101-2",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, klar",
+        "quantity": 72,
+        "unitPrice": 21.2,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 600,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 400,
+            "width": 300,
+            "height": 200
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l4",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 72,
+        "unitPrice": 19.3,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-3771",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Amir Haddad",
+    "totals": {
+      "net": 22276,
+      "shipping": 0,
+      "vat": 5569,
+      "gross": 27845
     },
     "basedOn": null
   },
   {
     "orderNumber": "10331",
     "customerId": "havbris",
-    "createdAt": "2026-09-18T09:03:00.000Z",
+    "createdAt": "2026-09-21T06:02:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": "0293-1",
+        "productSlug": "fiskekasse",
+        "name": "Fiskekasser 42 L m/drenering",
+        "quantity": 168,
+        "unitPrice": 225,
+        "customSpec": null
+      },
+      {
+        "id": "l2",
+        "sku": "9110-2",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 23 my, 300 m",
+        "quantity": 24,
+        "unitPrice": 104,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "havbris-ellingsoy",
+      "label": "Anlegg Ellingsøy",
+      "name": "Havbris Sjømat AS, varemottak",
+      "street": "Ellingsøyvegen 45",
+      "postalCode": "6057",
+      "city": "Ellingsøy",
+      "country": "Norge"
+    },
+    "poNumber": "PO-HB-5775",
+    "requestedDeliveryDate": "2026-10-11",
+    "note": null,
+    "orderedBy": "Ingrid Havnes",
+    "totals": {
+      "net": 40296,
+      "shipping": 0,
+      "vat": 10074,
+      "gross": 50370
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10332",
+    "customerId": "lunde",
+    "createdAt": "2026-10-31T11:50:00.000Z",
+    "status": "shipped",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1600,
+        "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
+        "unitPrice": 6.4,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 250,
+            "width": 250,
+            "height": 100
+          },
+          "board": "E-bølge",
+          "color": "Hvit",
+          "print": {
+            "colors": 1,
+            "description": "Logo på lokket, vindu i PET"
+          },
+          "notes": "Vindu 120 x 120 mm sentrert på lokket"
+        }
+      },
+      {
+        "id": "l2",
+        "sku": "9101-1",
+        "productSlug": "pakketape",
+        "name": "Pakketape PP 48 mm x 66 m, brun",
+        "quantity": 36,
+        "unitPrice": 18.3,
+        "customSpec": null
+      },
+      {
+        "id": "l3",
+        "sku": "3065",
+        "productSlug": "spann-dunker",
+        "name": "BEWI Spann 10 L",
+        "quantity": 90,
+        "unitPrice": 31.9,
+        "customSpec": null
+      }
+    ],
+    "deliveryAddress": {
+      "id": "lunde-bakeri",
+      "label": "Bakeriet",
+      "name": "Lunde Bakeri AS",
+      "street": "Fyllingsdalsveien 8",
+      "postalCode": "5147",
+      "city": "Fyllingsdalen",
+      "country": "Norge"
+    },
+    "poNumber": null,
+    "requestedDeliveryDate": "2026-11-16",
+    "note": null,
+    "orderedBy": "Sindre Aas",
+    "totals": {
+      "net": 13769.8,
+      "shipping": 0,
+      "vat": 3442.45,
+      "gross": 17212.25
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10333",
+    "customerId": "nordlys",
+    "createdAt": "2026-11-06T14:04:00.000Z",
+    "status": "delivered",
+    "lines": [
+      {
+        "id": "l1",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 700,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
+        "customSpec": {
+          "style": "0201",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 150
+          },
+          "board": "B-bølge",
+          "color": "Brun",
+          "print": null,
+          "notes": null
+        }
+      },
+      {
+        "id": "l2",
+        "sku": null,
+        "productSlug": null,
+        "quantity": 1400,
+        "name": "Gaveeske med logo, 300 x 200 x 80 mm",
+        "unitPrice": 9.8,
+        "customSpec": {
+          "style": "0427",
+          "innerDimensionsMm": {
+            "length": 300,
+            "width": 200,
+            "height": 80
+          },
+          "board": "E-bølge",
+          "color": "Sort",
+          "print": {
+            "colors": 1,
+            "description": "Hvit logo på lokket"
+          },
+          "notes": null
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "id": "nordlys-lager",
+      "label": "Lager Heimdal",
+      "name": "Nordlys Netthandel AS",
+      "street": "Industriveien 14",
+      "postalCode": "7080",
+      "city": "Heimdal",
+      "country": "Norge"
+    },
+    "poNumber": "NL-1764",
+    "requestedDeliveryDate": null,
+    "note": null,
+    "orderedBy": "Amir Haddad",
+    "totals": {
+      "net": 18550,
+      "shipping": 0,
+      "vat": 4637.5,
+      "gross": 23187.5
+    },
+    "basedOn": null
+  },
+  {
+    "orderNumber": "10334",
+    "customerId": "havbris",
+    "createdAt": "2026-11-10T13:44:00.000Z",
     "status": "delivered",
     "lines": [
       {
@@ -1749,203 +2052,15 @@
       "city": "Ellingsøy",
       "country": "Norge"
     },
-    "poNumber": "PO-HB-1241",
-    "requestedDeliveryDate": "2026-09-28",
+    "poNumber": "PO-HB-7843",
+    "requestedDeliveryDate": null,
     "note": null,
-    "orderedBy": "Ola Brekke",
+    "orderedBy": "Ingrid Havnes",
     "totals": {
       "net": 33950,
       "shipping": 0,
       "vat": 8487.5,
       "gross": 42437.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10332",
-    "customerId": "nordlys",
-    "createdAt": "2026-10-02T14:53:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "5427-1",
-        "productSlug": "postboks",
-        "name": "Postboks A5 220 x 160 x 50 mm",
-        "quantity": 1100,
-        "unitPrice": 2.5,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "5201-3",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 400 x 300 x 200 mm",
-        "quantity": 160,
-        "unitPrice": 8.1,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "5201-2",
-        "productSlug": "bolgepappeske",
-        "name": "Bølgepappeske 300 x 200 x 150 mm",
-        "quantity": 350,
-        "unitPrice": 4.8,
-        "customSpec": null
-      },
-      {
-        "id": "l4",
-        "sku": "9101-1",
-        "productSlug": "pakketape",
-        "name": "Pakketape PP 48 mm x 66 m, brun",
-        "quantity": 72,
-        "unitPrice": 19.3,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "nordlys-lager",
-      "label": "Lager Heimdal",
-      "name": "Nordlys Netthandel AS",
-      "street": "Industriveien 14",
-      "postalCode": "7080",
-      "city": "Heimdal",
-      "country": "Norge"
-    },
-    "poNumber": "NL-2670",
-    "requestedDeliveryDate": "2026-10-22",
-    "note": null,
-    "orderedBy": "Amir Haddad",
-    "totals": {
-      "net": 7115.6,
-      "shipping": 0,
-      "vat": 1778.9,
-      "gross": 8894.5
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10333",
-    "customerId": "havbris",
-    "createdAt": "2026-10-27T08:39:00.000Z",
-    "status": "delivered",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "0293-1",
-        "productSlug": "fiskekasse",
-        "name": "Fiskekasser 42 L m/drenering",
-        "quantity": 168,
-        "unitPrice": 225,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": "7002",
-        "productSlug": "filetbrett",
-        "name": "Filetbrett 5 L",
-        "quantity": 600,
-        "unitPrice": 44.3,
-        "customSpec": null
-      },
-      {
-        "id": "l3",
-        "sku": "0285-0",
-        "productSlug": "pers-box",
-        "name": "Pers box 90 L w/drain.",
-        "quantity": 16,
-        "unitPrice": 399,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "havbris-ellingsoy",
-      "label": "Anlegg Ellingsøy",
-      "name": "Havbris Sjømat AS, varemottak",
-      "street": "Ellingsøyvegen 45",
-      "postalCode": "6057",
-      "city": "Ellingsøy",
-      "country": "Norge"
-    },
-    "poNumber": "PO-HB-8676",
-    "requestedDeliveryDate": "2026-11-16",
-    "note": null,
-    "orderedBy": "Ola Brekke",
-    "totals": {
-      "net": 70764,
-      "shipping": 0,
-      "vat": 17691,
-      "gross": 88455
-    },
-    "basedOn": null
-  },
-  {
-    "orderNumber": "10334",
-    "customerId": "lunde",
-    "createdAt": "2026-11-23T09:13:00.000Z",
-    "status": "confirmed",
-    "lines": [
-      {
-        "id": "l1",
-        "sku": "6721",
-        "productSlug": "brodkasser",
-        "name": "BEWI Box 27 L",
-        "quantity": 28,
-        "unitPrice": 113,
-        "customSpec": null
-      },
-      {
-        "id": "l2",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1700,
-        "name": "Kakeeske med vindu, 250 x 250 x 100 mm",
-        "unitPrice": 6.4,
-        "customSpec": {
-          "style": "0427",
-          "innerDimensionsMm": {
-            "length": 250,
-            "width": 250,
-            "height": 100
-          },
-          "board": "E-bølge",
-          "color": "Hvit",
-          "print": {
-            "colors": 1,
-            "description": "Logo på lokket, vindu i PET"
-          },
-          "notes": "Vindu 120 x 120 mm sentrert på lokket"
-        }
-      },
-      {
-        "id": "l3",
-        "sku": "6723-2",
-        "productSlug": "brodkasser",
-        "name": "BEWI Box 26 L, Sort",
-        "quantity": 16,
-        "unitPrice": 113,
-        "customSpec": null
-      }
-    ],
-    "deliveryAddress": {
-      "id": "lunde-bakeri",
-      "label": "Bakeriet",
-      "name": "Lunde Bakeri AS",
-      "street": "Fyllingsdalsveien 8",
-      "postalCode": "5147",
-      "city": "Fyllingsdalen",
-      "country": "Norge"
-    },
-    "poNumber": null,
-    "requestedDeliveryDate": "2026-12-12",
-    "note": null,
-    "orderedBy": "Kari Lunde",
-    "totals": {
-      "net": 15852,
-      "shipping": 0,
-      "vat": 3963,
-      "gross": 19815
     },
     "basedOn": null
   }

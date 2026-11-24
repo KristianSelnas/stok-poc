@@ -25,7 +25,7 @@ Tre fiktive kunder med ulike behov. Hver kunde har egne avtalepriser, adresser o
 |---|---|---|
 | **Havbris Sjømat AS**, Ålesund | Fisk og sjømat | Fiskekasser, filetbrett og isoporkasser i store volum. Bestiller jevnlig |
 | **Lunde Bakeri AS**, Bergen | Næringsmiddel | Brødkasser og matkasser. Har noen skreddersydde esker med trykk |
-| **Nordlys Netthandel AS**, Trondheim | E-handel | Forsendelsesesker i mange størrelser. Trenger ofte nye mål |
+| **Nordlys Netthandel AS**, Trondheim | E-handel | Forsendelsesesker etter mål, vinesker og tape. Trenger ofte nye mål |
 
 ## Demomanus
 
@@ -43,8 +43,8 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 
 1. Kunden åpner Min side og ser ordren fra del 1 øverst under «Siste ordre».
 2. Kunden åpner en tidligere ordre, velger «Gjenta ordren» og justerer antallet i kurven. Den nye ordren er merket «Gjenkjøp av …».
-3. Kunden logger inn som Lunde Bakeri og åpner ordre 10327 med «Brødeske med logo, 400 x 300 x 150 mm».
-4. Kunden velger «Lag variant», endrer høyden fra 150 til 200 mm og antallet fra 700 til 500, og ser endringene og foreløpig pris fortløpende.
+3. Kunden logger inn som Lunde Bakeri og åpner ordre 10329 med «Brødeske med logo, 400 x 300 x 150 mm».
+4. Kunden velger «Lag variant», endrer høyden fra 150 til 200 mm og antallet fra 800 til 500, og ser endringene og foreløpig pris fortløpende.
 5. Kunden sender forespørselen. Under Forespørsler vises varianten med endringene mot originalen.
 
 ### Del 3: Skreddersydd kasse (fase C)
@@ -56,9 +56,9 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 ### Del 4: AI-assistent (fase D)
 
 1. Nordlys Netthandel skriver: «Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.»
-2. Assistenten stiller ett eller to oppfølgingsspørsmål og foreslår en eske fra katalogen og en skreddersydd variant.
+2. Assistenten stiller ett eller to oppfølgingsspørsmål og foreslår en skreddersydd eske, med vinesken Nordlys har bestilt før som utgangspunkt.
 3. Kunden velger den skreddersydde, og konfiguratoren åpnes med verdiene ferdig utfylt.
-4. Lunde Bakeri skriver på Min side: «Samme som ordre 10327, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
+4. Lunde Bakeri skriver på Min side: «Samme som ordre 10329, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
 
 ### Del 5: Utvidelser (fase E)
 

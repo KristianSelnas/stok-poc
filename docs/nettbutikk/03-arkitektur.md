@@ -143,7 +143,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
 
-Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale (`CatalogFilters`). Listen oppdateres når et valg endres, uten å hoppe til toppen, og «Nullstill» fjerner filtrene. Valgene ligger i adressen, så de kan deles. Uten JavaScript sender skjemaet valgene med knappen «Vis». Alle produkter vises, også de som krever tilbud, gruppert etter type som på bewifood.com.
+Katalogen er slått sammen med butikkens forside. Med 100 produkter gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale (`CatalogFilters`). Listen oppdateres når et valg endres, uten å hoppe til toppen, og «Nullstill» fjerner filtrene. Valgene ligger i adressen, så de kan deles. Uten JavaScript sender skjemaet valgene med knappen «Vis». Alle produkter vises, også de som krever tilbud, gruppert etter type som på bewifood.com.
 
 Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
 
@@ -246,7 +246,7 @@ src/
 
 scripts/shop/
 ├── fetch-bewifood.mts         Henter produkter og bilder fra bewifood.com
-├── build-catalog.mts          Lager catalog.json fra rådataene, med tillegg for demoen
+├── build-catalog.mts          Lager catalog.json fra rådataene, med varianter for demoen
 ├── generate-mock-data.mts     Lager prices.json, inventory.json og orders.json
 └── data/bewifood-raw.json     Rådata fra bewifood.com
 ```
@@ -288,4 +288,4 @@ Inndelingen følger filtrene på bewifood.com (beslutning N15). Valgene kommer f
 
 Materialet til hver variant (f.eks. PP eller LLDPE) står i `Variant.material` og vises i varianttabellen.
 
-Katalogen har 103 produkter og 235 varianter. 100 produkter kommer fra bewifood.com. Tre er lagt til for demoen fordi bewifood.com mangler esker i bølgepapp: Bølgepappeske (FEFCO 0201), Postboks (FEFCO 0427) og Flaskeeske. Seks forbruksvarer (pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter) har fått konkrete varianter. Tilleggene er merket med `source.name` = «STOK (tillegg for demo)».
+Katalogen har 100 produkter og 223 varianter, alle fra bewifood.com. Seks forbruksvarer (pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter) har bare en generell side på bewifood.com, og har fått konkrete varianter i `build-catalog.mts`, så de kan bestilles. Esker i bølgepapp finnes ikke i katalogen. De lages etter mål i konfiguratoren.

@@ -101,12 +101,12 @@ export const customLimits: Record<string, { length: Range; width: Range; height:
 
 export const customQuantity = { min: 250, max: 100_000 };
 
-/** Produkter i katalogen som kan tilpasses i konfiguratoren, med kassetype. */
-export const configurableProducts: Record<string, string> = {
-  bolgepappeske: "0201",
-  flaskeeske: "0201",
-  postboks: "0427",
-};
+/**
+ * Produkter i katalogen som kan tilpasses i konfiguratoren, med kassetype.
+ * Katalogen fra bewifood.com har ingen esker i bølgepapp, så listen er tom.
+ * Konfiguratoren lager esker etter mål uten utgangspunkt i en katalogvare.
+ */
+export const configurableProducts: Record<string, string> = {};
 
 /** Startverdier i konfiguratoren per kassetype. */
 export const defaultCustomBox: Record<string, { spec: PackagingSpec; quantity: number }> = {

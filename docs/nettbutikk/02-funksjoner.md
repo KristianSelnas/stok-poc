@@ -47,7 +47,7 @@ Detaljert design står i [04-ai.md](04-ai.md).
 |---|---|---|---|---|
 | 1 | Emballasjeveileder | Beskriver hva som skal sendes eller lagres | Stiller oppfølgingsspørsmål og foreslår produkter eller en skreddersydd spesifikasjon | D |
 | 2 | Fritekst til spesifikasjon | Beskriver behovet med egne ord | Fyller ut konfiguratoren. Kunden ser over og justerer | D |
-| 3 | Variant med naturlig språk | «Samme som ordre 10327, men 20 cm dype» | Lager varianten og viser endringene og ny pris | D |
+| 3 | Variant med naturlig språk | «Samme som ordre 10329, men 20 cm dype» | Lager varianten og viser endringene og ny pris | D |
 | 4 | Ferdig brief til selger | Sender en forespørsel | Lager et strukturert sammendrag til CRM | D |
 | 5 | Bilde til emballasje | Tar bilde av varen med et A4-ark som målestokk | Anslår mål, form og hvor skjør varen er, og foreslår løsning | E |
 | 6 | Smart søk | «isoporkasse til 10 kg laks» | Finner produkter selv om ordene ikke står i produktnavnet | E |

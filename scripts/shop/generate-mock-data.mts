@@ -7,7 +7,8 @@
  * prices.json, inventory.json og orders.json i samme mappe. Tallene er
  * laget av oss, men følger vekt, materiale og pallestørrelse, så de virker
  * troverdige. Skriptet bruker en fast startverdi for tilfeldige tall, så det
- * gir samme resultat hver gang.
+ * gir samme resultat hver gang. Hver variant og hver kunde har sin egen
+ * strøm av tall, så en endring ett sted ikke forskyver resten.
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -34,7 +35,18 @@ const FIRST_ORDER_NUMBER = 10301;
 // Tilfeldige tall med fast startverdi (mulberry32)
 // ---------------------------------------------------------------------------
 
-let seed = 20261124;
+const BASE_SEED = 20261124;
+let seed = BASE_SEED;
+
+/**
+ * Starter en ny strøm av tall for én variant eller kunde. Da påvirker ikke
+ * endringer i katalogen eller hos én kunde tallene for de andre.
+ */
+function reseed(key: string) {
+  seed = BASE_SEED;
+  for (const char of key) seed = Math.imul(seed ^ char.charCodeAt(0), 0x01000193);
+}
+
 function random(): number {
   seed |= 0;
   seed = (seed + 0x6d2b79f5) | 0;
@@ -67,9 +79,6 @@ const manualPrices: Record<string, number> = {
   "9150-1": 14.9,
 };
 
-/** Kr per m² bølgepapp etter kvalitet. */
-const boardRates: Record<string, number> = { "E-bølge": 10, "B-bølge": 12, "BC dobbelbølge": 19 };
-
 /** Kr per stk. etter type, når varianten mangler vekt. */
 const typeFallback: Record<string, number> = {
   eske: 12,
@@ -92,14 +101,6 @@ function round(value: number): number {
 
 function listPrice(product: Product, variant: Variant): number {
   if (manualPrices[variant.sku]) return manualPrices[variant.sku];
-  if (variant.material === "Bølgepapp" && variant.innerDimensions) {
-    const { length = 0, width = 0, height = 0 } = variant.innerDimensions;
-    const [l, w, h] = [length / 100, width / 100, height / 100];
-    const area = 2 * (l * w + l * h + w * h) * 1.15;
-    const board = variant.attributes.find((a) => a.key === "board")?.value ?? "B-bølge";
-    const insert = product.slug === "flaskeeske" ? 4 : 0;
-    return round(1.5 + area * (boardRates[board] ?? 12) + insert);
-  }
   if (variant.weightKg) {
     // Plast: omtrent 90 kr per kg ferdig vare, pluss et fast tillegg.
     return round(5 + variant.weightKg * 90);
@@ -224,12 +225,55 @@ const profiles: Profile[] = [
     defaultAddress: "nordlys-lager",
     poPrefix: "NL-",
     baskets: [
-      { sku: "5201-2", units: [200, 600], weight: 2 },
-      { sku: "5201-3", units: [100, 300] },
-      { sku: "5427-1", units: [500, 1500], weight: 2 },
-      { sku: "5427-2", units: [500, 1000] },
-      { sku: "9101-1", units: [36, 108] },
-      { sku: "5450-6", units: [100, 300] },
+      { sku: "9101-1", units: [36, 108], weight: 2 },
+      { sku: "9101-2", units: [36, 72] },
+      { sku: "9110-1", units: [6, 24] },
+      {
+        custom: {
+          name: "Forsendelseseske, 300 x 200 x 150 mm",
+          unitPrice: 6.9,
+          customSpec: spec({
+            style: "0201",
+            innerDimensionsMm: { length: 300, width: 200, height: 150 },
+            board: "B-bølge",
+            color: "Brun",
+            print: null,
+            notes: null,
+          }),
+        },
+        units: [500, 1500],
+        weight: 2,
+      },
+      {
+        custom: {
+          name: "Forsendelseseske, 400 x 300 x 200 mm",
+          unitPrice: 9.4,
+          customSpec: spec({
+            style: "0201",
+            innerDimensionsMm: { length: 400, width: 300, height: 200 },
+            board: "B-bølge",
+            color: "Brun",
+            print: null,
+            notes: null,
+          }),
+        },
+        units: [300, 800],
+      },
+      {
+        custom: {
+          name: "Vineske for 6 flasker, 280 x 190 x 360 mm",
+          unitPrice: 16.5,
+          customSpec: spec({
+            style: "0201",
+            innerDimensionsMm: { length: 280, width: 190, height: 360 },
+            board: "BC dobbelbølge",
+            color: "Brun",
+            print: { colors: 1, description: "Logo på to sider" },
+            notes: "Innredning for 6 flasker à 0,75 l",
+          }),
+        },
+        units: [200, 500],
+      },
       {
         custom: {
           name: "Gaveeske med logo, 300 x 200 x 80 mm",
@@ -285,7 +329,9 @@ async function main() {
   const prices: Record<string, number> = {};
   const stock: Record<string, InventoryInfo> = {};
   for (const { product, variant } of variants.values()) {
+    reseed(`pris:${variant.sku}`);
     if (variant.salesMode !== "quote") prices[variant.sku] = listPrice(product, variant);
+    reseed(`lager:${variant.sku}`);
     stock[variant.sku] = inventory(variant);
   }
 
@@ -294,6 +340,7 @@ async function main() {
   const start = new Date(NOW.getTime() - 548 * 86_400_000);
   for (const profile of profiles) {
     const customer = customers.find((c) => c.id === profile.customerId)!;
+    reseed(`ordre:${customer.id}`);
     let date = new Date(start.getTime() + between(0, 30) * 86_400_000);
     while (date < NOW) {
       const lineCount = between(...profile.lines);

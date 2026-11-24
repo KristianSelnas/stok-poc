@@ -12,9 +12,9 @@
  * - Produktgruppe, type og materiale følger filtrene på bewifood.com.
  * - De 18 produktene som lå i Sanity før fase N, beholder sluggene sine, så
  *   gamle adresser virker.
- * - Et lite tillegg (nederst) gir bølgepappesker, som bewifood.com ikke har,
- *   og konkrete varianter av noen forbruksvarer. Tillegget er merket med
- *   `source.name` = «STOK (tillegg for demo)».
+ * - Alle produktene kommer fra bewifood.com. Noen forbruksvarer har bare en
+ *   generell side der, og får konkrete varianter (nederst), så de kan
+ *   bestilles i butikken.
  *
  * Buntstørrelser er laget av oss, ut fra vekt og stk. per pall.
  *
@@ -460,10 +460,8 @@ function buildProduct(raw: RawProduct, slug: string): Product {
 }
 
 // ---------------------------------------------------------------------------
-// Tillegg for demoen
+// Varianter for demoen
 // ---------------------------------------------------------------------------
-
-const SUPPLEMENT_SOURCE = { name: "STOK (tillegg for demo)", url: null };
 
 type VariantInput = Partial<Variant> & Pick<Variant, "sku" | "name">;
 
@@ -482,123 +480,6 @@ function variant(input: VariantInput): Variant {
     ...input,
   };
 }
-
-/** Bølgepappeske med innvendige mål i mm, som i STOKs sortiment på stok.dk. */
-function boxVariant(
-  sku: string,
-  prefix: string,
-  [l, w, h]: [number, number, number],
-  board: string,
-  unitsPerBundle: number,
-  unitsPerPallet: number,
-  salesMode: SalesMode = "stock",
-): Variant {
-  return variant({
-    sku,
-    name: `${prefix} ${l} x ${w} x ${h} mm`,
-    attributes: [
-      { key: "inner", label: "Innvendige mål (mm)", value: `${l} x ${w} x ${h}` },
-      { key: "board", label: "Kvalitet", value: board },
-      { key: "color", label: "Farge", value: "Brun" },
-      { key: "pallet", label: "Stk. per pall", value: String(unitsPerPallet) },
-    ],
-    innerDimensions: { length: l / 10, width: w / 10, height: h / 10 },
-    material: "Bølgepapp",
-    unitsPerBundle,
-    unitsPerPallet,
-    salesMode,
-  });
-}
-
-const supplementProducts: Product[] = [
-  {
-    slug: "bolgepappeske",
-    name: "Bølgepappeske",
-    shortDescription: "Standard amerikanereske (FEFCO 0201) i brun bølgepapp for forsendelse og lagring.",
-    description: [
-      { type: "h", text: "Allsidig eske for forsendelse og lager" },
-      {
-        type: "p",
-        text: "Amerikanereske med fire klaffer i topp og bunn. Esken leveres flatpakket og settes opp med tape. Velg B-bølge for lette varer og BC dobbelbølge for tunge eller ømfintlige varer.",
-      },
-      {
-        type: "p",
-        text: "Trenger du andre mål, en annen kvalitet eller trykk med logo, kan vi lage esken etter mål.",
-      },
-    ],
-    benefits: [
-      { title: "Flatpakket", text: "Tar liten plass på lager" },
-      { title: "Resirkulerbar", text: "Laget av fornybar fiber" },
-      { title: "Etter mål", text: "Kan lages i dine mål og med trykk" },
-    ],
-    images: [],
-    type: "eske",
-    groups: ["handel", "transport-og-lagring"],
-    materials: [],
-    variants: [
-      boxVariant("5201-1", "Bølgepappeske", [200, 150, 100], "B-bølge", 25, 1500),
-      boxVariant("5201-2", "Bølgepappeske", [300, 200, 150], "B-bølge", 25, 1000),
-      boxVariant("5201-3", "Bølgepappeske", [400, 300, 200], "B-bølge", 20, 600),
-      boxVariant("5201-4", "Bølgepappeske", [500, 400, 300], "BC dobbelbølge", 10, 300),
-      boxVariant("5201-5", "Bølgepappeske", [600, 400, 400], "BC dobbelbølge", 10, 200),
-    ],
-    note: "Andre mål, kvaliteter og trykk på forespørsel.",
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-  {
-    slug: "postboks",
-    name: "Postboks",
-    shortDescription: "Lettvint forsendelseseske med lokk (FEFCO 0427) for netthandel. Passer i postkassen.",
-    description: [
-      {
-        type: "p",
-        text: "Stansede esker som brettes uten tape og lukkes med lokk. Gir et ryddig førsteinntrykk når kunden åpner pakken. De to minste størrelsene passer gjennom de fleste postkasser.",
-      },
-    ],
-    benefits: [
-      { title: "Uten tape", text: "Brettes og lukkes på sekunder" },
-      { title: "Postkassevennlig", text: "A5 og A4 passer i postkassen" },
-    ],
-    images: [],
-    type: "eske",
-    groups: ["handel"],
-    materials: [],
-    variants: [
-      boxVariant("5427-1", "Postboks A5", [220, 160, 50], "E-bølge", 50, 2500),
-      boxVariant("5427-2", "Postboks A4", [310, 220, 60], "E-bølge", 50, 1800),
-      boxVariant("5427-3", "Postboks", [350, 250, 100], "B-bølge", 25, 1000),
-      boxVariant("5427-4", "Postboks", [400, 300, 150], "B-bølge", 25, 600),
-    ],
-    note: null,
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-  {
-    slug: "flaskeeske",
-    name: "Flaskeeske",
-    shortDescription: "Forsendelseseske med innredning for vin og andre flasker på 0,75 l.",
-    description: [
-      {
-        type: "p",
-        text: "Esken har innredning i bølgepapp som holder flaskene på plass under transport. Godkjent for sending med Posten og Bring.",
-      },
-    ],
-    benefits: [{ title: "Trygg frakt", text: "Innredning holder flaskene adskilt" }],
-    images: [],
-    type: "eske",
-    groups: ["handel", "mat"],
-    materials: [],
-    variants: [
-      boxVariant("5450-1", "Flaskeeske 1 flaske", [95, 95, 360], "B-bølge", 25, 1200),
-      boxVariant("5450-3", "Flaskeeske 3 flasker", [280, 95, 360], "B-bølge", 25, 600),
-      boxVariant("5450-6", "Flaskeeske 6 flasker", [280, 190, 360], "BC dobbelbølge", 10, 300),
-    ],
-    note: "Flaskeesker for magnum og andre formater på forespørsel.",
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-];
 
 /** Konkrete varianter av forbruksvarer som bare har en generell side på bewifood.com. */
 const variantOverrides: Record<string, Variant[]> = {
@@ -701,11 +582,6 @@ async function main() {
       const image = product.images[0] ?? null;
       product.variants = override.map((v) => ({ ...v, image: v.image ?? image }));
     }
-    products.push(product);
-  }
-  for (const product of supplementProducts) {
-    if (used.has(product.slug)) throw new Error(`Slug finnes fra før: ${product.slug}`);
-    used.add(product.slug);
     products.push(product);
   }
 

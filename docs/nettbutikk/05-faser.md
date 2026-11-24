@@ -70,8 +70,8 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 **Merknader fra fase A:**
 
 - Katalogen er laget fra bewifood.com med ekte varenumre, mål, vekt og stk. per pall. Hvordan «Lager» og «Forespørsel» er tolket, står i [03-arkitektur.md](03-arkitektur.md#tolkning-av-dataene-fra-bewifoodcom).
-- Tre esker i bølgepapp er lagt til for demoen, fordi bewifood.com mangler dem. Nordlys Netthandel og konfiguratoren i fase C trenger dem.
-- Priser, lager og 34 historiske ordre er generert av `scripts/shop/generate-mock-data.mts`. Lunde Bakeri har ordre på skreddersydde esker (blant annet 10327 med «Brødeske med logo, 400 x 300 x 150 mm») til fase B og D.
+- Tre esker i bølgepapp ble lagt til for demoen, fordi bewifood.com mangler dem. De ble fjernet igjen i fase N, så katalogen bare har produkter fra bewifood.com.
+- Priser, lager og 34 historiske ordre er generert av `scripts/shop/generate-mock-data.mts`. Lunde Bakeri har ordre på skreddersydde esker (blant annet 10329 med «Brødeske med logo, 400 x 300 x 150 mm») til fase B og D.
 - Etter første gjennomgang ble produktlisten slått sammen med butikkens forside, og produktgruppene redusert fra 14 til 7. «Populære produkter» vises bare for besøkende som ikke er logget inn. Innloggede kunder ser «Kjøp igjen» i stedet.
 - Antall rundes opp til hele bunter på serveren. Feltet godtar alle tall, og viser hva antallet blir rundet opp til.
 - «Be om tilbud» lenker foreløpig til kontaktsiden. Det kobles til `QuoteService` i fase C.
@@ -96,7 +96,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 **Merknader fra fase B:**
 
-- Alle sider på Min side bruker query-parametere i stedet for dynamiske segmenter (`?ordre=10327`), av samme grunn som ordrebekreftelsen.
+- Alle sider på Min side bruker query-parametere i stedet for dynamiske segmenter (`?ordre=10329`), av samme grunn som ordrebekreftelsen.
 - Nye forespørsler ligger i minnet som nye ordre, og nullstilles med knappen på innloggingssiden.
 - Skreddersydde linjer legges ikke i kurven ved gjenkjøp. «Bestill på nytt» åpner variantskjemaet uten endringer, så kunden sender en forespørsel på samme emballasje.
 - Havbris' «Kartong laks 25 kg» er et tilbudsprodukt med varenummer. Den vises på ordren med beskjed om å bestille via «Be om tilbud», og regnes ikke som en av Mine emballasjer.
@@ -136,7 +136,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 ### C4. Lenker inn til konfiguratoren
 
 - [x] Kort om skreddersydd eske på butikkens forside
-- [x] «Tilpass mål og trykk» på produktsidene til Bølgepappeske, Postboks og Flaskeeske, med målene fra valgt variant
+- [x] «Tilpass mål og trykk» på produktsidene til Bølgepappeske, Postboks og Flaskeeske, med målene fra valgt variant (eskene ble fjernet i fase N, se merknadene der)
 - [x] Lenke i butikklinjen
 
 ### C5. Dokumentasjon og kvalitet
@@ -175,7 +175,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ## Fase N: Nettsiden bruker produktkatalogen
 
-- [x] Nettsidens produktkatalog og produktsider viser alle produktene fra `CatalogService` (103 i `/no`, 6 i `/is`)
+- [x] Nettsidens produktkatalog og produktsider viser alle produktene fra `CatalogService` (100 i `/no`, 6 i `/is`)
 - [x] Produktgrupper, typer og materialer ligger i katalogen, med samme inndeling som bewifood.com (beslutning N15)
 - [x] Bransjesider viser produktene i produktgruppene som peker på bransjen (`ProductGroup.industry`)
 - [x] `product`, `productGroup` og `material` er fjernet fra Sanity-skjemaet, og modulen «Produktutvalg» velger type, produktgruppe eller bransje
@@ -190,4 +190,6 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 - Mat peker på bransjesiden Næringsmiddel, og Tekniske komponenter på Landbruk og industri. Handel og Medisinsk har ingen bransjeside.
 - Det islandske markedet har sitt eget sortiment på bewifood.com. De seks produktene som lå i Sanity, ligger nå i `src/shop/mock/data/catalog-is.json`, med egne typer (Kassar og Pokar).
 - Valglistene for type og produktgruppe i Studio kommer fra `src/shop/mock/data/taxonomy.json`, som `build-catalog.mts` lager. Med en ekte produktkatalog bør det bli en egen input i Studio.
+- Bølgepappeske, Postboks og Flaskeeske er fjernet, fordi de ikke finnes på bewifood.com. Katalogen har nå 100 produkter. Variantene av pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter er beholdt, så de kan bestilles. «Tilpass mål og trykk» vises ikke lenger på produktsider, siden ingen katalogvare er en eske i bølgepapp. Konfiguratoren virker som før.
+- Nordlys Netthandel har fått ny ordrehistorikk med forsendelsesesker og vinesker etter mål, gaveesker, pakketape og strekkfilm. `generate-mock-data.mts` gir nå hver variant og kunde sin egen strøm av tilfeldige tall. Derfor er alle priser, lagertall og ordre laget på nytt. Lunde Bakeris ordre med brødesken i demomanuset er nå 10329 (800 stk.).
 - Teksten på Produkter-siden i Sanity nevner fortsatt «bransje» til `pnpm seed:content --replace` er kjørt, eller teksten er rettet i Studio.

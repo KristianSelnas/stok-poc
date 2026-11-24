@@ -153,7 +153,7 @@ async function VariantContent({ searchParams }: { searchParams: Props["searchPar
   );
 }
 
-/** Variant av en ordrelinje: `?ordre=10327&linje=l1`. */
+/** Variant av en ordrelinje: `?ordre=10329&linje=l3`. */
 export default function VariantPage({ searchParams }: Props) {
   return (
     <Suspense fallback={<MinSideSkeleton />}>

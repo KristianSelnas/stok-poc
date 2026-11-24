@@ -24,7 +24,7 @@ type Props = PageProps<"/[market]/butikk">;
 type SearchParams = Props["searchParams"];
 
 /** Produktene som vises når ingen kunde er logget inn. */
-const popularSlugs = ["fiskekasse", "stablebar-transportkasse", "bolgepappeske", "pakketape"];
+const popularSlugs = ["fiskekasse", "stablebar-transportkasse", "brodkasser", "pakketape"];
 
 const fieldClass =
   "rounded-full border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none";
