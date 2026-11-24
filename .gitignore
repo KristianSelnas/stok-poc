@@ -52,3 +52,6 @@ src/sanity/schema.json
 
 # Midlertidige filer (bildeforslag o.l.)
 /tmp/
+
+# mellomlager for katalogimporten
+/scripts/shop/.cache

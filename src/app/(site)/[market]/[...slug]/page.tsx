@@ -14,6 +14,8 @@ import { buildMetadata } from "@/lib/metadata";
 import { documentPath, resolveRoute, translationPaths } from "@/lib/routes";
 import { newsArticleJsonLd, productJsonLd } from "@/lib/structuredData";
 import type { Industry, NewsArticle, Page as PageDocument, Product } from "@/sanity/types";
+import { productPath, SHOP_MARKET } from "@/shop/paths";
+import { getShopSlugs } from "@/shop/queries";
 
 /**
  * Alle undersider går gjennom denne ruten. `resolveRoute` finner
@@ -99,13 +101,20 @@ async function DocumentPage({ params, searchParams }: PageProps<"/[market]/[...s
   switch (loaded.type) {
     case "industry":
       return <IndustryPage industry={loaded.doc} market={market} />;
-    case "product":
+    case "product": {
+      const inShop =
+        market === SHOP_MARKET && !!loaded.doc.slug && (await getShopSlugs()).includes(loaded.doc.slug);
       return (
         <>
           <JsonLd data={productJsonLd(loaded.doc, await getSiteSettings(market), market)} />
-          <ProductPage product={loaded.doc} market={market} />
+          <ProductPage
+            product={loaded.doc}
+            market={market}
+            shopHref={inShop && loaded.doc.slug ? productPath(loaded.doc.slug) : undefined}
+          />
         </>
       );
+    }
     case "newsArticle":
       return (
         <>

@@ -1,0 +1,124 @@
+[
+  {
+    "id": "havbris",
+    "name": "Havbris Sjømat AS",
+    "orgNumber": "918 234 567",
+    "industry": "fisk-og-sjomat",
+    "description": "Sjømatprodusent i Ålesund med to anlegg. Kjøper fiskekasser, filetbrett, kartonger og forbruksvarer i store volum, og bestiller jevnlig.",
+    "addresses": [
+      {
+        "id": "havbris-hk",
+        "label": "Hovedkontor",
+        "name": "Havbris Sjømat AS",
+        "street": "Storgata 12",
+        "postalCode": "6002",
+        "city": "Ålesund",
+        "country": "Norge"
+      },
+      {
+        "id": "havbris-ellingsoy",
+        "label": "Anlegg Ellingsøy",
+        "name": "Havbris Sjømat AS, varemottak",
+        "street": "Ellingsøyvegen 45",
+        "postalCode": "6057",
+        "city": "Ellingsøy",
+        "country": "Norge"
+      },
+      {
+        "id": "havbris-vigra",
+        "label": "Anlegg Vigra",
+        "name": "Havbris Sjømat AS, varemottak",
+        "street": "Rørvikvegen 210",
+        "postalCode": "6040",
+        "city": "Vigra",
+        "country": "Norge"
+      }
+    ],
+    "users": [
+      {
+        "id": "havbris-ingrid",
+        "name": "Ingrid Havnes",
+        "email": "ingrid.havnes@havbris.example",
+        "role": "admin"
+      },
+      { "id": "havbris-ola", "name": "Ola Brekke", "email": "ola.brekke@havbris.example", "role": "buyer" }
+    ],
+    "priceAgreement": {
+      "name": "Rammeavtale sjømat 2026",
+      "discountPercent": 5,
+      "groupDiscounts": { "eske": 12, "kar-og-spann": 12, "brett": 10, "sekker-og-film": 8 },
+      "fixedPrices": { "0293-1": 239, "0293-2": 235 }
+    },
+    "paymentTermsDays": 30,
+    "freeShippingThreshold": 10000
+  },
+  {
+    "id": "lunde",
+    "name": "Lunde Bakeri AS",
+    "orgNumber": "912 345 678",
+    "industry": "naeringsmiddel",
+    "description": "Familiebakeri i Bergen med eget utsalg. Kjøper brødkasser og spann, og har egne kakeesker med trykk som lages etter mål.",
+    "addresses": [
+      {
+        "id": "lunde-bakeri",
+        "label": "Bakeriet",
+        "name": "Lunde Bakeri AS",
+        "street": "Fyllingsdalsveien 8",
+        "postalCode": "5147",
+        "city": "Fyllingsdalen",
+        "country": "Norge"
+      },
+      {
+        "id": "lunde-sentrum",
+        "label": "Utsalg sentrum",
+        "name": "Lunde Bakeri AS, utsalg",
+        "street": "Strandgaten 23",
+        "postalCode": "5013",
+        "city": "Bergen",
+        "country": "Norge"
+      }
+    ],
+    "users": [
+      { "id": "lunde-kari", "name": "Kari Lunde", "email": "kari@lundebakeri.example", "role": "admin" },
+      { "id": "lunde-sindre", "name": "Sindre Aas", "email": "sindre@lundebakeri.example", "role": "buyer" }
+    ],
+    "priceAgreement": {
+      "name": "Bakeriavtale",
+      "discountPercent": 8,
+      "groupDiscounts": { "eske": 10, "kar-og-spann": 10 },
+      "fixedPrices": {}
+    },
+    "paymentTermsDays": 30,
+    "freeShippingThreshold": 5000
+  },
+  {
+    "id": "nordlys",
+    "name": "Nordlys Netthandel AS",
+    "orgNumber": "925 678 901",
+    "industry": "e-handel",
+    "description": "Nettbutikk for interiør og vin i Trondheim. Sender mange pakker i ulike størrelser og trenger ofte esker i nye mål.",
+    "addresses": [
+      {
+        "id": "nordlys-lager",
+        "label": "Lager Heimdal",
+        "name": "Nordlys Netthandel AS",
+        "street": "Industriveien 14",
+        "postalCode": "7080",
+        "city": "Heimdal",
+        "country": "Norge"
+      }
+    ],
+    "users": [
+      { "id": "nordlys-amir", "name": "Amir Haddad", "email": "amir@nordlys.example", "role": "admin" },
+      { "id": "nordlys-line", "name": "Line Moen", "email": "line@nordlys.example", "role": "buyer" }
+    ],
+    "priceAgreement": {
+      "name": "Standardavtale netthandel",
+      "discountPercent": 3,
+      "groupDiscounts": { "eske": 7 },
+      "fixedPrices": {}
+    },
+    "paymentTermsDays": 14,
+    "freeShippingThreshold": 3000
+  }
+]

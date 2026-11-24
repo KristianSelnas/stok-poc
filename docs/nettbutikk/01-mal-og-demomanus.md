@@ -57,7 +57,7 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 1. Nordlys Netthandel skriver: «Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.»
 2. Assistenten stiller ett eller to oppfølgingsspørsmål og foreslår en eske fra katalogen og en skreddersydd variant.
 3. Kunden velger den skreddersydde, og konfiguratoren åpnes med verdiene ferdig utfylt.
-4. Lunde Bakeri skriver på Min side: «Samme som ordre 10482, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
+4. Lunde Bakeri skriver på Min side: «Samme som ordre 10327, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
 
 ### Del 5: Utvidelser (fase E)
 

@@ -20,7 +20,16 @@ const contactPaths: Record<MarketId, string> = { no: "/kontakt", is: "/hafa-samb
  * kontaktknapp til høyre. Under kommer egenskaper, lang beskrivelse og
  * relaterte produkter (valgt manuelt, ellers andre i samme gruppe).
  */
-export function ProductPage({ product, market }: { product: Product; market: MarketId }) {
+export function ProductPage({
+  product,
+  market,
+  shopHref,
+}: {
+  product: Product;
+  market: MarketId;
+  /** Lenke til produktet i nettbutikken, når det finnes der. */
+  shopHref?: string;
+}) {
   const t = getDictionary(market);
   const catalogHref = marketPath(market, `/${routePrefixes.product[market]}`);
   const images = (product.images ?? []).filter((image) => image.url);
@@ -139,6 +148,11 @@ export function ProductPage({ product, market }: { product: Product; market: Mar
               )}
 
               <div className="mt-8 flex flex-wrap gap-4">
+                {shopHref && (
+                  <Link href={shopHref} className={buttonClasses("secondary")}>
+                    {t.seeInShop}
+                  </Link>
+                )}
                 <Link href={marketPath(market, contactPaths[market])} className={buttonClasses("primary")}>
                   {t.askAboutProduct}
                 </Link>
