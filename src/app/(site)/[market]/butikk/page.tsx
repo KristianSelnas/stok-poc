@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense, type ReactNode } from "react";
+import { Suspense } from "react";
 
 import { BoxPreview } from "@/components/shop/BoxPreview";
 import { ProductImageBox } from "@/components/shop/ProductImageBox";
@@ -45,7 +45,6 @@ async function readParams(searchParams: SearchParams): Promise<CatalogParams> {
     type: valid("type", types),
     gruppe: valid("gruppe", groups),
     materiale: valid("materiale", materials),
-    vis: one("vis") === "alle" ? "alle" : undefined,
   };
 }
 
@@ -58,7 +57,7 @@ async function SearchForm({ searchParams }: { searchParams: SearchParams }) {
   return <SearchFields params={params} />;
 }
 
-/** Søket gjelder alle typer, men beholder produktgruppe, materiale og visning. */
+/** Søket beholder filtrene på type, produktgruppe og materiale. */
 function SearchFields({ params = {} }: { params?: CatalogParams }) {
   return (
     <form action={`${shopPath()}#produkter`} role="search" className="mt-8 flex max-w-xl gap-2">
@@ -73,9 +72,9 @@ function SearchFields({ params = {} }: { params?: CatalogParams }) {
         placeholder={t.searchPlaceholder}
         className={`min-w-0 flex-1 ${fieldClass} px-5 py-3`}
       />
+      {params.type && <input type="hidden" name="type" value={params.type} />}
       {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}
       {params.materiale && <input type="hidden" name="materiale" value={params.materiale} />}
-      {params.vis && <input type="hidden" name="vis" value={params.vis} />}
       <button type="submit" className={buttonClasses("secondary")}>
         {t.search}
       </button>
@@ -197,45 +196,27 @@ async function Highlights() {
 }
 
 // ---------------------------------------------------------------------------
-// Katalogen: filterknapper og produktrutenett
+// Katalogen: filtre og produktrutenett
 // ---------------------------------------------------------------------------
-
-function Chip({ href, current, children }: { href: string; current: boolean; children: ReactNode }) {
-  return (
-    <Link
-      href={href}
-      scroll={false}
-      aria-current={current ? "true" : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-full border-2 px-4 py-1.5 font-semibold whitespace-nowrap ${
-        current
-          ? "border-stok-blue bg-stok-blue text-white"
-          : "border-stok-blue/15 bg-white text-stok-blue hover:border-stok-blue"
-      }`}
-    >
-      {children}
-    </Link>
-  );
-}
 
 async function Catalog({ searchParams }: { searchParams: SearchParams }) {
   const params = await readParams(searchParams);
   const [{ groups, types, materials }, products, session] = await Promise.all([
     getShopTaxonomy(),
-    listShopProducts({ query: params.q, group: params.gruppe, material: params.materiale }),
+    listShopProducts({
+      query: params.q,
+      type: params.type,
+      group: params.gruppe,
+      material: params.materiale,
+    }),
     getSession(),
   ]);
 
-  const orderableOnly = params.vis !== "alle";
-  const inType = (p: (typeof products)[number]) => !params.type || p.type === params.type;
-  const orderable = products.filter((p) => p.salesMode !== "quote");
-  const base = orderableOnly ? orderable : products;
-  const shown = base.filter(inType);
-  const typeCount = (slug: string) => base.filter((p) => p.type === slug).length;
   const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
-  const hasFilters = !!(params.q || params.type || params.gruppe || params.materiale || params.vis);
+  const hasFilters = !!(params.q || params.type || params.gruppe || params.materiale);
 
   const prices = await shop().pricing.getPrices(
-    shown.flatMap((p) => p.skus),
+    products.flatMap((p) => p.skus),
     session?.customer.id,
   );
   const fromPrice = (skus: string[]) => {
@@ -245,109 +226,72 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
 
   return (
     <>
-      <div className="space-y-5">
-        <nav aria-label={t.productTypes}>
-          <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            <li>
-              <Chip href={catalogPath({ ...params, type: undefined })} current={!params.type}>
-                {t.allInGroup} <span className="font-normal">{base.length}</span>
-              </Chip>
-            </li>
-            {types.map((type) => {
-              const count = typeCount(type.slug);
-              if (!count && params.type !== type.slug) return null;
-              return (
-                <li key={type.slug} className={params.type === type.slug ? "order-first sm:order-none" : ""}>
-                  <Chip
-                    href={catalogPath({ ...params, type: type.slug })}
-                    current={params.type === type.slug}
-                  >
-                    {type.title} <span className="font-normal">{count}</span>
-                  </Chip>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
+      <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
+        <form action={`${shopPath()}#produkter`} className="flex flex-wrap items-end gap-2">
+          {params.q && <input type="hidden" name="q" value={params.q} />}
           <div>
-            <p id="visning" className="mb-1 font-meta text-sm font-medium text-stok-blue">
-              {t.availability}
-            </p>
-            <ul aria-labelledby="visning" className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
-              <li>
-                <Chip href={catalogPath({ ...params, vis: undefined })} current={orderableOnly}>
-                  {t.orderableNow} <span className="font-normal">{orderable.filter(inType).length}</span>
-                </Chip>
-              </li>
-              <li>
-                <Chip href={catalogPath({ ...params, vis: "alle" })} current={!orderableOnly}>
-                  {t.showAllIncludingQuote}{" "}
-                  <span className="font-normal">{products.filter(inType).length}</span>
-                </Chip>
-              </li>
-            </ul>
+            <label htmlFor="type" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
+              {t.filterType}
+            </label>
+            <select id="type" name="type" defaultValue={params.type ?? ""} className={fieldClass}>
+              <option value="">{t.allTypes}</option>
+              {types.map((type) => (
+                <option key={type.slug} value={type.slug}>
+                  {type.title}
+                </option>
+              ))}
+            </select>
           </div>
+          <div>
+            <label htmlFor="gruppe" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
+              {t.filterGroup}
+            </label>
+            <select id="gruppe" name="gruppe" defaultValue={params.gruppe ?? ""} className={fieldClass}>
+              <option value="">{t.allGroups}</option>
+              {groups.map((group) => (
+                <option key={group.slug} value={group.slug}>
+                  {group.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="materiale" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
+              {t.filterMaterial}
+            </label>
+            <select
+              id="materiale"
+              name="materiale"
+              defaultValue={params.materiale ?? ""}
+              className={fieldClass}
+            >
+              <option value="">{t.allMaterials}</option>
+              {materials.map((material) => (
+                <option key={material.slug} value={material.slug}>
+                  {material.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit" className={buttonClasses("outline", "px-5 py-2")}>
+            {t.showResults}
+          </button>
+        </form>
 
-          <form action={`${shopPath()}#produkter`} className="flex flex-wrap items-end gap-2">
-            {params.q && <input type="hidden" name="q" value={params.q} />}
-            {params.type && <input type="hidden" name="type" value={params.type} />}
-            {params.vis && <input type="hidden" name="vis" value={params.vis} />}
-            <div>
-              <label htmlFor="gruppe" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-                {t.filterGroup}
-              </label>
-              <select id="gruppe" name="gruppe" defaultValue={params.gruppe ?? ""} className={fieldClass}>
-                <option value="">{t.allGroups}</option>
-                {groups.map((group) => (
-                  <option key={group.slug} value={group.slug}>
-                    {group.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="materiale" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-                {t.filterMaterial}
-              </label>
-              <select
-                id="materiale"
-                name="materiale"
-                defaultValue={params.materiale ?? ""}
-                className={fieldClass}
-              >
-                <option value="">{t.allMaterials}</option>
-                {materials.map((material) => (
-                  <option key={material.slug} value={material.slug}>
-                    {material.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button type="submit" className={buttonClasses("outline", "px-5 py-2")}>
-              {t.showResults}
-            </button>
-          </form>
-
-          {hasFilters && (
-            <Link href={catalogPath()} scroll={false} className="pb-2 font-semibold text-stok-blue underline">
-              {t.resetFilters}
-            </Link>
-          )}
-        </div>
+        {hasFilters && (
+          <Link href={catalogPath()} scroll={false} className="pb-2 font-semibold text-stok-blue underline">
+            {t.resetFilters}
+          </Link>
+        )}
       </div>
 
       <p role="status" className="mt-8 mb-4 font-meta text-sm font-medium text-stok-blue">
-        {t.resultCount(shown.length)}
+        {t.resultCount(products.length)}
         {params.q && t.matching(params.q)}
-        {orderableOnly && (
-          <span className="font-body font-normal text-stok-text"> · {t.orderableNowHelp}</span>
-        )}
       </p>
-      {shown.length ? (
+      {products.length ? (
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {shown.map((product) => (
+          {products.map((product) => (
             <li key={product.slug}>
               <ShopProductCard
                 product={product}
@@ -423,7 +367,8 @@ function ConfiguratorTeaser() {
 
 /**
  * Butikkens forside er også katalogen: søk, «Kjøp igjen» og alle produkter
- * med filterknapper. Filtrene ligger i adressen (`?type=eske&gruppe=mat&vis=alle`).
+ * med nedtrekkslister for type, produktgruppe og materiale. Filtrene ligger i
+ * adressen (`?type=eske&gruppe=mat`).
  */
 export default function ShopHome({ searchParams }: Props) {
   return (

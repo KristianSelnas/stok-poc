@@ -124,7 +124,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 | Rute | Innhold | Fase |
 |---|---|---|
-| `/no/butikk?q=…&gruppe=…&bransje=…&vis=alle` | Butikkens forside og katalog: søk, «Kjøp igjen» og alle produkter med filterknapper | A |
+| `/no/butikk?q=…&type=…&gruppe=…&materiale=…` | Butikkens forside og katalog: søk, «Kjøp igjen» og alle produkter med filtre | A, N |
 | `/no/butikk/produkter` | Sender videre til `/no/butikk` med samme parametere | A |
 | `/no/butikk/produkter/[slug]` | Produktside med variantvelger, pris, lager og «Legg i kurv» | A |
 | `/no/butikk/handlekurv` | Handlekurv | A |
@@ -143,7 +143,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
 
-Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er lenker med parametere i adressen, så de kan deles og fungerer uten JavaScript. Som standard vises bare varer som kan bestilles direkte. `vis=alle` tar med varer som krever tilbud.
+Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale i et vanlig skjema. Valgene havner i adressen, så de kan deles og fungerer uten JavaScript. Alle produkter vises, også de som krever tilbud.
 
 Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
 

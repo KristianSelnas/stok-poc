@@ -180,12 +180,12 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 - [x] Bransjesider viser produktene i produktgruppene som peker på bransjen (`ProductGroup.industry`)
 - [x] `product`, `productGroup` og `material` er fjernet fra Sanity-skjemaet, og modulen «Produktutvalg» velger type, produktgruppe eller bransje
 - [x] Sitemap, strukturerte data og forhåndsvisning er oppdatert
-- [ ] Kjør `pnpm remove:products` mot Sanity-datasettet, så gamle produktdokumenter og referanser forsvinner
+- [x] Kjør `pnpm remove:products` mot Sanity-datasettet, så gamle produktdokumenter og referanser forsvinner
 
 **Merknader fra fase N:**
 
 - Filtrene følger bewifood.com: produktgruppe (Beskyttende emballasje, Fisk og sjømat, Handel, Mat, Medisinsk, Tekniske komponenter, Transport og lagring), type (16, f.eks. Eske, Sekk, Brett, Spann) og materiale (HDPE, Kartong, Annet). Bare fiskeproduktene har materiale, som på bewifood.com.
-- Butikken har typene som filterknapper, og produktgruppe og materiale som nedtrekkslister. Adressene bruker `type`, `gruppe` og `materiale`, som nettsiden.
+- Butikken har nedtrekkslister for type, produktgruppe og materiale. Adressene bruker `type`, `gruppe` og `materiale`, som nettsiden. Filteret på tilgjengelighet er fjernet, så alle produkter vises, også de som krever tilbud.
 - Rabattavtalene gjelder per type (`typeDiscounts`). Prosentene er de samme som før, så priser og ordrehistorikk er uendret.
 - Mat peker på bransjesiden Næringsmiddel, og Tekniske komponenter på Landbruk og industri. Handel og Medisinsk har ingen bransjeside.
 - Det islandske markedet har sitt eget sortiment på bewifood.com. De seks produktene som lå i Sanity, ligger nå i `src/shop/mock/data/catalog-is.json`, med egne typer (Kassar og Pokar).

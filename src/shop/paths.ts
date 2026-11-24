@@ -19,13 +19,12 @@ export type CatalogParams = {
   type?: string;
   gruppe?: string;
   materiale?: string;
-  vis?: "alle";
 };
 
 /** Adresse til katalogen med filtre, med hopp ned til produktlisten. */
 export function catalogPath(params: CatalogParams = {}): string {
   const search = new URLSearchParams();
-  for (const key of ["q", "type", "gruppe", "materiale", "vis"] as const) {
+  for (const key of ["q", "type", "gruppe", "materiale"] as const) {
     const value = params[key];
     if (value) search.set(key, value);
   }
