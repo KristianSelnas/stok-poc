@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "typegen": "sanity schema extract --force --path src/sanity/schema.json && sanity typegen generate",
     "seed": "sanity exec scripts/seed-sanity.ts --with-user-token --",
-    "seed:content": "sanity exec scripts/seed-content.ts --with-user-token --"
+    "seed:content": "sanity exec scripts/seed-content.ts --with-user-token --",
+    "remove:products": "sanity exec scripts/remove-sanity-products.ts --with-user-token --"
   },
   "dependencies": {
     "@sanity/client": "^8.17.0",

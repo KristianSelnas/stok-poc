@@ -5,13 +5,13 @@
 import {
   contactPeople,
   ctaBanner,
-  docLink,
   featureList,
   hero,
   image,
   newsList,
   p,
   pageLink,
+  pathLink,
   productCatalog,
   remoteImage,
   rich,
@@ -21,13 +21,12 @@ import {
 } from "./builders";
 import type { Industry, Page } from "../../src/sanity/types";
 
+/** Produktene nederst på bransjesiden kommer fra produktkatalogen (fase N). */
 export type IndustryContent = Pick<
   Industry,
   "title" | "slug" | "heroTitle" | "lead" | "image" | "modules"
 > & {
   slug: string;
-  /** Slugs til produkter som vises nederst på siden. */
-  featuredProducts: string[];
 };
 
 export type PageContent = Pick<Page, "title" | "modules" | "seo"> & { slug: string };
@@ -86,19 +85,9 @@ export const industriesNo: IndustryContent[] = [
         ),
         image: image("fabrikkskip.jpg", "Fabrikkskip på vei inn mot land"),
         imagePosition: "right",
-        cta: docLink("Se pakkemaskinen A1", "product", "pakkemaskin-a1"),
+        cta: pathLink("Se pakkemaskinen A1", "/produkter/pakkemaskin-a1"),
       }),
       contactCta,
-    ],
-    featuredProducts: [
-      "fiskekasse",
-      "fiskekar",
-      "kartong-for-saltfisk",
-      "filetbrett",
-      "nordic-bags",
-      "fleksible-filmer",
-      "pallekarmer",
-      "pakkemaskin-a1",
     ],
   },
   {
@@ -149,7 +138,6 @@ export const industriesNo: IndustryContent[] = [
       }),
       contactCta,
     ],
-    featuredProducts: ["matkasse", "brodkasser", "spann-dunker", "kvantum-brett"],
   },
   {
     title: "Beskyttende emballasje",
@@ -175,7 +163,7 @@ export const industriesNo: IndustryContent[] = [
           "Honeycomb-plate i papir",
         ),
         imagePosition: "right",
-        cta: docLink("Se honeycomb", "product", "honeycomb"),
+        cta: pathLink("Se honeycomb", "/produkter/honeycomb"),
       }),
       textWithImage({
         eyebrow: "Tilskåret skum",
@@ -193,7 +181,6 @@ export const industriesNo: IndustryContent[] = [
       }),
       contactCta,
     ],
-    featuredProducts: ["honeycomb", "sherpa-systems"],
   },
   {
     title: "Transport og lagring",
@@ -240,7 +227,6 @@ export const industriesNo: IndustryContent[] = [
       }),
       contactCta,
     ],
-    featuredProducts: ["stablebar-transportkasse", "trillebrett", "pallekarmer", "avfallsbeholdere"],
   },
   {
     title: "Landbruk og industri",
@@ -258,7 +244,6 @@ export const industriesNo: IndustryContent[] = [
       ),
       contactCta,
     ],
-    featuredProducts: ["stablebar-transportkasse", "honeycomb", "spann-dunker", "trillebrett"],
   },
 ];
 
@@ -269,7 +254,7 @@ export const pagesNo: PageContent[] = [
     seo: {
       title: "Produkter",
       description:
-        "Emballasje til fisk og sjømat, næringsmiddel, transport og industri. Filtrer på gruppe, bransje og materiale.",
+        "Emballasje til fisk og sjømat, næringsmiddel, transport og industri. Filtrer på produktgruppe, type og materiale.",
       image: null,
       noIndex: null,
     },
@@ -277,7 +262,7 @@ export const pagesNo: PageContent[] = [
       hero({
         eyebrow: "Produkter",
         title: "Produkter",
-        lead: "Et utvalg av emballasjen vi leverer. Filtrer på produktgruppe, bransje eller materiale. Finner du ikke det du leter etter, hjelper vi deg gjerne.",
+        lead: "Emballasjen vi leverer. Filtrer på produktgruppe, type eller materiale. Finner du ikke det du leter etter, hjelper vi deg gjerne.",
       }),
       productCatalog(),
       contactCta,

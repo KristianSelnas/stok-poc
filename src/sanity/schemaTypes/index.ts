@@ -1,6 +1,5 @@
 import type { SchemaTypeDefinition } from "sanity";
 
-import { material, product, productGroup, productProperty } from "./documents/catalog";
 import { industry } from "./documents/industry";
 import { newsArticle, newsCategory } from "./documents/news";
 import { certificate, department, location, person, testimonial } from "./documents/organization";
@@ -25,9 +24,6 @@ export const singletonTypes = ["siteSettings", "navigation", "frontPage"] as con
 export const translatableTypes = [
   "page",
   "industry",
-  "product",
-  "productGroup",
-  "material",
   "newsArticle",
   "newsCategory",
   "person",
@@ -45,9 +41,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Dokumenter
   page,
   industry,
-  product,
-  productGroup,
-  material,
   newsArticle,
   newsCategory,
   person,
@@ -69,5 +62,4 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   imageWithAlt,
   blockContent,
   simpleBlockContent,
-  productProperty,
 ];

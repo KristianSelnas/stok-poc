@@ -1,8 +1,8 @@
 {
   "2157": {
     "sku": "2157",
-    "status": "lowStock",
-    "available": 55,
+    "status": "inStock",
+    "available": 2200,
     "leadTimeDays": 2
   },
   "2163": {
@@ -32,7 +32,7 @@
   "2290": {
     "sku": "2290",
     "status": "inStock",
-    "available": 1840,
+    "available": 240,
     "leadTimeDays": 2
   },
   "2705": {
@@ -51,7 +51,7 @@
     "sku": "2708",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "2709": {
     "sku": "2709",
@@ -63,67 +63,67 @@
     "sku": "3002",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "3003": {
     "sku": "3003",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "3005": {
     "sku": "3005",
     "status": "inStock",
-    "available": 748800,
+    "available": 691200,
     "leadTimeDays": 2
   },
   "3006": {
     "sku": "3006",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "3010": {
     "sku": "3010",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "3012": {
     "sku": "3012",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "3020": {
     "sku": "3020",
     "status": "inStock",
-    "available": 23328,
+    "available": 25920,
     "leadTimeDays": 2
   },
   "3022": {
     "sku": "3022",
     "status": "inStock",
-    "available": 224640,
+    "available": 86400,
     "leadTimeDays": 2
   },
   "3025": {
     "sku": "3025",
-    "status": "lowStock",
-    "available": 700,
+    "status": "inStock",
+    "available": 42120,
     "leadTimeDays": 2
   },
   "3026": {
     "sku": "3026",
     "status": "inStock",
-    "available": 62400,
+    "available": 15600,
     "leadTimeDays": 2
   },
   "3028": {
     "sku": "3028",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "3033": {
     "sku": "3033",
@@ -141,19 +141,19 @@
     "sku": "3040",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "3041": {
     "sku": "3041",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "3042": {
     "sku": "3042",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "3043": {
     "sku": "3043",
@@ -164,44 +164,44 @@
   "3060": {
     "sku": "3060",
     "status": "inStock",
-    "available": 10500,
+    "available": 5880,
     "leadTimeDays": 2
   },
   "3062": {
     "sku": "3062",
     "status": "inStock",
-    "available": 63000,
+    "available": 96600,
     "leadTimeDays": 2
   },
   "3065": {
     "sku": "3065",
     "status": "inStock",
-    "available": 1980,
+    "available": 6160,
     "leadTimeDays": 2
   },
   "3066": {
     "sku": "3066",
-    "status": "lowStock",
-    "available": 40,
+    "status": "inStock",
+    "available": 3740,
     "leadTimeDays": 2
   },
   "3067": {
     "sku": "3067",
     "status": "inStock",
-    "available": 80960,
+    "available": 88000,
     "leadTimeDays": 2
   },
   "3070": {
     "sku": "3070",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "3071": {
     "sku": "3071",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "3072": {
     "sku": "3072",
@@ -225,7 +225,7 @@
     "sku": "3075",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "3250": {
     "sku": "3250",
@@ -236,68 +236,68 @@
   "3252": {
     "sku": "3252",
     "status": "inStock",
-    "available": 972,
+    "available": 13608,
     "leadTimeDays": 2
   },
   "3270": {
     "sku": "3270",
-    "status": "inStock",
-    "available": 324,
+    "status": "lowStock",
+    "available": 82,
     "leadTimeDays": 2
   },
   "3502": {
     "sku": "3502",
-    "status": "inStock",
-    "available": 3600,
+    "status": "lowStock",
+    "available": 240,
     "leadTimeDays": 2
   },
   "3510": {
     "sku": "3510",
     "status": "inStock",
-    "available": 1980,
+    "available": 4500,
     "leadTimeDays": 2
   },
   "3512": {
     "sku": "3512",
-    "status": "lowStock",
-    "available": 260,
+    "status": "inStock",
+    "available": 10800,
     "leadTimeDays": 2
   },
   "3530": {
     "sku": "3530",
     "status": "inStock",
-    "available": 660,
+    "available": 960,
     "leadTimeDays": 2
   },
   "3540": {
     "sku": "3540",
     "status": "inStock",
-    "available": 72,
+    "available": 480,
     "leadTimeDays": 2
   },
   "3542": {
     "sku": "3542",
     "status": "inStock",
-    "available": 1050,
+    "available": 2250,
     "leadTimeDays": 2
   },
   "4427": {
     "sku": "4427",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "4428": {
     "sku": "4428",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "4429": {
     "sku": "4429",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "4432": {
     "sku": "4432",
@@ -315,61 +315,61 @@
     "sku": "4434",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "4435": {
     "sku": "4435",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "4436": {
     "sku": "4436",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "6415": {
     "sku": "6415",
-    "status": "inStock",
-    "available": 5800,
+    "status": "lowStock",
+    "available": 40,
     "leadTimeDays": 2
   },
   "6416": {
     "sku": "6416",
     "status": "inStock",
-    "available": 5152,
+    "available": 3680,
     "leadTimeDays": 2
   },
   "6417": {
     "sku": "6417",
     "status": "inStock",
-    "available": 4600,
+    "available": 3600,
     "leadTimeDays": 2
   },
   "6525": {
     "sku": "6525",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "6528": {
     "sku": "6528",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "6530": {
     "sku": "6530",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "6532": {
     "sku": "6532",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "6695": {
     "sku": "6695",
@@ -387,48 +387,48 @@
     "sku": "6697",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "6698": {
     "sku": "6698",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "6700": {
     "sku": "6700",
     "status": "inStock",
-    "available": 224,
+    "available": 800,
     "leadTimeDays": 2
   },
   "6702": {
     "sku": "6702",
     "status": "inStock",
-    "available": 1152,
+    "available": 448,
     "leadTimeDays": 2
   },
   "6703": {
     "sku": "6703",
-    "status": "lowStock",
-    "available": 15,
+    "status": "inStock",
+    "available": 240,
     "leadTimeDays": 2
   },
   "6704": {
     "sku": "6704",
     "status": "inStock",
-    "available": 448,
+    "available": 320,
     "leadTimeDays": 2
   },
   "6706": {
     "sku": "6706",
     "status": "inStock",
-    "available": 6900,
+    "available": 1200,
     "leadTimeDays": 2
   },
   "6707": {
     "sku": "6707",
-    "status": "inStock",
-    "available": 11400,
+    "status": "lowStock",
+    "available": 240,
     "leadTimeDays": 2
   },
   "6716": {
@@ -441,24 +441,24 @@
     "sku": "6719",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 15
   },
   "6721": {
     "sku": "6721",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "7002": {
     "sku": "7002",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "7005": {
     "sku": "7005",
-    "status": "inStock",
-    "available": 7200,
+    "status": "lowStock",
+    "available": 210,
     "leadTimeDays": 2
   },
   "7110": {
@@ -483,55 +483,55 @@
     "sku": "7120",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "7150": {
     "sku": "7150",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "7162": {
     "sku": "7162",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "7164": {
     "sku": "7164",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "7175": {
     "sku": "7175",
     "status": "inStock",
-    "available": 1320,
+    "available": 1800,
     "leadTimeDays": 2
   },
   "7180": {
     "sku": "7180",
-    "status": "inStock",
-    "available": 2700,
+    "status": "lowStock",
+    "available": 85,
     "leadTimeDays": 2
   },
   "7190": {
     "sku": "7190",
-    "status": "inStock",
-    "available": 320,
+    "status": "lowStock",
+    "available": 27,
     "leadTimeDays": 2
   },
   "7191": {
     "sku": "7191",
     "status": "inStock",
-    "available": 1408,
+    "available": 704,
     "leadTimeDays": 2
   },
   "7192": {
     "sku": "7192",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "8075-0": {
     "sku": "8075-0",
@@ -615,13 +615,13 @@
     "sku": "7034-1",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "7034-2": {
     "sku": "7034-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "7034-3": {
     "sku": "7034-3",
@@ -668,37 +668,7 @@
   "6723-2": {
     "sku": "6723-2",
     "status": "inStock",
-    "available": 1664,
-    "leadTimeDays": 2
-  },
-  "5201-1": {
-    "sku": "5201-1",
-    "status": "inStock",
-    "available": 22500,
-    "leadTimeDays": 2
-  },
-  "5201-2": {
-    "sku": "5201-2",
-    "status": "inStock",
-    "available": 2000,
-    "leadTimeDays": 2
-  },
-  "5201-3": {
-    "sku": "5201-3",
-    "status": "inStock",
-    "available": 13800,
-    "leadTimeDays": 2
-  },
-  "5201-4": {
-    "sku": "5201-4",
-    "status": "inStock",
-    "available": 6000,
-    "leadTimeDays": 2
-  },
-  "5201-5": {
-    "sku": "5201-5",
-    "status": "lowStock",
-    "available": 160,
+    "available": 1152,
     "leadTimeDays": 2
   },
   "8003-0": {
@@ -873,31 +843,13 @@
     "sku": "0293-1",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "0293-2": {
     "sku": "0293-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
-  },
-  "5450-1": {
-    "sku": "5450-1",
-    "status": "lowStock",
-    "available": 125,
-    "leadTimeDays": 2
-  },
-  "5450-3": {
-    "sku": "5450-3",
-    "status": "inStock",
-    "available": 10800,
-    "leadTimeDays": 2
-  },
-  "5450-6": {
-    "sku": "5450-6",
-    "status": "inStock",
-    "available": 3900,
-    "leadTimeDays": 2
+    "leadTimeDays": 10
   },
   "8093-0": {
     "sku": "8093-0",
@@ -915,13 +867,13 @@
     "sku": "CG1615",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "PP32": {
     "sku": "PP32",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "8094-0": {
     "sku": "8094-0",
@@ -1047,7 +999,7 @@
     "sku": "0260-0",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "8044-0": {
     "sku": "8044-0",
@@ -1064,31 +1016,31 @@
   "9101-1": {
     "sku": "9101-1",
     "status": "inStock",
-    "available": 30240,
+    "available": 17280,
     "leadTimeDays": 2
   },
   "9101-2": {
     "sku": "9101-2",
     "status": "inStock",
-    "available": 62640,
+    "available": 30240,
     "leadTimeDays": 2
   },
   "9102-1": {
     "sku": "9102-1",
-    "status": "lowStock",
-    "available": 1176,
+    "status": "inStock",
+    "available": 2880,
     "leadTimeDays": 2
   },
   "9140-1": {
     "sku": "9140-1",
     "status": "inStock",
-    "available": 2000,
+    "available": 21000,
     "leadTimeDays": 2
   },
   "9140-2": {
     "sku": "9140-2",
-    "status": "inStock",
-    "available": 12000,
+    "status": "lowStock",
+    "available": 650,
     "leadTimeDays": 2
   },
   "8090-0": {
@@ -1099,8 +1051,8 @@
   },
   "9150-1": {
     "sku": "9150-1",
-    "status": "inStock",
-    "available": 50000,
+    "status": "lowStock",
+    "available": 700,
     "leadTimeDays": 2
   },
   "8092-0": {
@@ -1113,19 +1065,19 @@
     "sku": "6708-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 20
   },
   "7178-2": {
     "sku": "7178-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "7156-2": {
     "sku": "7156-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 10
+    "leadTimeDays": 15
   },
   "0280-1": {
     "sku": "0280-1",
@@ -1137,19 +1089,19 @@
     "sku": "0280-3",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 20
+    "leadTimeDays": 10
   },
   "0285-0": {
     "sku": "0285-0",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 10
   },
   "0290-0": {
     "sku": "0290-0",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "8036-0": {
     "sku": "8036-0",
@@ -1166,13 +1118,13 @@
   "9130-1": {
     "sku": "9130-1",
     "status": "inStock",
-    "available": 1080000,
+    "available": 1000000,
     "leadTimeDays": 2
   },
   "9130-2": {
     "sku": "9130-2",
     "status": "inStock",
-    "available": 480000,
+    "available": 300000,
     "leadTimeDays": 2
   },
   "8037-0": {
@@ -1180,30 +1132,6 @@
     "status": "onRequest",
     "available": 0,
     "leadTimeDays": 25
-  },
-  "5427-1": {
-    "sku": "5427-1",
-    "status": "inStock",
-    "available": 12500,
-    "leadTimeDays": 2
-  },
-  "5427-2": {
-    "sku": "5427-2",
-    "status": "inStock",
-    "available": 14400,
-    "leadTimeDays": 2
-  },
-  "5427-3": {
-    "sku": "5427-3",
-    "status": "inStock",
-    "available": 7000,
-    "leadTimeDays": 2
-  },
-  "5427-4": {
-    "sku": "5427-4",
-    "status": "inStock",
-    "available": 5400,
-    "leadTimeDays": 2
   },
   "8042-0": {
     "sku": "8042-0",
@@ -1281,13 +1209,13 @@
     "sku": "6705-1",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "6705-2": {
     "sku": "6705-2",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "6700-2": {
     "sku": "6700-2",
@@ -1299,54 +1227,54 @@
     "sku": "6708-1",
     "status": "madeToOrder",
     "available": 0,
-    "leadTimeDays": 15
+    "leadTimeDays": 20
   },
   "7178-1": {
     "sku": "7178-1",
-    "status": "inStock",
-    "available": 3360,
+    "status": "lowStock",
+    "available": 29,
     "leadTimeDays": 2
   },
   "7178-5": {
     "sku": "7178-5",
     "status": "inStock",
-    "available": 2016,
+    "available": 560,
     "leadTimeDays": 2
   },
   "7156-1": {
     "sku": "7156-1",
     "status": "inStock",
-    "available": 960,
+    "available": 1760,
     "leadTimeDays": 2
   },
   "9120-1": {
     "sku": "9120-1",
     "status": "inStock",
-    "available": 1248,
+    "available": 768,
     "leadTimeDays": 2
   },
   "9120-2": {
     "sku": "9120-2",
-    "status": "inStock",
-    "available": 384,
+    "status": "lowStock",
+    "available": 7,
     "leadTimeDays": 2
   },
   "9110-1": {
     "sku": "9110-1",
     "status": "inStock",
-    "available": 6960,
+    "available": 3120,
     "leadTimeDays": 2
   },
   "9110-2": {
     "sku": "9110-2",
-    "status": "lowStock",
-    "available": 96,
+    "status": "inStock",
+    "available": 5760,
     "leadTimeDays": 2
   },
   "9111-1": {
     "sku": "9111-1",
     "status": "inStock",
-    "available": 960,
+    "available": 280,
     "leadTimeDays": 2
   },
   "8046-0": {
@@ -1382,13 +1310,13 @@
   "7185-2": {
     "sku": "7185-2",
     "status": "inStock",
-    "available": 684,
+    "available": 864,
     "leadTimeDays": 2
   },
   "7185-4": {
     "sku": "7185-4",
     "status": "inStock",
-    "available": 450,
+    "available": 390,
     "leadTimeDays": 2
   },
   "8087-0": {

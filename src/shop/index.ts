@@ -1,7 +1,9 @@
 import "server-only";
 
-import { mockServices, resetMockData } from "./mock";
-import type { ShopServices } from "./services";
+import type { MarketId } from "@/lib/markets";
+
+import { mockMarketCatalogs, mockServices, resetMockData } from "./mock";
+import type { CatalogService, ShopServices } from "./services";
 
 /**
  * Velger implementasjon av tjenestene bak nettbutikken.
@@ -24,6 +26,23 @@ const services: ShopServices = (() => {
 
 export function shop(): ShopServices {
   return services;
+}
+
+const marketCatalogs: Record<MarketId, CatalogService> = (() => {
+  switch (backend) {
+    case "mock":
+      return mockMarketCatalogs;
+    default:
+      throw new Error(`Ukjent SHOP_BACKEND: «${backend}».`);
+  }
+})();
+
+/**
+ * Produktkatalogen for et marked. Nettsidens produktsider bruker denne
+ * (fase N). Den norske er den samme som nettbutikkens.
+ */
+export function catalogFor(market: MarketId): CatalogService {
+  return marketCatalogs[market];
 }
 
 /** Om demoen kan nullstilles. Gjelder bare mockene. */

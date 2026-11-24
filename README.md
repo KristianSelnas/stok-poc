@@ -37,17 +37,18 @@ Publiserte endringer vises med en gang via Sanity Live, også lokalt. Webhooken 
 
 ## Kommandoer
 
-| Kommando            | Hva den gjør                                                        |
-| ------------------- | ------------------------------------------------------------------- |
-| `pnpm dev`          | Utviklingsserver                                                    |
-| `pnpm build`        | Produksjonsbygg                                                     |
-| `pnpm start`        | Kjører produksjonsbygget                                            |
-| `pnpm lint`         | ESLint                                                              |
-| `pnpm typecheck`    | Genererer rutetyper og kjører TypeScript                            |
-| `pnpm format`       | Formaterer koden med Prettier                                       |
-| `pnpm typegen`      | Genererer typer fra Sanity-skjema og GROQ                           |
-| `pnpm seed`         | Legger startinnholdet (fase 2) inn i Sanity                         |
-| `pnpm seed:content` | Legger innholdet for fase 3 inn i Sanity (`--dry-run`, `--replace`) |
+| Kommando               | Hva den gjør                                                        |
+| ---------------------- | ------------------------------------------------------------------- |
+| `pnpm dev`             | Utviklingsserver                                                    |
+| `pnpm build`           | Produksjonsbygg                                                     |
+| `pnpm start`           | Kjører produksjonsbygget                                            |
+| `pnpm lint`            | ESLint                                                              |
+| `pnpm typecheck`       | Genererer rutetyper og kjører TypeScript                            |
+| `pnpm format`          | Formaterer koden med Prettier                                       |
+| `pnpm typegen`         | Genererer typer fra Sanity-skjema og GROQ                           |
+| `pnpm seed`            | Legger startinnholdet (fase 2) inn i Sanity                         |
+| `pnpm seed:content`    | Legger innholdet for fase 3 inn i Sanity (`--dry-run`, `--replace`) |
+| `pnpm remove:products` | Fjerner produktene fra Sanity etter fase N (`--dry-run`)            |
 
 ## Struktur
 

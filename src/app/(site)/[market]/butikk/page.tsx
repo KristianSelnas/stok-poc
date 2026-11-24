@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense, type ReactNode } from "react";
+import { Suspense } from "react";
 
 import { BoxPreview } from "@/components/shop/BoxPreview";
+import { CatalogFilters } from "@/components/shop/CatalogFilters";
 import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { ShopProductCard } from "@/components/shop/ShopProductCard";
 import { buttonClasses } from "@/components/ui/Button";
@@ -11,7 +12,7 @@ import { quickAddToCart } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import { formatNok, formatNumber, formatShopDate } from "@/shop/format";
 import { shop } from "@/shop/index";
-import { catalogPath, configuratorPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
+import { configuratorPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
 import { getShopTaxonomy, listShopProducts } from "@/shop/queries";
 import { getFrequentItems } from "@/shop/recommendations";
 import { getSession } from "@/shop/session";
@@ -23,7 +24,7 @@ type Props = PageProps<"/[market]/butikk">;
 type SearchParams = Props["searchParams"];
 
 /** Produktene som vises når ingen kunde er logget inn. */
-const popularSlugs = ["fiskekasse", "stablebar-transportkasse", "bolgepappeske", "pakketape"];
+const popularSlugs = ["fiskekasse", "stablebar-transportkasse", "brodkasser", "pakketape"];
 
 const fieldClass =
   "rounded-full border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none";
@@ -35,14 +36,16 @@ async function readParams(searchParams: SearchParams): Promise<CatalogParams> {
     const value = raw[key];
     return (Array.isArray(value) ? value[0] : value)?.trim() ?? "";
   };
-  const { groups, industries } = await getShopTaxonomy();
-  const gruppe = one("gruppe");
-  const bransje = one("bransje");
+  const { groups, types, materials } = await getShopTaxonomy();
+  const valid = (key: string, options: { slug: string }[]) => {
+    const value = one(key);
+    return options.some((o) => o.slug === value) ? value : undefined;
+  };
   return {
     q: one("q").slice(0, 80) || undefined,
-    gruppe: groups.some((g) => g.slug === gruppe) ? gruppe : undefined,
-    bransje: industries.some((i) => i.slug === bransje) ? bransje : undefined,
-    vis: one("vis") === "alle" ? "alle" : undefined,
+    type: valid("type", types),
+    gruppe: valid("gruppe", groups),
+    materiale: valid("materiale", materials),
   };
 }
 
@@ -55,7 +58,7 @@ async function SearchForm({ searchParams }: { searchParams: SearchParams }) {
   return <SearchFields params={params} />;
 }
 
-/** Søket gjelder alle grupper, men beholder bransje og visning. */
+/** Søket beholder filtrene på type, produktgruppe og materiale. */
 function SearchFields({ params = {} }: { params?: CatalogParams }) {
   return (
     <form action={`${shopPath()}#produkter`} role="search" className="mt-8 flex max-w-xl gap-2">
@@ -70,8 +73,9 @@ function SearchFields({ params = {} }: { params?: CatalogParams }) {
         placeholder={t.searchPlaceholder}
         className={`min-w-0 flex-1 ${fieldClass} px-5 py-3`}
       />
-      {params.bransje && <input type="hidden" name="bransje" value={params.bransje} />}
-      {params.vis && <input type="hidden" name="vis" value={params.vis} />}
+      {params.type && <input type="hidden" name="type" value={params.type} />}
+      {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}
+      {params.materiale && <input type="hidden" name="materiale" value={params.materiale} />}
       <button type="submit" className={buttonClasses("secondary")}>
         {t.search}
       </button>
@@ -171,8 +175,8 @@ async function Highlights() {
     }
   }
 
-  const [products, { groups }] = await Promise.all([listShopProducts(), getShopTaxonomy()]);
-  const groupTitle = new Map(groups.map((g) => [g.slug, g.title]));
+  const [products, { types }] = await Promise.all([listShopProducts(), getShopTaxonomy()]);
+  const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
   const popular = popularSlugs.flatMap((slug) => products.find((p) => p.slug === slug) ?? []);
   return (
     <section aria-labelledby="populaere" className="py-10 md:py-14">
@@ -183,7 +187,7 @@ async function Highlights() {
         <ul className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
           {popular.map((product) => (
             <li key={product.slug} className="w-[75%] shrink-0 snap-start sm:w-auto">
-              <ShopProductCard product={product} groupTitle={groupTitle.get(product.group)} />
+              <ShopProductCard product={product} typeTitle={typeTitle.get(product.type)} />
             </li>
           ))}
         </ul>
@@ -193,45 +197,29 @@ async function Highlights() {
 }
 
 // ---------------------------------------------------------------------------
-// Katalogen: filterknapper og produktrutenett
+// Katalogen: filtre og produktrutenett
 // ---------------------------------------------------------------------------
-
-function Chip({ href, current, children }: { href: string; current: boolean; children: ReactNode }) {
-  return (
-    <Link
-      href={href}
-      scroll={false}
-      aria-current={current ? "true" : undefined}
-      className={`inline-flex items-center gap-1.5 rounded-full border-2 px-4 py-1.5 font-semibold whitespace-nowrap ${
-        current
-          ? "border-stok-blue bg-stok-blue text-white"
-          : "border-stok-blue/15 bg-white text-stok-blue hover:border-stok-blue"
-      }`}
-    >
-      {children}
-    </Link>
-  );
-}
 
 async function Catalog({ searchParams }: { searchParams: SearchParams }) {
   const params = await readParams(searchParams);
-  const [{ groups, industries }, products, session] = await Promise.all([
+  const [{ groups, types, materials }, products, session] = await Promise.all([
     getShopTaxonomy(),
-    listShopProducts({ query: params.q, industry: params.bransje }),
+    listShopProducts({
+      query: params.q,
+      type: params.type,
+      group: params.gruppe,
+      material: params.materiale,
+    }),
     getSession(),
   ]);
 
-  const orderableOnly = params.vis !== "alle";
-  const inGroup = (p: (typeof products)[number]) => !params.gruppe || p.group === params.gruppe;
-  const orderable = products.filter((p) => p.salesMode !== "quote");
-  const base = orderableOnly ? orderable : products;
-  const shown = base.filter(inGroup);
-  const groupCount = (slug: string) => base.filter((p) => p.group === slug).length;
-  const groupTitle = new Map(groups.map((g) => [g.slug, g.title]));
-  const hasFilters = !!(params.q || params.gruppe || params.bransje || params.vis);
+  // Produktene grupperes etter type, som på bewifood.com.
+  const sections = types
+    .map((type) => ({ type, items: products.filter((p) => p.type === type.slug) }))
+    .filter((section) => section.items.length > 0);
 
   const prices = await shop().pricing.getPrices(
-    shown.flatMap((p) => p.skus),
+    products.flatMap((p) => p.skus),
     session?.customer.id,
   );
   const fromPrice = (skus: string[]) => {
@@ -241,103 +229,33 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
 
   return (
     <>
-      <div className="space-y-5">
-        <nav aria-label={t.productGroups}>
-          <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            <li>
-              <Chip href={catalogPath({ ...params, gruppe: undefined })} current={!params.gruppe}>
-                {t.allInGroup} <span className="font-normal">{base.length}</span>
-              </Chip>
-            </li>
-            {groups.map((group) => {
-              const count = groupCount(group.slug);
-              if (!count && params.gruppe !== group.slug) return null;
-              return (
-                <li
-                  key={group.slug}
-                  className={params.gruppe === group.slug ? "order-first sm:order-none" : ""}
-                >
-                  <Chip
-                    href={catalogPath({ ...params, gruppe: group.slug })}
-                    current={params.gruppe === group.slug}
-                  >
-                    {group.title} <span className="font-normal">{count}</span>
-                  </Chip>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
-          <div>
-            <p id="visning" className="mb-1 font-meta text-sm font-medium text-stok-blue">
-              {t.availability}
-            </p>
-            <ul aria-labelledby="visning" className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
-              <li>
-                <Chip href={catalogPath({ ...params, vis: undefined })} current={orderableOnly}>
-                  {t.orderableNow} <span className="font-normal">{orderable.filter(inGroup).length}</span>
-                </Chip>
-              </li>
-              <li>
-                <Chip href={catalogPath({ ...params, vis: "alle" })} current={!orderableOnly}>
-                  {t.showAllIncludingQuote}{" "}
-                  <span className="font-normal">{products.filter(inGroup).length}</span>
-                </Chip>
-              </li>
-            </ul>
-          </div>
-
-          <form action={`${shopPath()}#produkter`} className="flex items-end gap-2">
-            {params.q && <input type="hidden" name="q" value={params.q} />}
-            {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}
-            {params.vis && <input type="hidden" name="vis" value={params.vis} />}
-            <div>
-              <label htmlFor="bransje" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-                {t.industry}
-              </label>
-              <select id="bransje" name="bransje" defaultValue={params.bransje ?? ""} className={fieldClass}>
-                <option value="">{t.allIndustries}</option>
-                {industries.map((i) => (
-                  <option key={i.slug} value={i.slug}>
-                    {i.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button type="submit" className={buttonClasses("outline", "px-5 py-2")}>
-              {t.showResults}
-            </button>
-          </form>
-
-          {hasFilters && (
-            <Link href={catalogPath()} scroll={false} className="pb-2 font-semibold text-stok-blue underline">
-              {t.resetFilters}
-            </Link>
-          )}
-        </div>
-      </div>
+      <CatalogFilters params={params} types={types} groups={groups} materials={materials} />
 
       <p role="status" className="mt-8 mb-4 font-meta text-sm font-medium text-stok-blue">
-        {t.resultCount(shown.length)}
+        {t.resultCount(products.length)}
         {params.q && t.matching(params.q)}
-        {orderableOnly && (
-          <span className="font-body font-normal text-stok-text"> · {t.orderableNowHelp}</span>
-        )}
       </p>
-      {shown.length ? (
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {shown.map((product) => (
-            <li key={product.slug}>
-              <ShopProductCard
-                product={product}
-                groupTitle={groupTitle.get(product.group)}
-                fromPrice={fromPrice(product.skus)}
-              />
-            </li>
+      {sections.length ? (
+        <div className="space-y-12">
+          {sections.map(({ type, items }) => (
+            <section key={type.slug} aria-labelledby={`type-${type.slug}`}>
+              <h3 id={`type-${type.slug}`} className="mb-5 text-2xl">
+                {type.title} <span className="font-body text-base font-normal">({items.length})</span>
+              </h3>
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {items.map((product) => (
+                  <li key={product.slug}>
+                    <ShopProductCard
+                      product={product}
+                      fromPrice={fromPrice(product.skus)}
+                      headingLevel="h4"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       ) : (
         <p className="rounded-3xl bg-white p-8 text-lg">{t.noResults}</p>
       )}
@@ -404,7 +322,8 @@ function ConfiguratorTeaser() {
 
 /**
  * Butikkens forside er også katalogen: søk, «Kjøp igjen» og alle produkter
- * med filterknapper. Filtrene ligger i adressen (`?gruppe=eske&vis=alle`).
+ * med nedtrekkslister for type, produktgruppe og materiale, gruppert etter type. Filtrene ligger i
+ * adressen (`?type=eske&gruppe=mat`).
  */
 export default function ShopHome({ searchParams }: Props) {
   return (

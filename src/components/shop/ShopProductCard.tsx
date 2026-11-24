@@ -10,13 +10,17 @@ import { ProductImageBox } from "./ProductImageBox";
 /** Produktkort i butikken. Hele kortet er klikkbart. `fromPrice` vises når den er kjent. */
 export function ShopProductCard({
   product,
-  groupTitle,
+  typeTitle,
   fromPrice,
+  headingLevel = "h3",
 }: {
   product: ProductSummary;
-  groupTitle?: string;
+  typeTitle?: string;
   fromPrice?: number | null;
+  /** `h4` når kortene står under en overskrift på nivå 3, f.eks. i katalogen gruppert etter type. */
+  headingLevel?: "h3" | "h4";
 }) {
+  const Heading = headingLevel;
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stok-blue/10 transition-shadow hover:shadow-lg">
       <ProductImageBox
@@ -25,16 +29,16 @@ export function ShopProductCard({
         className="aspect-[4/3]"
       />
       <div className="flex flex-1 flex-col p-5">
-        {groupTitle && (
+        {typeTitle && (
           <p className="font-meta text-xs font-medium tracking-wide text-stok-green-dark uppercase">
-            {groupTitle}
+            {typeTitle}
           </p>
         )}
-        <h3 className="mt-1 text-lg">
+        <Heading className="mt-1 text-lg">
           <Link href={productPath(product.slug)} className="after:absolute after:inset-0">
             {product.name}
           </Link>
-        </h3>
+        </Heading>
         {product.shortDescription && <p className="mt-2 line-clamp-2 text-sm">{product.shortDescription}</p>}
         <div className="mt-auto flex items-end justify-between gap-3 pt-4 text-sm">
           <span className="text-stok-text">

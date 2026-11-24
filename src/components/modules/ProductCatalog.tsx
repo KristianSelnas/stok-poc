@@ -8,10 +8,10 @@ import {
   parseSelection,
   selectionHref,
 } from "@/lib/catalog";
-import { getCatalog } from "@/lib/content";
 import { getDictionary, type Dictionary } from "@/lib/dictionaries";
 import type { MarketId } from "@/lib/markets";
-import type { Catalog, ModuleOf } from "@/sanity/types";
+import { getSiteCatalog, type SiteCatalog, toCards } from "@/lib/products";
+import type { ModuleOf } from "@/sanity/types";
 
 import { Container } from "../ui/Container";
 import { ProductCardGrid } from "../ui/ProductCard";
@@ -28,14 +28,15 @@ type ProductCatalogProps = {
 };
 
 /**
- * Produktkatalog med filtre for gruppe, bransje og materiale. Filtrene er
+ * Produktkatalog med filtre for produktgruppe, type og materiale, som på
+ * bewifood.com. Produktene kommer fra produktkatalogen (fase N). Filtrene er
  * lenker med URL-parametere, så de virker uten JavaScript og kan deles.
  *
  * Filtrene leses fra URL-en ved forespørsel. Den statiske versjonen av siden
  * viser alle produkter, og den filtrerte versjonen strømmes inn.
  */
 export async function ProductCatalog({ module, market, basePath, searchParams }: ProductCatalogProps) {
-  const catalog = await getCatalog(market);
+  const catalog = await getSiteCatalog(market);
   const t = getDictionary(market);
 
   return (
@@ -65,7 +66,7 @@ async function FilteredCatalog({
   searchParams,
   ...props
 }: {
-  catalog: Catalog;
+  catalog: SiteCatalog;
   searchParams?: SearchParams;
   basePath: string;
   market: MarketId;
@@ -82,14 +83,14 @@ function CatalogView({
   market,
   t,
 }: {
-  catalog: Catalog;
+  catalog: SiteCatalog;
   selection: CatalogSelection;
   basePath: string;
   market: MarketId;
   t: Dictionary;
 }) {
   const products = filterProducts(catalog, selection);
-  const labels = { gruppe: t.productGroup, bransje: t.industry, materiale: t.material };
+  const labels = { gruppe: t.productGroup, type: t.productType, materiale: t.material };
   const hasSelection = Object.values(selection).some(Boolean);
 
   return (
@@ -144,7 +145,7 @@ function CatalogView({
           {products.length} {products.length === 1 ? t.productFound : t.productsFound}
         </p>
         {products.length ? (
-          <ProductCardGrid products={products} market={market} columns={3} />
+          <ProductCardGrid products={toCards(catalog, products)} market={market} columns={3} />
         ) : (
           <p className="rounded-3xl bg-stok-light p-8">{t.noProducts}</p>
         )}

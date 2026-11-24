@@ -10,25 +10,21 @@ import { singletonId } from "@/sanity/lib/singletons";
 import { SANITY_TAG } from "@/sanity/lib/tags";
 import { readToken } from "@/sanity/lib/token";
 import {
-  catalogQuery,
   frontPageQuery,
   industryQuery,
   navigationQuery,
   newsArticleQuery,
   pageQuery,
-  productQuery,
   routesQuery,
   siteSettingsQuery,
   sitemapQuery,
 } from "@/sanity/queries";
 import type {
-  Catalog,
   FrontPage,
   Industry,
   Navigation,
   NewsArticle,
   Page,
-  Product,
   Routes,
   SiteSettings,
   Sitemap,
@@ -140,14 +136,6 @@ export async function getIndustry(market: MarketId, slug: string): Promise<Indus
   return fetchSanity(industryQuery, { language: language(market), slug });
 }
 
-export async function getProduct(market: MarketId, slug: string): Promise<Product | null> {
-  "use cache";
-  cacheTag(SANITY_TAG, "product", `product:${market}:${slug}`);
-  applyCacheLife();
-
-  return fetchSanity(productQuery, { language: language(market), slug });
-}
-
 export async function getNewsArticle(market: MarketId, slug: string): Promise<NewsArticle | null> {
   "use cache";
   cacheTag(SANITY_TAG, "newsArticle", `newsArticle:${market}:${slug}`);
@@ -156,16 +144,7 @@ export async function getNewsArticle(market: MarketId, slug: string): Promise<Ne
   return fetchSanity(newsArticleQuery, { language: language(market), slug });
 }
 
-/** Produkter og filtervalg til produktkatalogen. Filtreringen skjer i `lib/catalog.ts`. */
-export async function getCatalog(market: MarketId): Promise<Catalog> {
-  "use cache";
-  cacheTag(SANITY_TAG, "product");
-  applyCacheLife();
-
-  return fetchSanity(catalogQuery, { language: language(market) });
-}
-
-/** Alle adresser i et marked (sider, bransjer, produkter, nyheter), til `generateStaticParams`. */
+/** Alle adresser i Sanity i et marked (sider, bransjer, nyheter), til `generateStaticParams`. */
 export async function getRoutes(market: MarketId): Promise<Routes> {
   "use cache";
   cacheTag(SANITY_TAG);

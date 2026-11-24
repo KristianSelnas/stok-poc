@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { cookieCart, getCartOrigin, setCartOrigin } from "./cart";
+import { clearAllCarts, cookieCart, getCartOrigin, mergeGuestCart, setCartOrigin } from "./cart";
 import { t } from "./dictionary";
 import { canResetDemo, resetDemo, shop } from "./index";
 import { roundToBundle } from "./mock/rules";
@@ -43,6 +43,7 @@ export async function login(formData: FormData) {
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });
+  await mergeGuestCart({ customerId: customer.id, userId: user.id });
   redirect(safeNext(text(formData, "next")));
 }
 
@@ -54,7 +55,7 @@ export async function logout() {
 export async function resetDemoData() {
   if (canResetDemo) {
     resetDemo();
-    await cookieCart.clear();
+    await clearAllCarts();
   }
   redirect(`${shopPath("/logg-inn")}?nullstilt=1`);
 }

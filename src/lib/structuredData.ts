@@ -1,7 +1,8 @@
-import type { NewsArticle, Product, SiteSettings } from "@/sanity/types";
+import type { NewsArticle, SiteSettings } from "@/sanity/types";
 
 import { getDictionary } from "./dictionaries";
 import { marketPath, markets, type MarketId } from "./markets";
+import type { SiteProduct } from "./products";
 import { documentPath, routePrefixes } from "./routes";
 import { absoluteUrl } from "./site";
 
@@ -59,30 +60,33 @@ function publisher(settings: SiteSettings, market: MarketId) {
   };
 }
 
-/** Produkt med brødsmulesti (Produkter → gruppe → produkt). */
-export function productJsonLd(product: Product, settings: SiteSettings, market: MarketId) {
+/** Produkt fra produktkatalogen med brødsmulesti (Produkter → type → produkt). */
+export function productJsonLd(
+  { product, type, materials }: SiteProduct,
+  settings: SiteSettings,
+  market: MarketId,
+) {
   const url = absoluteUrl(marketPath(market, documentPath("product", product.slug, market)));
   const catalogUrl = absoluteUrl(marketPath(market, `/${routePrefixes.product[market]}`));
-  const images = (product.images ?? []).map((image) => image.url).filter(Boolean);
+  const images = product.images.map((image) => absoluteUrl(image.url));
 
   const crumbs = [
     { name: getDictionary(market).products, item: catalogUrl },
-    ...(product.group?.title && product.group.slug
-      ? [{ name: product.group.title, item: `${catalogUrl}?gruppe=${product.group.slug}` }]
-      : []),
-    { name: product.title, item: url },
+    ...(type ? [{ name: type.title, item: `${catalogUrl}?type=${type.slug}` }] : []),
+    { name: product.name, item: url },
   ];
 
   return [
     compact({
       "@context": "https://schema.org",
       "@type": "Product",
-      name: product.title,
+      name: product.name,
       description: product.shortDescription,
       url,
       image: images.length ? images : undefined,
-      category: product.group?.title,
-      material: product.materials?.map((material) => material.title).join(", ") || undefined,
+      sku: product.variants.length === 1 ? product.variants[0].sku : undefined,
+      category: type?.title,
+      material: materials.map((material) => material.title).join(", ") || undefined,
       brand: { "@type": "Brand", name: settings.companyName || settings.title || "STOK Emballage" },
     }),
     {

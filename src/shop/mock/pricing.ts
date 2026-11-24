@@ -20,7 +20,7 @@ export const mockPricing: PricingService = {
       const listPrice = pricesData[sku];
       const entry = variants.get(sku);
       if (listPrice === undefined || !entry) continue;
-      result[sku] = computePrice(sku, listPrice, entry.variant, entry.product.group, agreement);
+      result[sku] = computePrice(sku, listPrice, entry.variant, entry.product.type, agreement);
     }
     return result;
   },

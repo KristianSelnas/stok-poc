@@ -15,8 +15,8 @@ const cardClass = "rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10";
 async function Company() {
   const session = await requireSession(minSidePath("/firma"));
   const { customer } = session;
-  const { groups } = await getShopTaxonomy();
-  const groupTitle = new Map(groups.map((g) => [g.slug, g.title]));
+  const { types } = await getShopTaxonomy();
+  const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
   const agreement = customer.priceAgreement;
   const fixedCount = Object.keys(agreement.fixedPrices).length;
 
@@ -36,12 +36,12 @@ async function Company() {
           <h3 className="mt-4 text-base">{t.discounts}</h3>
           <ul className="mt-1 list-disc space-y-1 pl-5 text-sm">
             <li>
-              {Object.keys(agreement.groupDiscounts).length
+              {Object.keys(agreement.typeDiscounts).length
                 ? t.discountOther(agreement.discountPercent)
                 : t.discountAll(agreement.discountPercent)}
             </li>
-            {Object.entries(agreement.groupDiscounts).map(([group, percent]) => (
-              <li key={group}>{t.discountGroup(groupTitle.get(group) ?? group, percent)}</li>
+            {Object.entries(agreement.typeDiscounts).map(([type, percent]) => (
+              <li key={type}>{t.discountType(typeTitle.get(type) ?? type, percent)}</li>
             ))}
             {fixedCount > 0 && <li>{t.fixedPrices(fixedCount)}</li>}
           </ul>

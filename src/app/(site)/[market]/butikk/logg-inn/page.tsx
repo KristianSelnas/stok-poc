@@ -6,7 +6,6 @@ import { Container } from "@/components/ui/Container";
 import { login, resetDemoData } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import { canResetDemo, shop } from "@/shop/index";
-import { getShopTaxonomy } from "@/shop/queries";
 
 export const metadata: Metadata = { title: "Logg inn", robots: { index: false } };
 
@@ -16,9 +15,8 @@ async function CustomerList({ searchParams }: { searchParams: Props["searchParam
   const params = await searchParams;
   const next = typeof params.neste === "string" ? params.neste : "";
   const { customers, orders } = shop();
-  const [list, { industries }] = await Promise.all([customers.listCustomers(), getShopTaxonomy()]);
+  const list = await customers.listCustomers();
   const orderCounts = await Promise.all(list.map((c) => orders.listOrders(c.id).then((o) => o.length)));
-  const industryTitle = new Map(industries.map((i) => [i.slug, i.title]));
 
   return (
     <>
@@ -31,7 +29,7 @@ async function CustomerList({ searchParams }: { searchParams: Props["searchParam
         {list.map((customer, i) => (
           <li key={customer.id} className="flex flex-col rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10">
             <p className="font-meta text-xs font-medium tracking-wide text-stok-green-dark uppercase">
-              {industryTitle.get(customer.industry) ?? customer.industry}
+              {customer.industry}
             </p>
             <h2 className="mt-1 text-2xl">{customer.name}</h2>
             <p className="mt-3">{customer.description}</p>

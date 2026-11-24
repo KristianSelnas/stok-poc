@@ -1,0 +1,118 @@
+{
+  "no": {
+    "groups": [
+      {
+        "slug": "beskyttende-emballasje",
+        "title": "Beskyttende emballasje"
+      },
+      {
+        "slug": "fisk-og-sjomat",
+        "title": "Fisk og sjømat"
+      },
+      {
+        "slug": "handel",
+        "title": "Handel"
+      },
+      {
+        "slug": "mat",
+        "title": "Mat"
+      },
+      {
+        "slug": "medisinsk",
+        "title": "Medisinsk"
+      },
+      {
+        "slug": "tekniske-komponenter",
+        "title": "Tekniske komponenter"
+      },
+      {
+        "slug": "transport-og-lagring",
+        "title": "Transport og lagring"
+      }
+    ],
+    "types": [
+      {
+        "slug": "ark",
+        "title": "Ark"
+      },
+      {
+        "slug": "avfall",
+        "title": "Avfall"
+      },
+      {
+        "slug": "brett",
+        "title": "Brett"
+      },
+      {
+        "slug": "botter-og-tonner",
+        "title": "Bøtter og tønner"
+      },
+      {
+        "slug": "eske",
+        "title": "Eske"
+      },
+      {
+        "slug": "film",
+        "title": "Film"
+      },
+      {
+        "slug": "honeycomb",
+        "title": "Honeycomb"
+      },
+      {
+        "slug": "hvac-lokk",
+        "title": "HVAC-lokk"
+      },
+      {
+        "slug": "kar",
+        "title": "Kar"
+      },
+      {
+        "slug": "pakkemaskin",
+        "title": "Pakkemaskin"
+      },
+      {
+        "slug": "sekk",
+        "title": "Sekk"
+      },
+      {
+        "slug": "spann",
+        "title": "Spann"
+      },
+      {
+        "slug": "temperaturkontrollert",
+        "title": "Temperaturkontrollert"
+      },
+      {
+        "slug": "tilbehor",
+        "title": "Tilbehør"
+      },
+      {
+        "slug": "transport",
+        "title": "Transport"
+      },
+      {
+        "slug": "annet",
+        "title": "Annet"
+      }
+    ]
+  },
+  "is": {
+    "groups": [
+      {
+        "slug": "sjavarafurdir",
+        "title": "Sjávarafurðir"
+      }
+    ],
+    "types": [
+      {
+        "slug": "kassi",
+        "title": "Kassar"
+      },
+      {
+        "slug": "poki",
+        "title": "Pokar"
+      }
+    ]
+  }
+}

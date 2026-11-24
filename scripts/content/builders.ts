@@ -19,7 +19,7 @@ export const pageLink = (label: string, slug: string): Link => ({
   url: null,
 });
 
-/** Intern lenke til et hvilket som helst dokument, f.eks. en bransje eller et produkt. */
+/** Intern lenke til et hvilket som helst dokument, f.eks. en bransje. Produkter lenkes med `pathLink`. */
 export const docLink = (label: string, type: NonNullable<Link["internal"]>["_type"], slug: string): Link => ({
   label,
   linkType: "internal",

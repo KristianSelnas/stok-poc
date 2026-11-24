@@ -1,6 +1,4 @@
-import { Suspense } from "react";
-
-import { ShopHeaderLink, ShopHeaderLinkFallback } from "@/components/shop/ShopHeaderLink";
+import { ShopHeaderLink } from "@/components/shop/ShopHeaderLink";
 import { getNavigation, getSiteSettings } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { isExternal, resolveHref } from "@/lib/links";
@@ -59,11 +57,7 @@ export async function Header({ market }: { market: MarketId }) {
             chooseMarket: t.chooseMarket,
           }}
         />
-        {market === SHOP_MARKET && (
-          <Suspense fallback={<ShopHeaderLinkFallback />}>
-            <ShopHeaderLink />
-          </Suspense>
-        )}
+        {market === SHOP_MARKET && <ShopHeaderLink />}
       </div>
     </header>
   );

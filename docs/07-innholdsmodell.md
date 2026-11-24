@@ -15,10 +15,7 @@ Modellen kombinerer faste dokumenttyper for innhold med struktur (produkter, bra
 | Type | Viktige felter | Kommentar |
 |---|---|---|
 | `page` | tittel, slug, forelder, moduler, SEO | Generelle sider (Om oss, bærekraft, åpenhetsloven) |
-| `industry` | tittel, slug, ingress, hero-bilde, moduler, utvalgte produkter, SEO | Fisk og sjømat, næringsmiddel osv. |
-| `productGroup` | navn, slug, beskrivelse, rekkefølge | Eske, sekk, brett osv. Brukes som filter i katalogen |
-| `product` | navn, slug, produktgruppe, bransjer, materialer, bilder, ingress, beskrivelse (Portable Text), egenskaper (nøkkel/verdi), datablad (fil), relaterte produkter, SEO | Ca. 100 produkter på bewifood.com |
-| `material` | navn, slug | Brukes i filter |
+| `industry` | tittel, slug, ingress, hero-bilde, moduler, SEO | Fisk og sjømat, næringsmiddel osv. Produktene nederst kommer fra produktkatalogen |
 | `newsArticle` | tittel, slug, dato, bilde, ingress, brødtekst (Portable Text), kategori, SEO | |
 | `newsCategory` | navn, slug | Ny i forhold til stok.dk |
 | `testimonial` | sitat, navn, rolle, firma, logo | Gjenbrukes på flere sider |

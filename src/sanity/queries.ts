@@ -35,16 +35,6 @@ const blockFields = /* groq */ `
   _type == "imageWithAlt" => { _key, _type, ${imageFields} }
 `;
 
-const productCardFields = /* groq */ `
-  _id,
-  _type,
-  title,
-  "slug": slug.current,
-  shortDescription,
-  "image": images[0]{ ${imageFields} },
-  "group": productGroup->title
-`;
-
 const newsCardFields = /* groq */ `
   _id,
   _type,
@@ -130,11 +120,10 @@ const modulesFields = /* groq */ `
     intro,
     limit,
     cta{ ${linkFields} },
-    "products": select(
-      source == "group" => *[_type == "product" && language == $language && productGroup._ref == ^.productGroup._ref] | order(title asc){ ${productCardFields} },
-      source == "industry" => *[_type == "product" && language == $language && ^.industry._ref in industries[]._ref] | order(title asc){ ${productCardFields} },
-      products[]->{ ${productCardFields} }
-    )
+    source,
+    productType,
+    productGroup,
+    "industry": industry->slug.current
   },
   _type == "productCatalog" => {
     title,
@@ -253,28 +242,6 @@ export const industryQuery = defineQuery(`
     lead,
     image{ ${imageFields} },
     modules[]{ ${modulesFields} },
-    "featuredProducts": featuredProducts[]->{ ${productCardFields} },
-    "industryProducts": *[_type == "product" && language == $language && references(^._id)] | order(title asc){ ${productCardFields} },
-    ${translationsField},
-    seo{ ${seoFields} }
-  }
-`);
-
-export const productQuery = defineQuery(`
-  *[_type == "product" && language == $language && slug.current == $slug][0]{
-    _id,
-    title,
-    "slug": slug.current,
-    shortDescription,
-    "images": images[]{ _key, ${imageFields} },
-    description[]{ ${blockFields} },
-    properties[]{ _key, key, value },
-    "datasheetUrl": datasheet.asset->url,
-    "group": productGroup->{ title, "slug": slug.current },
-    "industries": industries[]->{ _id, title, "slug": slug.current },
-    "materials": materials[]->{ _id, title },
-    "relatedProducts": relatedProducts[]->{ ${productCardFields} },
-    "sameGroup": *[_type == "product" && language == $language && defined(^.productGroup) && productGroup._ref == ^.productGroup._ref && _id != ^._id] | order(title asc)[0...4]{ ${productCardFields} },
     ${translationsField},
     seo{ ${seoFields} }
   }
@@ -296,24 +263,9 @@ export const newsArticleQuery = defineQuery(`
   }
 `);
 
-/** Alt katalogen trenger: produkter med filterverdier og listene over filtervalg. */
-export const catalogQuery = defineQuery(`
-  {
-    "products": *[_type == "product" && language == $language] | order(title asc){
-      ${productCardFields},
-      "groupSlug": productGroup->slug.current,
-      "industrySlugs": industries[]->slug.current,
-      "materialSlugs": materials[]->slug.current
-    },
-    "groups": *[_type == "productGroup" && language == $language] | order(order asc, title asc){ title, "slug": slug.current },
-    "industries": *[_type == "industry" && language == $language] | order(title asc){ title, "slug": slug.current },
-    "materials": *[_type == "material" && language == $language] | order(title asc){ title, "slug": slug.current }
-  }
-`);
-
 /** Alle adresser i et marked, til generateStaticParams. */
 export const routesQuery = defineQuery(`
-  *[_type in ["page", "industry", "product", "newsArticle"] && language == $language && defined(slug.current)]{
+  *[_type in ["page", "industry", "newsArticle"] && language == $language && defined(slug.current)]{
     _type,
     "slug": slug.current
   }
@@ -329,7 +281,7 @@ export const sitemapQuery = defineQuery(`
       language,
       _updatedAt
     },
-    "documents": *[_type in ["page", "industry", "product", "newsArticle"] && defined(language) && defined(slug.current) && seo.noIndex != true]{
+    "documents": *[_type in ["page", "industry", "newsArticle"] && defined(language) && defined(slug.current) && seo.noIndex != true]{
       _type,
       language,
       _updatedAt,

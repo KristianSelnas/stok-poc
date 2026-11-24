@@ -1,21 +1,32 @@
+import Link from "next/link";
+
 import { getDictionary } from "@/lib/dictionaries";
 import { marketPath, type MarketId } from "@/lib/markets";
-import { documentPath } from "@/lib/routes";
+import { getSiteCatalog, productsForIndustry, toCards } from "@/lib/products";
+import { documentPath, routePrefixes } from "@/lib/routes";
 import type { Industry } from "@/sanity/types";
 
 import { Hero } from "../modules/Hero";
 import { Modules } from "../modules/Modules";
+import { buttonClasses } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { ProductCardGrid } from "../ui/ProductCard";
 
 /**
  * Bransjeside: hero fra bransjens egne felt, deretter modulene redaktøren
- * har lagt til, og til slutt produkter for bransjen.
+ * har lagt til, og til slutt produkter for bransjen. Produktene kommer fra
+ * produktkatalogen: produktgruppene som peker på bransjesiden (fase N).
  */
-export function IndustryPage({ industry, market }: { industry: Industry; market: MarketId }) {
+export async function IndustryPage({ industry, market }: { industry: Industry; market: MarketId }) {
   const t = getDictionary(market);
-  const featured = (industry.featuredProducts ?? []).filter(Boolean);
-  const products = (featured.length ? featured : (industry.industryProducts ?? [])).slice(0, 8);
+  const catalog = await getSiteCatalog(market);
+  const all = industry.slug ? productsForIndustry(catalog, industry.slug) : [];
+  const products = toCards(catalog, all.slice(0, 8));
+  const group = catalog.groups.find((g) => g.industry === industry.slug);
+  const catalogHref = marketPath(
+    market,
+    `/${routePrefixes.product[market]}${group ? `?gruppe=${group.slug}` : ""}`,
+  );
 
   return (
     <>
@@ -45,6 +56,11 @@ export function IndustryPage({ industry, market }: { industry: Industry; market:
               {t.productsFor} {industry.title?.toLowerCase()}
             </h2>
             <ProductCardGrid products={products} market={market} />
+            {all.length > products.length && (
+              <Link href={catalogHref} className={buttonClasses("outline", "mt-10")}>
+                {t.seeAllProducts}
+              </Link>
+            )}
           </Container>
         </section>
       )}

@@ -27,7 +27,7 @@ Sidene og server actions kaller aldri mockene direkte. De henter tjenestene fra 
 
 | Tjeneste | System senere | Ansvar |
 |---|---|---|
-| `CatalogService` | Produktkatalog (PIM) | Produkter, varianter, produktgrupper, materialer, bilder, egenskaper |
+| `CatalogService` | Produktkatalog (PIM) | Produkter, varianter, produktgrupper, typer, materialer, bilder, egenskaper |
 | `InventoryService` | ERP | Lagerstatus og leveringstid per variant |
 | `PricingService` | ERP | Listepris, avtalepris per kunde og mengderabatt |
 | `CustomerService` | CRM | Firma, brukere, leveringsadresser og prisavtale |
@@ -49,7 +49,8 @@ export interface CatalogService {
   getProduct(slug: string): Promise<Product | null>;
   getVariant(sku: string): Promise<{ product: Product; variant: Variant } | null>;
   listGroups(): Promise<ProductGroup[]>;
-  search(query: string): Promise<ProductSummary[]>;
+  listTypes(): Promise<ProductType[]>;
+  listMaterials(): Promise<Taxon[]>;
 }
 
 // src/shop/services/pricing.ts
@@ -100,22 +101,22 @@ Et engangsskript i `scripts/shop/` henter produktene og lager JSON-filen til moc
 | Felt fra bewifood.com | Brukes som |
 |---|---|
 | Navn, ingress, beskrivelse, fordeler | `Product` |
-| Kategorier (produktgruppe, bransje, materiale) | `group`, `industries`, `materials` |
+| Kategorier under «Emballasje» (produktgruppe) | `groups` |
+| Tagger (type) | `type` |
+| Kategorier under «Fisk & Sjømat» (materiale) | `materials` |
 | Rader i varianttabellen | `Variant` med varenummer, mål, vekt og stk. per pall |
 | Lager/forespørsel | Startverdi for `InventoryService` og `Variant.onRequest` |
 | Bilder | Lastes ned til `public/images/produkter/` |
 
 Priser, buntstørrelser der de mangler, lagerantall og ordrehistorikk lager vi selv. Prisene settes ut fra materiale, størrelse og vekt, så de virker troverdige.
 
-De 18 produktene som finnes på nettsiden, beholder sluggene sine fra Sanity. Da kan nettsidens produktsider lenke til «Se i nettbutikken» med samme slug. De andre får norske slugger laget fra navnet.
+De 18 produktene som lå i Sanity før fase N, beholder sluggene sine, så gamle adresser virker. De andre får norske slugger laget fra navnet. Nettsiden og nettbutikken bruker samme slug.
 
 ### Overgang for nettsiden
 
 1. **Fase A:** Butikken bruker katalogen. Nettsiden bruker fortsatt Sanity.
-2. **Fase N:** Nettsidens produktkatalog og produktsider viser alle produktene fra `CatalogService` (beslutning N11). Produktgrupper og materialer flyttes også. Sanity beholder bransjer, sider og moduler. Bransjesider viser produkter ved å spørre katalogen etter bransjeslug.
+2. **Fase N (ferdig):** Nettsidens produktkatalog og produktsider viser alle produktene fra katalogen via `catalogFor(market)` og `src/lib/products.ts` (beslutning N11). Produktgrupper, typer og materialer ligger i katalogen. Sanity beholder bransjer, sider og moduler. Bransjesider viser produktene i produktgruppene som peker på bransjen.
 3. **Senere, ved behov:** Redaktører kan velge produkter fra katalogen i Sanity-moduler via en egen velger i Studio.
-
-Til fase N er gjennomført, finnes 18 av produktene to steder.
 
 ## Ruter
 
@@ -123,7 +124,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 | Rute | Innhold | Fase |
 |---|---|---|
-| `/no/butikk?q=…&gruppe=…&bransje=…&vis=alle` | Butikkens forside og katalog: søk, «Kjøp igjen» og alle produkter med filterknapper | A |
+| `/no/butikk?q=…&type=…&gruppe=…&materiale=…` | Butikkens forside og katalog: søk, «Kjøp igjen» og alle produkter med filtre | A, N |
 | `/no/butikk/produkter` | Sender videre til `/no/butikk` med samme parametere | A |
 | `/no/butikk/produkter/[slug]` | Produktside med variantvelger, pris, lager og «Legg i kurv» | A |
 | `/no/butikk/handlekurv` | Handlekurv | A |
@@ -140,9 +141,9 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 | `/no/min-side/firma` | Prisavtale, adresser og brukere | B |
 | `/no/butikk/konfigurator?type=…&l=…&b=…&h=…` | Konfigurator for skreddersydd eske, se [Konfiguratoren](#konfiguratoren) | C |
 
-Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
+Butikken bruker samme layout, header og bunntekst som nettsiden. Når markedet er `no`, får headeren en lenke til forsiden av nettbutikken. Handlekurven, med antall varer, nås fra butikkmenyen under headeren.
 
-Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er lenker med parametere i adressen, så de kan deles og fungerer uten JavaScript. Som standard vises bare varer som kan bestilles direkte. `vis=alle` tar med varer som krever tilbud.
+Katalogen er slått sammen med butikkens forside. Med 100 produkter gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale (`CatalogFilters`). Listen oppdateres når et valg endres, uten å hoppe til toppen, og «Nullstill» fjerner filtrene. Valgene ligger i adressen, så de kan deles. Uten JavaScript sender skjemaet valgene med knappen «Vis». Alle produkter vises, også de som krever tilbud, gruppert etter type som på bewifood.com.
 
 Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
 
@@ -203,7 +204,7 @@ Sider som avhenger av innlogget kunde, rendres dynamisk. Katalogdata kan fortsat
 | Data | Lagring |
 |---|---|
 | Katalog, priser, kunder og tidligere ordre | JSON-filer i `src/shop/mock/data/`, sjekket inn |
-| Handlekurv | Cookie, per nettleser |
+| Handlekurv | Cookie per bruker i nettleseren, pluss en gjestekurv som flettes inn ved innlogging |
 | Nye ordre og forespørsler | I minnet i mock-ordretjenesten |
 
 Mock-ordretjenesten slår sammen ordrene fra JSON med ordrene som er lagt inn i demoen. Nye ordre ligger på `globalThis`, så de også overlever hot reload under utvikling.
@@ -245,7 +246,7 @@ src/
 
 scripts/shop/
 ├── fetch-bewifood.mts         Henter produkter og bilder fra bewifood.com
-├── build-catalog.mts          Lager catalog.json fra rådataene, med tillegg for demoen
+├── build-catalog.mts          Lager catalog.json fra rådataene, med varianter for demoen
 ├── generate-mock-data.mts     Lager prices.json, inventory.json og orders.json
 └── data/bewifood-raw.json     Rådata fra bewifood.com
 ```
@@ -277,6 +278,14 @@ Skriptene trenger ingen pakker utover Node 24. `generate-mock-data.mts` bruker e
 | «Forespørsel» i varianttabellen | Bestillingsvare (`madeToOrder`): kan bestilles, leveringstid 2–4 uker |
 | Produkt uten varianttabell | Tilbud (`quote`): kundetilpasset, knappen «Be om tilbud» |
 
-bewifood.com har 16 produktgrupper, og mange av dem har bare ett eller to produkter. Katalogen slår dem sammen til sju: Esker og kasser, Kar og spann, Brett, Sekker og film, Ark og beskyttelse, Transport og temperatur, og Tilbehør og maskiner.
+Inndelingen følger filtrene på bewifood.com (beslutning N15). Valgene kommer fra `/wp-json/api/fetch/filters/?c=143`:
 
-Katalogen har 103 produkter og 235 varianter. 100 produkter kommer fra bewifood.com. Tre er lagt til for demoen fordi bewifood.com mangler esker i bølgepapp: Bølgepappeske (FEFCO 0201), Postboks (FEFCO 0427) og Flaskeeske. Seks forbruksvarer (pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter) har fått konkrete varianter. Tilleggene er merket med `source.name` = «STOK (tillegg for demo)».
+| bewifood.com | I katalogen | Verdier |
+|---|---|---|
+| Produktgruppe (kategori under «Emballasje») | `Product.groups`, flere per produkt | Beskyttende emballasje, Fisk og sjømat, Handel (Retail), Mat, Medisinsk, Tekniske komponenter (Technical components), Transport og lagring |
+| Type (tagg) | `Product.type`, én per produkt | Ark, Avfall (Waste), Brett, Bøtter og tønner (Bin & Drum), Eske, Film (Wrap), Honeycomb, HVAC-lokk (HVAC Caps), Kar (Tub), Pakkemaskin, Sekk, Spann (Pail), Temperaturkontrollert, Tilbehør, Transport (Transportere), Annet |
+| Materiale (kategori under «Fisk & Sjømat») | `Product.materials` | HDPE, Kartong, Annet |
+
+Materialet til hver variant (f.eks. PP eller LLDPE) står i `Variant.material` og vises i varianttabellen.
+
+Katalogen har 100 produkter og 223 varianter, alle fra bewifood.com. Seks forbruksvarer (pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter) har bare en generell side på bewifood.com, og har fått konkrete varianter i `build-catalog.mts`, så de kan bestilles. Esker i bølgepapp finnes ikke i katalogen. De lages etter mål i konfiguratoren.

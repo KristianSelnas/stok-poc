@@ -31,14 +31,10 @@ export async function getShopTaxonomy() {
   cacheTag(CATALOG_TAG);
   cacheLife("hours");
   const { catalog } = shop();
-  const [groups, industries] = await Promise.all([catalog.listGroups(), catalog.listIndustries()]);
-  return { groups, industries };
-}
-
-/** Sluggene i katalogen, til lenker fra nettsidens produktsider. */
-export async function getShopSlugs(): Promise<string[]> {
-  "use cache";
-  cacheTag(CATALOG_TAG);
-  cacheLife("hours");
-  return (await shop().catalog.listProducts()).map((p) => p.slug);
+  const [groups, types, materials] = await Promise.all([
+    catalog.listGroups(),
+    catalog.listTypes(),
+    catalog.listMaterials(),
+  ]);
+  return { groups, types, materials };
 }

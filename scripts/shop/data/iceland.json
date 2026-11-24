@@ -1,0 +1,121 @@
+{
+  "source": "Flyttet fra scripts/content/catalog-is.json (Sanity) i fase N. Bildene er lastet ned fra bewifood.com.",
+  "groups": [
+    {
+      "slug": "sjavarafurdir",
+      "title": "Sjávarafurðir",
+      "order": 1,
+      "industry": "fiskur-og-sjavarafurdir"
+    }
+  ],
+  "types": [
+    {
+      "slug": "kassi",
+      "title": "Kassar",
+      "order": 1
+    },
+    {
+      "slug": "poki",
+      "title": "Pokar",
+      "order": 2
+    }
+  ],
+  "products": [
+    {
+      "slug": "25-kg-saltfiskkassi-standard",
+      "name": "25 kg saltfiskkassi Standard",
+      "shortDescription": null,
+      "type": "kassi",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/25-kg-saltfiskkassi-standard/20245-20438.jpg",
+          "alt": "25 kg saltfiskkassi Standard"
+        }
+      ],
+      "url": "https://bewifood.com/products/25-kg-saltfiskkassi-standard?lang=is"
+    },
+    {
+      "slug": "25-kg-stor-flakakassi",
+      "name": "25 kg stór flakakassi",
+      "shortDescription": null,
+      "type": "kassi",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/25-kg-stor-flakakassi/20524.jpg",
+          "alt": "25 kg stór flakakassi"
+        }
+      ],
+      "url": "https://bewifood.com/products/25-kg-stor-flakakassi?lang=is"
+    },
+    {
+      "slug": "askja-6kg-14lbs-aprentud",
+      "name": "Askja 6kg/14lbs áprentuð",
+      "shortDescription": null,
+      "type": "kassi",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/askja-6kg-14lbs-aprentud/19065.jpg",
+          "alt": "Askja 6kg/14lbs áprentuð"
+        }
+      ],
+      "url": "https://bewifood.com/products/askja-6kg-14lbs-aprentud?lang=is"
+    },
+    {
+      "slug": "graludupoki-540-100x900x0-025mm-graenn",
+      "name": "Grálúðupoki 540/100x900x0,025mm Grænn",
+      "shortDescription": null,
+      "type": "poki",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/graludupoki-540-100x900x0-025mm-graenn/206611.jpg",
+          "alt": "Grálúðupoki 540/100x900x0,025mm Grænn"
+        }
+      ],
+      "url": "https://bewifood.com/products/graludupoki-540-100x900x0025mm-graenn?lang=is"
+    },
+    {
+      "slug": "makrilpoki-545-65x735x0-022-blar",
+      "name": "Makrílpoki 545/65x735x0,022 Blár",
+      "shortDescription": null,
+      "type": "poki",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/makrilpoki-545-65x735x0-022-blar/198353.jpg",
+          "alt": "Makrílpoki 545/65x735x0,022 Blár"
+        }
+      ],
+      "url": "https://bewifood.com/products/makrilpoki-545-65x735x0022-blar?lang=is"
+    },
+    {
+      "slug": "trollakassi-standard",
+      "name": "Tröllakassi standard",
+      "shortDescription": null,
+      "type": "kassi",
+      "groups": [
+        "sjavarafurdir"
+      ],
+      "images": [
+        {
+          "url": "/images/produkter/trollakassi-standard/10105b.jpg",
+          "alt": "Tröllakassi standard"
+        }
+      ],
+      "url": "https://bewifood.com/products/trollakassi-standard?lang=is"
+    }
+  ]
+}

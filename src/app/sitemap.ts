@@ -2,12 +2,14 @@ import type { MetadataRoute } from "next";
 
 import { getSitemap } from "@/lib/content";
 import { marketForLanguage, marketIds, marketPath, markets } from "@/lib/markets";
+import { getSiteCatalog } from "@/lib/products";
 import { documentPath, translationPaths } from "@/lib/routes";
 import { absoluteUrl } from "@/lib/site";
 
 /**
  * sitemap.xml med forsider, sider, bransjer, produkter og nyheter i begge
- * markeder. Oversettelser legges inn som `hreflang`-alternativer.
+ * markeder. Oversettelser legges inn som `hreflang`-alternativer. Produktene
+ * kommer fra produktkatalogen og har ikke oversettelser eller endringsdato.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { frontPages, documents } = await getSitemap();
@@ -46,5 +48,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
   });
 
-  return [...frontPageEntries, ...documentEntries];
+  const productEntries = (
+    await Promise.all(
+      marketIds.map(async (market) =>
+        (await getSiteCatalog(market)).products.flatMap((product) => {
+          const path = documentPath("product", product.slug, market);
+          return path ? [{ url: absoluteUrl(marketPath(market, path)) }] : [];
+        }),
+      ),
+    )
+  ).flat();
+
+  return [...frontPageEntries, ...documentEntries, ...productEntries];
 }

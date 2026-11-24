@@ -1,21 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { documentHref } from "@/lib/links";
 import type { MarketId } from "@/lib/markets";
-import type { ProductCard as ProductCardData } from "@/sanity/types";
+import type { ProductCardData } from "@/lib/products";
 
-import { ContentImage } from "./ContentImage";
-
-/** Produktkort med bilde, gruppe, navn og kort beskrivelse. Hele kortet er klikkbart. */
+/** Produktkort med bilde, type, navn og kort beskrivelse. Hele kortet er klikkbart. */
 export function ProductCard({ product, market }: { product: ProductCardData; market: MarketId }) {
   const href = documentHref("product", product.slug, market);
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stok-blue/10 transition-shadow hover:shadow-lg">
       <div className="relative aspect-square bg-stok-grey">
-        {product.image?.url ? (
-          <ContentImage
-            image={product.image}
+        {product.image ? (
+          <Image
+            src={product.image.url}
+            alt={product.image.alt}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
             className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
@@ -39,18 +39,18 @@ export function ProductCard({ product, market }: { product: ProductCardData; mar
         )}
       </div>
       <div className="flex flex-1 flex-col p-5">
-        {product.group && (
+        {product.label && (
           <p className="font-meta text-xs font-medium tracking-wide text-stok-green-dark uppercase">
-            {product.group}
+            {product.label}
           </p>
         )}
         <h3 className="mt-1 text-lg">
           {href ? (
             <Link href={href} className="after:absolute after:inset-0">
-              {product.title}
+              {product.name}
             </Link>
           ) : (
-            product.title
+            product.name
           )}
         </h3>
         {product.shortDescription && <p className="mt-2 line-clamp-3 text-sm">{product.shortDescription}</p>}
@@ -71,7 +71,7 @@ export function ProductCardGrid({
   return (
     <ul className={`grid gap-6 sm:grid-cols-2 ${columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
       {products.map((product) => (
-        <li key={product._id}>
+        <li key={product.slug}>
           <ProductCard product={product} market={market} />
         </li>
       ))}

@@ -9,12 +9,18 @@
  * - Radene i varianttabellen blir varianter med varenummer, mål, vekt og stk. per pall.
  * - «Lager» gir lagervare, «Forespørsel» gir bestillingsvare. Produkter uten
  *   varianttabell (kundetilpassede kartonger, sekker osv.) krever tilbud.
- * - De 18 produktene som finnes på nettsiden, beholder sluggene sine fra Sanity.
- * - Et lite tillegg (nederst) gir bølgepappesker, som bewifood.com ikke har,
- *   og konkrete varianter av noen forbruksvarer. Tillegget er merket med
- *   `source.name` = «STOK (tillegg for demo)».
+ * - Produktgruppe, type og materiale følger filtrene på bewifood.com.
+ * - De 18 produktene som lå i Sanity før fase N, beholder sluggene sine, så
+ *   gamle adresser virker.
+ * - Alle produktene kommer fra bewifood.com. Noen forbruksvarer har bare en
+ *   generell side der, og får konkrete varianter (nederst), så de kan
+ *   bestilles i butikken.
  *
  * Buntstørrelser er laget av oss, ut fra vekt og stk. per pall.
+ *
+ * Skriptet lager også src/shop/mock/data/catalog-is.json, katalogen for det
+ * islandske markedet, fra scripts/shop/data/iceland.json. Den har bare noen få
+ * produkter uten varianttabell, og brukes bare av nettsiden.
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
@@ -24,6 +30,7 @@ import type {
   Product,
   ProductGroup,
   ProductImage,
+  ProductType,
   SalesMode,
   Taxon,
   Variant,
@@ -33,73 +40,105 @@ import type { RawProduct } from "./fetch-bewifood.mts";
 
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const RAW_FILE = path.join(ROOT, "scripts/shop/data/bewifood-raw.json");
-const SANITY_CATALOG = path.join(ROOT, "scripts/content/catalog-no.json");
 const OUT_FILE = path.join(ROOT, "src/shop/mock/data/catalog.json");
+const ICELAND_FILE = path.join(ROOT, "scripts/shop/data/iceland.json");
+const ICELAND_OUT_FILE = path.join(ROOT, "src/shop/mock/data/catalog-is.json");
+/** Produktgrupper og typer per marked, til valglistene i Sanity Studio (modulen «Produktutvalg»). */
+const TAXONOMY_FILE = path.join(ROOT, "src/shop/mock/data/taxonomy.json");
+
+/** Sluggene produktene hadde i Sanity før fase N (bewifood-slug → slug). */
+const legacySlugs: Record<string, string> = {
+  "fish-box": "fiskekasse",
+  "pers-box": "pers-box",
+  "longline-tub": "fiskekar",
+  "kartong-for-saltfisk": "kartong-for-saltfisk",
+  "nordic-bags": "nordic-bags",
+  "fillet-tray": "filetbrett",
+  "fleksible-filmer": "fleksible-filmer",
+  pallekarmer: "pallekarmer",
+  "pakkemaskin-a1": "pakkemaskin-a1",
+  matkasse: "matkasse",
+  "bread-box": "brodkasser",
+  "drums-pails": "spann-dunker",
+  "qvantum-tray": "kvantum-brett",
+  "stacking-and-transport-box": "stablebar-transportkasse",
+  dollies: "trillebrett",
+  "waste-containers": "avfallsbeholdere",
+  honeycomb: "honeycomb",
+  "sherpa-systems": "sherpa-systems",
+};
 
 // ---------------------------------------------------------------------------
-// Grupper, bransjer og materialer
+// Produktgrupper, typer og materialer
 // ---------------------------------------------------------------------------
 
-const groups: ProductGroup[] = [
-  { slug: "eske", title: "Esker og kasser", order: 1 },
-  { slug: "kar-og-spann", title: "Kar og spann", order: 2 },
-  { slug: "brett", title: "Brett", order: 3 },
-  { slug: "sekker-og-film", title: "Sekker og film", order: 4 },
-  { slug: "ark-og-beskyttelse", title: "Ark og beskyttelse", order: 5 },
-  { slug: "transport-og-temperatur", title: "Transport og temperatur", order: 6 },
-  { slug: "tilbehor-og-maskiner", title: "Tilbehør og maskiner", order: 7 },
-];
+/*
+ * Inndelingen følger filtrene på https://bewifood.com/emballasje/produkter/
+ * (produktgruppe, type og materiale), med norske navn der bewifood.com bruker
+ * engelske. Filtervalgene kommer fra /wp-json/api/fetch/filters/?c=143.
+ * Rekkefølgen er alfabetisk, som på bewifood.com, med «Annet» sist.
+ */
 
 /**
- * Overskriften i produktlisten på bewifood.com → produktgruppe. bewifood.com
- * har 16 overskrifter, og mange har bare ett eller to produkter. Vi slår dem
- * sammen til sju grupper med minst fem produkter i hver.
+ * Produktgruppe = WordPress-kategori under «Emballasje» på bewifood.com. Et
+ * produkt kan være i flere. `industry` er bransjesiden i Sanity som viser
+ * produktene i gruppen.
  */
-const groupByListHeading: Record<string, string> = {
-  Eske: "eske",
-  Tub: "kar-og-spann",
-  Pail: "kar-og-spann",
-  "Bin & Drum": "kar-og-spann",
-  Waste: "kar-og-spann",
-  Brett: "brett",
-  Sekk: "sekker-og-film",
-  Wrap: "sekker-og-film",
-  Ark: "ark-og-beskyttelse",
-  Honeycomb: "ark-og-beskyttelse",
-  Transportere: "transport-og-temperatur",
-  Temperaturkontrollerede: "transport-og-temperatur",
-  Pakkemaskin: "tilbehor-og-maskiner",
-  Tilbehør: "tilbehor-og-maskiner",
-  "HVAC Caps": "tilbehor-og-maskiner",
-  Annen: "tilbehor-og-maskiner",
+const groupByCategory: Record<string, ProductGroup> = {
+  "beskyttende-emballasje": {
+    slug: "beskyttende-emballasje",
+    title: "Beskyttende emballasje",
+    order: 1,
+    industry: "beskyttende-emballasje",
+  },
+  "fisk-og-sjomat": { slug: "fisk-og-sjomat", title: "Fisk og sjømat", order: 2, industry: "fisk-og-sjomat" },
+  "retail-no": { slug: "handel", title: "Handel", order: 3, industry: null },
+  mat: { slug: "mat", title: "Mat", order: 4, industry: "naeringsmiddel" },
+  medisinsk: { slug: "medisinsk", title: "Medisinsk", order: 5, industry: null },
+  "technical-components-no": {
+    slug: "tekniske-komponenter",
+    title: "Tekniske komponenter",
+    order: 6,
+    industry: "landbruk-og-industri",
+  },
+  "transport-og-lagring": {
+    slug: "transport-og-lagring",
+    title: "Transport og lagring",
+    order: 7,
+    industry: "transport-og-lagring",
+  },
 };
 
-/** Bransjene bruker samme slugger som bransjesidene på nettsiden der de finnes. */
-const industries: Taxon[] = [
-  { slug: "fisk-og-sjomat", title: "Fisk og sjømat" },
-  { slug: "naeringsmiddel", title: "Næringsmiddel" },
-  { slug: "beskyttende-emballasje", title: "Beskyttende emballasje" },
-  { slug: "transport-og-lagring", title: "Transport og lagring" },
-  { slug: "landbruk-og-industri", title: "Landbruk og industri" },
-  { slug: "e-handel", title: "E-handel" },
-  { slug: "medisinsk", title: "Medisinsk" },
-  { slug: "handel", title: "Handel" },
-  { slug: "tekniske-komponenter", title: "Tekniske komponenter" },
-];
-
-/** WordPress-kategori på bewifood.com → bransje. */
-const industryByCategory: Record<string, string> = {
-  "fisk-og-sjomat": "fisk-og-sjomat",
-  mat: "naeringsmiddel",
-  "beskyttende-emballasje": "beskyttende-emballasje",
-  "transport-og-lagring": "transport-og-lagring",
-  "agri-industry": "landbruk-og-industri",
-  "horticulture-no": "landbruk-og-industri",
-  medisinsk: "medisinsk",
-  "retail-no": "handel",
-  "technical-components-no": "tekniske-komponenter",
+/** Type = WordPress-tagg på bewifood.com (samme som overskriftene i produktlisten). */
+const typeByTag: Record<string, ProductType> = {
+  Ark: { slug: "ark", title: "Ark", order: 1 },
+  Waste: { slug: "avfall", title: "Avfall", order: 2 },
+  Brett: { slug: "brett", title: "Brett", order: 3 },
+  "Bin & Drum": { slug: "botter-og-tonner", title: "Bøtter og tønner", order: 4 },
+  Eske: { slug: "eske", title: "Eske", order: 5 },
+  Wrap: { slug: "film", title: "Film", order: 6 },
+  Honeycomb: { slug: "honeycomb", title: "Honeycomb", order: 7 },
+  "HVAC Caps": { slug: "hvac-lokk", title: "HVAC-lokk", order: 8 },
+  Tub: { slug: "kar", title: "Kar", order: 9 },
+  Pakkemaskin: { slug: "pakkemaskin", title: "Pakkemaskin", order: 10 },
+  Sekk: { slug: "sekk", title: "Sekk", order: 11 },
+  Pail: { slug: "spann", title: "Spann", order: 12 },
+  Temperaturkontrollerede: { slug: "temperaturkontrollert", title: "Temperaturkontrollert", order: 13 },
+  Tilbehør: { slug: "tilbehor", title: "Tilbehør", order: 14 },
+  Transportere: { slug: "transport", title: "Transport", order: 15 },
+  Annen: { slug: "annet", title: "Annet", order: 16 },
 };
 
+/** Materiale = WordPress-kategori under «Fisk & Sjømat». Bare fiskeprodukter har materiale. */
+const materialByCategory: Record<string, Taxon> = {
+  "hdpe-no": { slug: "hdpe", title: "HDPE" },
+  "hdpe-no-2": { slug: "hdpe", title: "HDPE" },
+  kartong: { slug: "kartong", title: "Kartong" },
+  annen: { slug: "annet", title: "Annet" },
+};
+const materialOrder = ["hdpe", "kartong", "annet"];
+
+/** Materialer i varianttabellene. Vises i varianttabellen, ikke i filteret. */
 const knownMaterials: Record<string, string> = {
   hdpe: "HDPE",
   pp: "PP",
@@ -389,18 +428,17 @@ function buildProduct(raw: RawProduct, slug: string): Product {
   }
   const variants = buildVariants(raw, images);
 
+  const groups = new Set<string>();
   const materials = new Set<string>();
-  for (const v of variants) if (v.material) materials.add(v.material);
   for (const c of raw.categories) {
-    const m = normalizeMaterial(c.name);
-    if (m) materials.add(m);
+    const group = groupByCategory[c.slug];
+    if (group) groups.add(group.slug);
+    const material = materialByCategory[c.slug];
+    if (material) materials.add(material.slug);
   }
 
-  const industrySlugs = new Set<string>();
-  for (const c of raw.categories) {
-    const industry = industryByCategory[c.slug];
-    if (industry) industrySlugs.add(industry);
-  }
+  const tag = raw.tags.map((t) => typeByTag[t.name]).find(Boolean) ?? typeByTag[raw.listGroup];
+  if (!tag) throw new Error(`Ukjent type for ${raw.bewifoodSlug}: ${raw.listGroup}`);
 
   const datasheet = raw.downloads.find((d) => !/product overview/i.test(d.label));
 
@@ -411,9 +449,9 @@ function buildProduct(raw: RawProduct, slug: string): Product {
     description: raw.description,
     benefits: raw.benefits,
     images: [...images.values()],
-    group: groupByListHeading[raw.listGroup] ?? "tilbehor-og-maskiner",
-    industries: [...industrySlugs],
-    materials: [...materials],
+    type: tag.slug,
+    groups: [...groups].sort(),
+    materials: materialOrder.filter((m) => materials.has(m)),
     variants,
     note: raw.specNote,
     datasheetUrl: datasheet?.url ?? null,
@@ -422,10 +460,8 @@ function buildProduct(raw: RawProduct, slug: string): Product {
 }
 
 // ---------------------------------------------------------------------------
-// Tillegg for demoen
+// Varianter for demoen
 // ---------------------------------------------------------------------------
-
-const SUPPLEMENT_SOURCE = { name: "STOK (tillegg for demo)", url: null };
 
 type VariantInput = Partial<Variant> & Pick<Variant, "sku" | "name">;
 
@@ -444,123 +480,6 @@ function variant(input: VariantInput): Variant {
     ...input,
   };
 }
-
-/** Bølgepappeske med innvendige mål i mm, som i STOKs sortiment på stok.dk. */
-function boxVariant(
-  sku: string,
-  prefix: string,
-  [l, w, h]: [number, number, number],
-  board: string,
-  unitsPerBundle: number,
-  unitsPerPallet: number,
-  salesMode: SalesMode = "stock",
-): Variant {
-  return variant({
-    sku,
-    name: `${prefix} ${l} x ${w} x ${h} mm`,
-    attributes: [
-      { key: "inner", label: "Innvendige mål (mm)", value: `${l} x ${w} x ${h}` },
-      { key: "board", label: "Kvalitet", value: board },
-      { key: "color", label: "Farge", value: "Brun" },
-      { key: "pallet", label: "Stk. per pall", value: String(unitsPerPallet) },
-    ],
-    innerDimensions: { length: l / 10, width: w / 10, height: h / 10 },
-    material: "Bølgepapp",
-    unitsPerBundle,
-    unitsPerPallet,
-    salesMode,
-  });
-}
-
-const supplementProducts: Product[] = [
-  {
-    slug: "bolgepappeske",
-    name: "Bølgepappeske",
-    shortDescription: "Standard amerikanereske (FEFCO 0201) i brun bølgepapp for forsendelse og lagring.",
-    description: [
-      { type: "h", text: "Allsidig eske for forsendelse og lager" },
-      {
-        type: "p",
-        text: "Amerikanereske med fire klaffer i topp og bunn. Esken leveres flatpakket og settes opp med tape. Velg B-bølge for lette varer og BC dobbelbølge for tunge eller ømfintlige varer.",
-      },
-      {
-        type: "p",
-        text: "Trenger du andre mål, en annen kvalitet eller trykk med logo, kan vi lage esken etter mål.",
-      },
-    ],
-    benefits: [
-      { title: "Flatpakket", text: "Tar liten plass på lager" },
-      { title: "Resirkulerbar", text: "Laget av fornybar fiber" },
-      { title: "Etter mål", text: "Kan lages i dine mål og med trykk" },
-    ],
-    images: [],
-    group: "eske",
-    industries: ["e-handel", "transport-og-lagring", "handel"],
-    materials: ["Bølgepapp"],
-    variants: [
-      boxVariant("5201-1", "Bølgepappeske", [200, 150, 100], "B-bølge", 25, 1500),
-      boxVariant("5201-2", "Bølgepappeske", [300, 200, 150], "B-bølge", 25, 1000),
-      boxVariant("5201-3", "Bølgepappeske", [400, 300, 200], "B-bølge", 20, 600),
-      boxVariant("5201-4", "Bølgepappeske", [500, 400, 300], "BC dobbelbølge", 10, 300),
-      boxVariant("5201-5", "Bølgepappeske", [600, 400, 400], "BC dobbelbølge", 10, 200),
-    ],
-    note: "Andre mål, kvaliteter og trykk på forespørsel.",
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-  {
-    slug: "postboks",
-    name: "Postboks",
-    shortDescription: "Lettvint forsendelseseske med lokk (FEFCO 0427) for netthandel. Passer i postkassen.",
-    description: [
-      {
-        type: "p",
-        text: "Stansede esker som brettes uten tape og lukkes med lokk. Gir et ryddig førsteinntrykk når kunden åpner pakken. De to minste størrelsene passer gjennom de fleste postkasser.",
-      },
-    ],
-    benefits: [
-      { title: "Uten tape", text: "Brettes og lukkes på sekunder" },
-      { title: "Postkassevennlig", text: "A5 og A4 passer i postkassen" },
-    ],
-    images: [],
-    group: "eske",
-    industries: ["e-handel", "handel"],
-    materials: ["Bølgepapp"],
-    variants: [
-      boxVariant("5427-1", "Postboks A5", [220, 160, 50], "E-bølge", 50, 2500),
-      boxVariant("5427-2", "Postboks A4", [310, 220, 60], "E-bølge", 50, 1800),
-      boxVariant("5427-3", "Postboks", [350, 250, 100], "B-bølge", 25, 1000),
-      boxVariant("5427-4", "Postboks", [400, 300, 150], "B-bølge", 25, 600),
-    ],
-    note: null,
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-  {
-    slug: "flaskeeske",
-    name: "Flaskeeske",
-    shortDescription: "Forsendelseseske med innredning for vin og andre flasker på 0,75 l.",
-    description: [
-      {
-        type: "p",
-        text: "Esken har innredning i bølgepapp som holder flaskene på plass under transport. Godkjent for sending med Posten og Bring.",
-      },
-    ],
-    benefits: [{ title: "Trygg frakt", text: "Innredning holder flaskene adskilt" }],
-    images: [],
-    group: "eske",
-    industries: ["e-handel", "naeringsmiddel"],
-    materials: ["Bølgepapp"],
-    variants: [
-      boxVariant("5450-1", "Flaskeeske 1 flaske", [95, 95, 360], "B-bølge", 25, 1200),
-      boxVariant("5450-3", "Flaskeeske 3 flasker", [280, 95, 360], "B-bølge", 25, 600),
-      boxVariant("5450-6", "Flaskeeske 6 flasker", [280, 190, 360], "BC dobbelbølge", 10, 300),
-    ],
-    note: "Flaskeesker for magnum og andre formater på forespørsel.",
-    datasheetUrl: null,
-    source: SUPPLEMENT_SOURCE,
-  },
-];
 
 /** Konkrete varianter av forbruksvarer som bare har en generell side på bewifood.com. */
 const variantOverrides: Record<string, Variant[]> = {
@@ -650,17 +569,11 @@ const variantOverrides: Record<string, Variant[]> = {
 
 async function main() {
   const raw = JSON.parse(await readFile(RAW_FILE, "utf8")) as { products: RawProduct[] };
-  const sanity = JSON.parse(await readFile(SANITY_CATALOG, "utf8")) as {
-    products: { slug: string; sourceUrl: string }[];
-  };
-  const sanitySlugs = new Map(
-    sanity.products.map((p) => [new URL(p.sourceUrl).pathname.replace(/\/$/, "").split("/").pop()!, p.slug]),
-  );
 
   const used = new Set<string>();
   const products: Product[] = [];
   for (const item of raw.products) {
-    let slug = sanitySlugs.get(item.bewifoodSlug) ?? slugify(item.name);
+    let slug = legacySlugs[item.bewifoodSlug] ?? slugify(item.name);
     if (used.has(slug)) slug = slugify(item.bewifoodSlug);
     used.add(slug);
     const product = buildProduct(item, slug);
@@ -671,20 +584,25 @@ async function main() {
     }
     products.push(product);
   }
-  for (const product of supplementProducts) {
-    if (used.has(product.slug)) throw new Error(`Slug finnes fra før: ${product.slug}`);
-    used.add(product.slug);
-    products.push(product);
-  }
 
   products.sort((a, b) => a.name.localeCompare(b.name, "nb"));
+
+  const usedGroups = new Set(products.flatMap((p) => p.groups));
+  const usedTypes = new Set(products.map((p) => p.type));
   const usedMaterials = new Set(products.flatMap((p) => p.materials));
-  const materials: Taxon[] = Object.values(knownMaterials)
+  const unique = <T extends Taxon>(items: T[]) => [...new Map(items.map((i) => [i.slug, i])).values()];
+  const groups = unique(Object.values(groupByCategory))
+    .filter((g) => usedGroups.has(g.slug))
+    .sort((a, b) => a.order - b.order);
+  const types = unique(Object.values(typeByTag))
+    .filter((t) => usedTypes.has(t.slug))
+    .sort((a, b) => a.order - b.order);
+  const materials = materialOrder
     .filter((m) => usedMaterials.has(m))
-    .map((title) => ({ slug: slugify(title), title }));
+    .map((slug) => Object.values(materialByCategory).find((m) => m.slug === slug)!);
 
   await mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await writeFile(OUT_FILE, JSON.stringify({ groups, industries, materials, products }, null, 2) + "\n");
+  await writeFile(OUT_FILE, JSON.stringify({ groups, types, materials, products }, null, 2) + "\n");
 
   const variantCount = products.reduce((n, p) => n + p.variants.length, 0);
   const byMode = products
@@ -694,6 +612,57 @@ async function main() {
     `Skrev ${products.length} produkter og ${variantCount} varianter til ${path.relative(ROOT, OUT_FILE)}`,
   );
   console.log(byMode);
+
+  const iceland = await buildIceland();
+  const options = (items: Taxon[]) => items.map(({ slug, title }) => ({ slug, title }));
+  await writeFile(
+    TAXONOMY_FILE,
+    JSON.stringify(
+      {
+        no: { groups: options(groups), types: options(types) },
+        is: { groups: options(iceland.groups), types: options(iceland.types) },
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+}
+
+type IcelandFile = {
+  groups: ProductGroup[];
+  types: ProductType[];
+  products: (Pick<Product, "slug" | "name" | "shortDescription" | "type" | "groups" | "images"> & {
+    url: string;
+  })[];
+};
+
+/** Den islandske katalogen: få produkter, uten varianttabell, som krever tilbud. */
+async function buildIceland() {
+  const source = JSON.parse(await readFile(ICELAND_FILE, "utf8")) as IcelandFile;
+  const products: Product[] = source.products.map(({ url, ...product }) => ({
+    ...product,
+    description: [],
+    benefits: [],
+    materials: [],
+    variants: [
+      variant({
+        sku: nextSku(),
+        name: product.name,
+        image: product.images[0] ?? null,
+        salesMode: "quote",
+      }),
+    ],
+    note: null,
+    datasheetUrl: null,
+    source: { name: "bewifood.com", url },
+  }));
+  products.sort((a, b) => a.name.localeCompare(b.name, "is"));
+  await writeFile(
+    ICELAND_OUT_FILE,
+    JSON.stringify({ groups: source.groups, types: source.types, materials: [], products }, null, 2) + "\n",
+  );
+  console.log(`Skrev ${products.length} produkter til ${path.relative(ROOT, ICELAND_OUT_FILE)}`);
+  return source;
 }
 
 await main();

@@ -1,13 +1,57 @@
 {
   "groups": [
     {
-      "slug": "eske",
-      "title": "Esker og kasser",
+      "slug": "beskyttende-emballasje",
+      "title": "Beskyttende emballasje",
+      "order": 1,
+      "industry": "beskyttende-emballasje"
+    },
+    {
+      "slug": "fisk-og-sjomat",
+      "title": "Fisk og sjømat",
+      "order": 2,
+      "industry": "fisk-og-sjomat"
+    },
+    {
+      "slug": "handel",
+      "title": "Handel",
+      "order": 3,
+      "industry": null
+    },
+    {
+      "slug": "mat",
+      "title": "Mat",
+      "order": 4,
+      "industry": "naeringsmiddel"
+    },
+    {
+      "slug": "medisinsk",
+      "title": "Medisinsk",
+      "order": 5,
+      "industry": null
+    },
+    {
+      "slug": "tekniske-komponenter",
+      "title": "Tekniske komponenter",
+      "order": 6,
+      "industry": "landbruk-og-industri"
+    },
+    {
+      "slug": "transport-og-lagring",
+      "title": "Transport og lagring",
+      "order": 7,
+      "industry": "transport-og-lagring"
+    }
+  ],
+  "types": [
+    {
+      "slug": "ark",
+      "title": "Ark",
       "order": 1
     },
     {
-      "slug": "kar-og-spann",
-      "title": "Kar og spann",
+      "slug": "avfall",
+      "title": "Avfall",
       "order": 2
     },
     {
@@ -16,62 +60,69 @@
       "order": 3
     },
     {
-      "slug": "sekker-og-film",
-      "title": "Sekker og film",
+      "slug": "botter-og-tonner",
+      "title": "Bøtter og tønner",
       "order": 4
     },
     {
-      "slug": "ark-og-beskyttelse",
-      "title": "Ark og beskyttelse",
+      "slug": "eske",
+      "title": "Eske",
       "order": 5
     },
     {
-      "slug": "transport-og-temperatur",
-      "title": "Transport og temperatur",
+      "slug": "film",
+      "title": "Film",
       "order": 6
     },
     {
-      "slug": "tilbehor-og-maskiner",
-      "title": "Tilbehør og maskiner",
+      "slug": "honeycomb",
+      "title": "Honeycomb",
       "order": 7
-    }
-  ],
-  "industries": [
-    {
-      "slug": "fisk-og-sjomat",
-      "title": "Fisk og sjømat"
     },
     {
-      "slug": "naeringsmiddel",
-      "title": "Næringsmiddel"
+      "slug": "hvac-lokk",
+      "title": "HVAC-lokk",
+      "order": 8
     },
     {
-      "slug": "beskyttende-emballasje",
-      "title": "Beskyttende emballasje"
+      "slug": "kar",
+      "title": "Kar",
+      "order": 9
     },
     {
-      "slug": "transport-og-lagring",
-      "title": "Transport og lagring"
+      "slug": "pakkemaskin",
+      "title": "Pakkemaskin",
+      "order": 10
     },
     {
-      "slug": "landbruk-og-industri",
-      "title": "Landbruk og industri"
+      "slug": "sekk",
+      "title": "Sekk",
+      "order": 11
     },
     {
-      "slug": "e-handel",
-      "title": "E-handel"
+      "slug": "spann",
+      "title": "Spann",
+      "order": 12
     },
     {
-      "slug": "medisinsk",
-      "title": "Medisinsk"
+      "slug": "temperaturkontrollert",
+      "title": "Temperaturkontrollert",
+      "order": 13
     },
     {
-      "slug": "handel",
-      "title": "Handel"
+      "slug": "tilbehor",
+      "title": "Tilbehør",
+      "order": 14
     },
     {
-      "slug": "tekniske-komponenter",
-      "title": "Tekniske komponenter"
+      "slug": "transport",
+      "title": "Transport",
+      "order": 15
+    },
+    {
+      "slug": "annet",
+      "title": "Annet",
+      "order": 16
     }
   ],
   "materials": [
@@ -80,20 +131,12 @@
       "title": "HDPE"
     },
     {
-      "slug": "pp",
-      "title": "PP"
-    },
-    {
-      "slug": "lldpe",
-      "title": "LLDPE"
-    },
-    {
       "slug": "kartong",
       "title": "Kartong"
     },
     {
-      "slug": "bolgepapp",
-      "title": "Bølgepapp"
+      "slug": "annet",
+      "title": "Annet"
     }
   ],
   "products": [
@@ -154,9 +197,9 @@
           "alt": "Absorbenter"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8075-0",
@@ -216,9 +259,9 @@
           "alt": "Antioksidant (E-316)"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8076-0",
@@ -270,9 +313,9 @@
           "alt": "Antioksidant IONOL (E-321)"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8077-0",
@@ -324,9 +367,9 @@
           "alt": "Antioksidant teststrimler"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8078-0",
@@ -407,8 +450,8 @@
           "alt": "Avfallsbeholdere"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["transport-og-lagring"],
+      "type": "avfall",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -558,9 +601,9 @@
           "alt": "BEWI Bag 25 kg"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8023-0",
@@ -616,9 +659,9 @@
           "alt": "BEWI Bag 50 kg (E)"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8024-0",
@@ -678,9 +721,9 @@
           "alt": "BEWI Bag 50 kg med sideåpning (B)"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8025-0",
@@ -732,9 +775,9 @@
           "alt": "BEWI Bag fiskemel"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8026-0",
@@ -790,9 +833,9 @@
           "alt": "BEWI Bag fiskemel (OS)"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8027-0",
@@ -860,9 +903,9 @@
           "alt": "BEWI Bag Marine waste bag"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8028-0",
@@ -926,9 +969,9 @@
           "alt": "BEWI Bag singelfisk (OS)"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8029-0",
@@ -988,9 +1031,9 @@
           "alt": "BEWI Bags"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8030-0",
@@ -1087,9 +1130,9 @@
           "alt": "BEWI Pallet"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
-      "materials": ["HDPE"],
+      "type": "transport",
+      "groups": ["fisk-og-sjomat", "transport-og-lagring"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8089-0",
@@ -1196,9 +1239,9 @@
           "alt": "BEWI RE Box"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["hdpe"],
       "variants": [
         {
           "sku": "7034-1",
@@ -1472,8 +1515,8 @@
           "alt": "BEWI ReBox"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -1546,9 +1589,9 @@
           "alt": "Block liner 16,5 lbs (B)"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8001-0",
@@ -1600,9 +1643,9 @@
           "alt": "Block liner nøytral"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8002-0",
@@ -1686,9 +1729,9 @@
           "alt": "Brett"
         }
       ],
-      "group": "brett",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "brett",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8038-0",
@@ -1769,9 +1812,9 @@
           "alt": "Brødkasser"
         }
       ],
-      "group": "eske",
-      "industries": ["naeringsmiddel"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["mat"],
+      "materials": [],
       "variants": [
         {
           "sku": "6721",
@@ -1989,9 +2032,9 @@
           "alt": "Bær kasse"
         }
       ],
-      "group": "eske",
-      "industries": ["naeringsmiddel"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["mat"],
+      "materials": [],
       "variants": [
         {
           "sku": "7150",
@@ -2053,246 +2096,6 @@
       }
     },
     {
-      "slug": "bolgepappeske",
-      "name": "Bølgepappeske",
-      "shortDescription": "Standard amerikanereske (FEFCO 0201) i brun bølgepapp for forsendelse og lagring.",
-      "description": [
-        {
-          "type": "h",
-          "text": "Allsidig eske for forsendelse og lager"
-        },
-        {
-          "type": "p",
-          "text": "Amerikanereske med fire klaffer i topp og bunn. Esken leveres flatpakket og settes opp med tape. Velg B-bølge for lette varer og BC dobbelbølge for tunge eller ømfintlige varer."
-        },
-        {
-          "type": "p",
-          "text": "Trenger du andre mål, en annen kvalitet eller trykk med logo, kan vi lage esken etter mål."
-        }
-      ],
-      "benefits": [
-        {
-          "title": "Flatpakket",
-          "text": "Tar liten plass på lager"
-        },
-        {
-          "title": "Resirkulerbar",
-          "text": "Laget av fornybar fiber"
-        },
-        {
-          "title": "Etter mål",
-          "text": "Kan lages i dine mål og med trykk"
-        }
-      ],
-      "images": [],
-      "group": "eske",
-      "industries": ["e-handel", "transport-og-lagring", "handel"],
-      "materials": ["Bølgepapp"],
-      "variants": [
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "200 x 150 x 100"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "1500"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 20,
-            "width": 15,
-            "height": 10
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 1500,
-          "salesMode": "stock",
-          "sku": "5201-1",
-          "name": "Bølgepappeske 200 x 150 x 100 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "300 x 200 x 150"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "1000"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 30,
-            "width": 20,
-            "height": 15
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 1000,
-          "salesMode": "stock",
-          "sku": "5201-2",
-          "name": "Bølgepappeske 300 x 200 x 150 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "400 x 300 x 200"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "600"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 40,
-            "width": 30,
-            "height": 20
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 20,
-          "unitsPerPallet": 600,
-          "salesMode": "stock",
-          "sku": "5201-3",
-          "name": "Bølgepappeske 400 x 300 x 200 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "500 x 400 x 300"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "BC dobbelbølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "300"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 50,
-            "width": 40,
-            "height": 30
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 10,
-          "unitsPerPallet": 300,
-          "salesMode": "stock",
-          "sku": "5201-4",
-          "name": "Bølgepappeske 500 x 400 x 300 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "600 x 400 x 400"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "BC dobbelbølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "200"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 60,
-            "width": 40,
-            "height": 40
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 10,
-          "unitsPerPallet": 200,
-          "salesMode": "stock",
-          "sku": "5201-5",
-          "name": "Bølgepappeske 600 x 400 x 400 mm"
-        }
-      ],
-      "note": "Andre mål, kvaliteter og trykk på forespørsel.",
-      "datasheetUrl": null,
-      "source": {
-        "name": "STOK (tillegg for demo)",
-        "url": null
-      }
-    },
-    {
       "slug": "botter-og-spann",
       "name": "Bøtter og spann",
       "shortDescription": "Flerbruksbøtter, malingsbøtter og søppeldunker",
@@ -2350,8 +2153,8 @@
           "alt": "Bøtter og spann"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["transport-og-lagring"],
+      "type": "botter-og-tonner",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -2615,9 +2418,9 @@
           "alt": "Bøylekasse"
         }
       ],
-      "group": "eske",
-      "industries": ["naeringsmiddel"],
-      "materials": ["PP"],
+      "type": "eske",
+      "groups": ["mat"],
+      "materials": [],
       "variants": [
         {
           "sku": "7110",
@@ -2801,9 +2604,9 @@
           "alt": "Cateringkartong (EF)"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8003-0",
@@ -2896,8 +2699,8 @@
           "alt": "CoolGuard"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["medisinsk"],
+      "type": "temperaturkontrollert",
+      "groups": ["medisinsk"],
       "materials": [],
       "variants": [
         {
@@ -3046,8 +2849,8 @@
           "alt": "Crédo Cube"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["medisinsk"],
+      "type": "temperaturkontrollert",
+      "groups": ["medisinsk"],
       "materials": [],
       "variants": [
         {
@@ -4192,8 +3995,8 @@
           "alt": "Dekklokk"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["tekniske-komponenter"],
+      "type": "hvac-lokk",
+      "groups": ["tekniske-komponenter"],
       "materials": [],
       "variants": [
         {
@@ -4437,9 +4240,9 @@
           "alt": "Emballasje for catering"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8004-0",
@@ -4523,9 +4326,9 @@
           "alt": "Etiketter"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8079-0",
@@ -4606,9 +4409,9 @@
           "alt": "Filetbrett"
         }
       ],
-      "group": "brett",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["LLDPE"],
+      "type": "brett",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "7002",
@@ -4748,9 +4551,9 @@
           "alt": "Fiskekar"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["HDPE"],
+      "type": "kar",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "0336-0",
@@ -4847,9 +4650,9 @@
           "alt": "Fiskekasse"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["hdpe"],
       "variants": [
         {
           "sku": "0293-1",
@@ -4944,152 +4747,6 @@
       }
     },
     {
-      "slug": "flaskeeske",
-      "name": "Flaskeeske",
-      "shortDescription": "Forsendelseseske med innredning for vin og andre flasker på 0,75 l.",
-      "description": [
-        {
-          "type": "p",
-          "text": "Esken har innredning i bølgepapp som holder flaskene på plass under transport. Godkjent for sending med Posten og Bring."
-        }
-      ],
-      "benefits": [
-        {
-          "title": "Trygg frakt",
-          "text": "Innredning holder flaskene adskilt"
-        }
-      ],
-      "images": [],
-      "group": "eske",
-      "industries": ["e-handel", "naeringsmiddel"],
-      "materials": ["Bølgepapp"],
-      "variants": [
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "95 x 95 x 360"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "1200"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 9.5,
-            "width": 9.5,
-            "height": 36
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 1200,
-          "salesMode": "stock",
-          "sku": "5450-1",
-          "name": "Flaskeeske 1 flaske 95 x 95 x 360 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "280 x 95 x 360"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "600"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 28,
-            "width": 9.5,
-            "height": 36
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 600,
-          "salesMode": "stock",
-          "sku": "5450-3",
-          "name": "Flaskeeske 3 flasker 280 x 95 x 360 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "280 x 190 x 360"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "BC dobbelbølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "300"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 28,
-            "width": 19,
-            "height": 36
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 10,
-          "unitsPerPallet": 300,
-          "salesMode": "stock",
-          "sku": "5450-6",
-          "name": "Flaskeeske 6 flasker 280 x 190 x 360 mm"
-        }
-      ],
-      "note": "Flaskeesker for magnum og andre formater på forespørsel.",
-      "datasheetUrl": null,
-      "source": {
-        "name": "STOK (tillegg for demo)",
-        "url": null
-      }
-    },
-    {
       "slug": "fleksible-filmer",
       "name": "Fleksible filmer",
       "shortDescription": "Komplett utvalg av fleksible filmer for thermoforming, MAP-pakking, skålpakking og skin-pack.",
@@ -5142,9 +4799,9 @@
           "alt": "Fleksible filmer"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "film",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8093-0",
@@ -5240,9 +4897,9 @@
           "alt": "Fôringspose"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8031-0",
@@ -5298,8 +4955,8 @@
           "alt": "Gel ice/Kjøleposer"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["medisinsk"],
+      "type": "tilbehor",
+      "groups": ["medisinsk"],
       "materials": [],
       "variants": [
         {
@@ -5417,9 +5074,9 @@
           "alt": "GRAMX film HD"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "film",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8094-0",
@@ -5479,8 +5136,8 @@
           "alt": "Honeycomb"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["beskyttende-emballasje"],
+      "type": "honeycomb",
+      "groups": ["beskyttende-emballasje"],
       "materials": [],
       "variants": [
         {
@@ -5549,9 +5206,9 @@
           "alt": "Jutesekker"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8032-0",
@@ -5607,9 +5264,9 @@
           "alt": "Kartong 5 kg reker plano (OS)"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8005-0",
@@ -5661,9 +5318,9 @@
           "alt": "Kartong filet 7,5 lbs (M)"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8006-0",
@@ -5731,9 +5388,9 @@
           "alt": "Kartong for klippfisk"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8007-0",
@@ -5789,9 +5446,9 @@
           "alt": "Kartong for krabbe"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8008-0",
@@ -5875,9 +5532,9 @@
           "alt": "Kartong for reker"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8009-0",
@@ -5953,9 +5610,9 @@
           "alt": "Kartong for saltfisk"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8010-0",
@@ -6019,9 +5676,9 @@
           "alt": "Kartong for singelfryst filet"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8011-0",
@@ -6077,9 +5734,9 @@
           "alt": "Kartong for vertikalblokk 25 kg"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8012-0",
@@ -6159,9 +5816,9 @@
           "alt": "Kartong i bølgepapp for singelfryst fisk"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8013-0",
@@ -6245,9 +5902,9 @@
           "alt": "Kartong laks 25 kg"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8014-0",
@@ -6331,9 +5988,9 @@
           "alt": "Kartong laks 40 kg"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8015-0",
@@ -6429,9 +6086,9 @@
           "alt": "Kartong Polarfresh"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8016-0",
@@ -6487,9 +6144,9 @@
           "alt": "Kartong snøkrabbe (RG)"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8017-0",
@@ -6553,8 +6210,8 @@
           "alt": "Kebab tønne"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["naeringsmiddel"],
+      "type": "botter-og-tonner",
+      "groups": ["mat"],
       "materials": [],
       "variants": [
         {
@@ -6773,8 +6430,8 @@
           "alt": "Kopper og spann"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["naeringsmiddel"],
+      "type": "spann",
+      "groups": ["mat"],
       "materials": [],
       "variants": [
         {
@@ -7013,9 +6670,9 @@
           "alt": "Kurv til reker"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8080-0",
@@ -7108,8 +6765,8 @@
           "alt": "Kvadratisk spann"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["naeringsmiddel"],
+      "type": "spann",
+      "groups": ["mat"],
       "materials": [],
       "variants": [
         {
@@ -7348,8 +7005,8 @@
           "alt": "Kvantum brett"
         }
       ],
-      "group": "brett",
-      "industries": ["naeringsmiddel"],
+      "type": "brett",
+      "groups": ["mat"],
       "materials": [],
       "variants": [
         {
@@ -7593,9 +7250,9 @@
           "alt": "Masterkartong"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8018-0",
@@ -7643,9 +7300,9 @@
           "alt": "Masterkartong for 3 x 15 lbs filet"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8019-0",
@@ -7726,9 +7383,9 @@
           "alt": "Matkasse"
         }
       ],
-      "group": "eske",
-      "industries": ["naeringsmiddel"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["mat"],
+      "materials": [],
       "variants": [
         {
           "sku": "6723-3",
@@ -7919,9 +7576,9 @@
           "alt": "Norbox"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["hdpe"],
       "variants": [
         {
           "sku": "0260-0",
@@ -8002,9 +7659,9 @@
           "alt": "Pakkemaskin A1"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "pakkemaskin",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8044-0",
@@ -8060,9 +7717,9 @@
           "alt": "Pakkemaskin A6"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "pakkemaskin",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8045-0",
@@ -8158,9 +7815,9 @@
           "alt": "Pakketape"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -8290,9 +7947,9 @@
           "alt": "Palleark"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
-      "materials": [],
+      "type": "ark",
+      "groups": ["fisk-og-sjomat", "transport-og-lagring"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -8405,9 +8062,9 @@
           "alt": "Pallecontainer"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
-      "materials": [],
+      "type": "transport",
+      "groups": ["fisk-og-sjomat", "transport-og-lagring"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8090-0",
@@ -8503,9 +8160,9 @@
           "alt": "Pallehetter"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
-      "materials": [],
+      "type": "transport",
+      "groups": ["fisk-og-sjomat", "transport-og-lagring"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -8585,9 +8242,9 @@
           "alt": "Pallekarmer"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["fisk-og-sjomat", "transport-og-lagring"],
-      "materials": [],
+      "type": "transport",
+      "groups": ["fisk-og-sjomat", "transport-og-lagring"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8092-0",
@@ -8684,9 +8341,9 @@
           "alt": "Perforert transportkasse"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
-      "materials": ["PP", "HDPE"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
+      "materials": [],
       "variants": [
         {
           "sku": "6708-2",
@@ -9070,9 +8727,9 @@
           "alt": "Pers box"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["HDPE"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["hdpe"],
       "variants": [
         {
           "sku": "0280-1",
@@ -9279,9 +8936,9 @@
           "alt": "Plastark"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "ark",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8036-0",
@@ -9377,9 +9034,9 @@
           "alt": "Plastfilm"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "film",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8095-0",
@@ -9463,9 +9120,9 @@
           "alt": "Polybags"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -9566,9 +9223,9 @@
           "alt": "Polysheet"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "ark",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8037-0",
@@ -9593,195 +9250,6 @@
       "source": {
         "name": "bewifood.com",
         "url": "https://bewifood.com/products/polysheet/"
-      }
-    },
-    {
-      "slug": "postboks",
-      "name": "Postboks",
-      "shortDescription": "Lettvint forsendelseseske med lokk (FEFCO 0427) for netthandel. Passer i postkassen.",
-      "description": [
-        {
-          "type": "p",
-          "text": "Stansede esker som brettes uten tape og lukkes med lokk. Gir et ryddig førsteinntrykk når kunden åpner pakken. De to minste størrelsene passer gjennom de fleste postkasser."
-        }
-      ],
-      "benefits": [
-        {
-          "title": "Uten tape",
-          "text": "Brettes og lukkes på sekunder"
-        },
-        {
-          "title": "Postkassevennlig",
-          "text": "A5 og A4 passer i postkassen"
-        }
-      ],
-      "images": [],
-      "group": "eske",
-      "industries": ["e-handel", "handel"],
-      "materials": ["Bølgepapp"],
-      "variants": [
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "220 x 160 x 50"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "E-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "2500"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 22,
-            "width": 16,
-            "height": 5
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 50,
-          "unitsPerPallet": 2500,
-          "salesMode": "stock",
-          "sku": "5427-1",
-          "name": "Postboks A5 220 x 160 x 50 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "310 x 220 x 60"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "E-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "1800"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 31,
-            "width": 22,
-            "height": 6
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 50,
-          "unitsPerPallet": 1800,
-          "salesMode": "stock",
-          "sku": "5427-2",
-          "name": "Postboks A4 310 x 220 x 60 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "350 x 250 x 100"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "1000"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 35,
-            "width": 25,
-            "height": 10
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 1000,
-          "salesMode": "stock",
-          "sku": "5427-3",
-          "name": "Postboks 350 x 250 x 100 mm"
-        },
-        {
-          "description": null,
-          "image": null,
-          "attributes": [
-            {
-              "key": "inner",
-              "label": "Innvendige mål (mm)",
-              "value": "400 x 300 x 150"
-            },
-            {
-              "key": "board",
-              "label": "Kvalitet",
-              "value": "B-bølge"
-            },
-            {
-              "key": "color",
-              "label": "Farge",
-              "value": "Brun"
-            },
-            {
-              "key": "pallet",
-              "label": "Stk. per pall",
-              "value": "600"
-            }
-          ],
-          "outerDimensions": null,
-          "innerDimensions": {
-            "length": 40,
-            "width": 30,
-            "height": 15
-          },
-          "weightKg": null,
-          "material": "Bølgepapp",
-          "unitsPerBundle": 25,
-          "unitsPerPallet": 600,
-          "salesMode": "stock",
-          "sku": "5427-4",
-          "name": "Postboks 400 x 300 x 150 mm"
-        }
-      ],
-      "note": null,
-      "datasheetUrl": null,
-      "source": {
-        "name": "STOK (tillegg for demo)",
-        "url": null
       }
     },
     {
@@ -9813,8 +9281,8 @@
           "alt": "Punched Honeycomb"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["beskyttende-emballasje"],
+      "type": "honeycomb",
+      "groups": ["beskyttende-emballasje"],
       "materials": [],
       "variants": [
         {
@@ -9854,8 +9322,8 @@
           "alt": "RePa-Board®"
         }
       ],
-      "group": "ark-og-beskyttelse",
-      "industries": ["beskyttende-emballasje", "handel"],
+      "type": "honeycomb",
+      "groups": ["beskyttende-emballasje", "handel"],
       "materials": [],
       "variants": [
         {
@@ -9949,8 +9417,8 @@
           "alt": "Runde beger/spann IML-muligheter"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["naeringsmiddel"],
+      "type": "spann",
+      "groups": ["mat"],
       "materials": [],
       "variants": [
         {
@@ -10318,9 +9786,9 @@
           "alt": "Saltfisk container"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8020-0",
@@ -10380,9 +9848,9 @@
           "alt": "Sekk for fiskemel"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "sekk",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8034-0",
@@ -10459,8 +9927,8 @@
           "alt": "SH Oppbevaringsboks"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -10662,8 +10130,8 @@
           "alt": "Sherpa Systems"
         }
       ],
-      "group": "transport-og-temperatur",
-      "industries": ["medisinsk"],
+      "type": "temperaturkontrollert",
+      "groups": ["medisinsk"],
       "materials": [],
       "variants": [
         {
@@ -10817,9 +10285,9 @@
           "alt": "Skin pack"
         }
       ],
-      "group": "brett",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "brett",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8040-0",
@@ -10903,9 +10371,9 @@
           "alt": "Skåler"
         }
       ],
-      "group": "brett",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "brett",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8039-0",
@@ -10965,9 +10433,9 @@
           "alt": "Slangeplast til singelfisk"
         }
       ],
-      "group": "sekker-og-film",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "film",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8096-0",
@@ -11035,9 +10503,9 @@
           "alt": "Slingreduk"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8081-0",
@@ -11138,9 +10606,9 @@
           "alt": "Spann & dunker"
         }
       ],
-      "group": "kar-og-spann",
-      "industries": ["naeringsmiddel"],
-      "materials": ["PP", "LLDPE"],
+      "type": "spann",
+      "groups": ["mat"],
+      "materials": [],
       "variants": [
         {
           "sku": "3065",
@@ -11647,8 +11115,8 @@
           "alt": "Spraglekassa"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -11746,8 +11214,8 @@
           "alt": "Stablebar transportkasse"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -12246,9 +11714,9 @@
           "alt": "Stablebar transportkasse"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
-      "materials": ["PP", "HDPE"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
+      "materials": [],
       "variants": [
         {
           "sku": "6708-1",
@@ -12731,9 +12199,9 @@
           "alt": "Strammebånd"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -12846,9 +12314,9 @@
           "alt": "Strekkfilm"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "description": null,
@@ -12930,9 +12398,9 @@
           "alt": "Sveisemaskin – horisontal"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "pakkemaskin",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8046-0",
@@ -12980,9 +12448,9 @@
           "alt": "Sveisemaskin – vertikal"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "pakkemaskin",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8047-0",
@@ -13038,9 +12506,9 @@
           "alt": "Symaskin (NP-7A)"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8084-0",
@@ -13096,9 +12564,9 @@
           "alt": "Synåler"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8085-0",
@@ -13190,9 +12658,9 @@
           "alt": "Tapedispenser"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8086-0",
@@ -13269,8 +12737,8 @@
           "alt": "Trillebrett"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["transport-og-lagring"],
+      "type": "annet",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -13378,9 +12846,9 @@
           "alt": "Tråd for symaskin"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8087-0",
@@ -13456,9 +12924,9 @@
           "alt": "Tørrfiskemballasje"
         }
       ],
-      "group": "eske",
-      "industries": ["fisk-og-sjomat"],
-      "materials": ["Kartong"],
+      "type": "eske",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["kartong"],
       "variants": [
         {
           "sku": "8022-0",
@@ -13531,8 +12999,8 @@
           "alt": "Utstyrskofferter"
         }
       ],
-      "group": "eske",
-      "industries": ["transport-og-lagring"],
+      "type": "eske",
+      "groups": ["transport-og-lagring"],
       "materials": [],
       "variants": [
         {
@@ -13748,9 +13216,9 @@
           "alt": "Wax Marker Pelican"
         }
       ],
-      "group": "tilbehor-og-maskiner",
-      "industries": ["fisk-og-sjomat"],
-      "materials": [],
+      "type": "tilbehor",
+      "groups": ["fisk-og-sjomat"],
+      "materials": ["annet"],
       "variants": [
         {
           "sku": "8088-0",

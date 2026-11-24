@@ -9,7 +9,16 @@
 // ---------------------------------------------------------------------------
 
 export type Taxon = { slug: string; title: string };
-export type ProductGroup = Taxon & { order: number };
+
+/**
+ * Produktgruppe, f.eks. «Fisk og sjømat» eller «Mat», som på bewifood.com.
+ * Et produkt kan være i flere. `industry` er sluggen til bransjesiden på
+ * nettsiden som viser produktene i gruppen, når det finnes en.
+ */
+export type ProductGroup = Taxon & { order: number; industry: string | null };
+
+/** Type, f.eks. «Eske» eller «Brett», som på bewifood.com. Et produkt har én type. */
+export type ProductType = Taxon & { order: number };
 
 export type DescriptionBlock =
   { type: "h"; text: string } | { type: "p"; text: string } | { type: "ul"; items: string[] };
@@ -54,8 +63,11 @@ export type Product = {
   description: DescriptionBlock[];
   benefits: { title: string; text: string }[];
   images: ProductImage[];
-  group: string;
-  industries: string[];
+  /** Sluggen til typen. */
+  type: string;
+  /** Sluggene til produktgruppene. */
+  groups: string[];
+  /** Sluggene til materialene. Materialet til hver variant står i `Variant.material`. */
   materials: string[];
   variants: Variant[];
   /** Merknad under varianttabellen, f.eks. «Andre farger på forespørsel». */
@@ -65,7 +77,10 @@ export type Product = {
   source: { name: string; url: string | null };
 };
 
-export type ProductSummary = Pick<Product, "slug" | "name" | "shortDescription" | "group" | "industries"> & {
+export type ProductSummary = Pick<
+  Product,
+  "slug" | "name" | "shortDescription" | "type" | "groups" | "materials"
+> & {
   image: ProductImage | null;
   variantCount: number;
   skus: string[];
@@ -73,7 +88,7 @@ export type ProductSummary = Pick<Product, "slug" | "name" | "shortDescription" 
   salesMode: SalesMode;
 };
 
-export type ProductFilter = { group?: string; industry?: string; query?: string };
+export type ProductFilter = { group?: string; type?: string; material?: string; query?: string };
 
 // ---------------------------------------------------------------------------
 // Lager (ERP)
@@ -129,8 +144,8 @@ export type PriceAgreement = {
   name: string;
   /** Rabatt i prosent på alle varer. */
   discountPercent: number;
-  /** Rabatt i prosent per produktgruppe. Overstyrer `discountPercent`. */
-  groupDiscounts: Record<string, number>;
+  /** Rabatt i prosent per produkttype (typens slug). Overstyrer `discountPercent`. */
+  typeDiscounts: Record<string, number>;
   /** Fastpris per varenummer. Overstyrer rabattene. */
   fixedPrices: Record<string, number>;
 };
@@ -139,6 +154,7 @@ export type Customer = {
   id: string;
   name: string;
   orgNumber: string;
+  /** Bransjen slik den vises på innloggingssiden, f.eks. «Bakeri». */
   industry: string;
   description: string;
   addresses: Address[];
