@@ -3,11 +3,13 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { cookieCart } from "./cart";
+import { cookieCart, getCartOrigin, setCartOrigin } from "./cart";
 import { t } from "./dictionary";
 import { canResetDemo, resetDemo, shop } from "./index";
 import { roundToBundle } from "./mock/rules";
-import { shopPath } from "./paths";
+import { minSidePath, shopPath } from "./paths";
+import { specName } from "./specs";
+import type { PackagingSpec } from "./domain";
 import { OrderError } from "./services";
 import { getSession, SESSION_COOKIE } from "./session";
 
@@ -26,7 +28,8 @@ const text = (formData: FormData, key: string) => {
 
 /** Bare interne stier i butikken er gyldige mål etter innlogging. */
 function safeNext(value: string): string {
-  return value.startsWith(shopPath()) && !value.startsWith("//") ? value : shopPath();
+  const allowed = [shopPath(), minSidePath()].some((prefix) => value.startsWith(prefix));
+  return allowed && !value.startsWith("//") ? value : shopPath();
 }
 
 export async function login(formData: FormData) {
@@ -103,6 +106,7 @@ export async function placeOrder(_prev: ActionState, formData: FormData): Promis
   const cart = await cookieCart.getCart();
 
   const date = text(formData, "requestedDeliveryDate");
+  const origin = await getCartOrigin();
   let orderNumber: string;
   try {
     const order = await shop().orders.placeOrder(session.customer.id, {
@@ -112,6 +116,7 @@ export async function placeOrder(_prev: ActionState, formData: FormData): Promis
       requestedDeliveryDate: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null,
       note: text(formData, "note").slice(0, 500) || null,
       orderedBy: session.user.name,
+      basedOn: origin ? { orderNumber: origin, kind: "reorder" } : null,
     });
     orderNumber = order.orderNumber;
   } catch (error) {
@@ -120,4 +125,89 @@ export async function placeOrder(_prev: ActionState, formData: FormData): Promis
 
   await cookieCart.clear();
   redirect(`${shopPath("/bekreftelse")}?ordre=${encodeURIComponent(orderNumber)}`);
+}
+
+// ---------------------------------------------------------------------------
+// Min side
+// ---------------------------------------------------------------------------
+
+/** Legger katalogvarene fra en tidligere ordre i kurven, med samme antall. */
+export async function reorder(formData: FormData) {
+  const orderNumber = text(formData, "orderNumber");
+  const session = await getSession();
+  if (!session) redirect(shopPath("/logg-inn"));
+  const order = await shop().orders.getOrder(session.customer.id, orderNumber);
+  if (!order) redirect(minSidePath("/ordre"));
+  for (const line of order.lines) {
+    if (!line.sku) continue;
+    const variant = await orderableVariant(line.sku);
+    if (variant) await cookieCart.add(variant.sku, roundToBundle(line.quantity, variant.unitsPerBundle));
+  }
+  await setCartOrigin(order.orderNumber);
+  redirect(`${shopPath("/handlekurv")}?fra=${encodeURIComponent(order.orderNumber)}`);
+}
+
+/** Variant av en katalogvare: en annen variant av samme produkt i kurven. */
+export async function addVariantToCart(formData: FormData) {
+  const variant = await orderableVariant(text(formData, "sku"));
+  const quantity = Number(text(formData, "quantity"));
+  if (variant && Number.isFinite(quantity) && quantity > 0) {
+    await cookieCart.add(variant.sku, roundToBundle(quantity, variant.unitsPerBundle));
+  }
+  redirect(shopPath("/handlekurv"));
+}
+
+export type VariantFormState = { ok: false; message: string; fields?: Record<string, string> } | null;
+
+const MM = { min: 30, max: 2000 };
+
+/**
+ * Lager en forespørsel på en variant av en skreddersydd ordrelinje.
+ * Originalen hentes fra ordren på serveren, så diffen alltid er mot det kunden faktisk kjøpte.
+ */
+export async function createVariantRequest(
+  _prev: VariantFormState,
+  formData: FormData,
+): Promise<VariantFormState> {
+  const session = await getSession();
+  if (!session) return { ok: false, message: t.errorLoginRequired };
+  const order = await shop().orders.getOrder(session.customer.id, text(formData, "orderNumber"));
+  const line = order?.lines.find((l) => l.id === text(formData, "lineId"));
+  if (!order || !line?.customSpec) return { ok: false, message: t.errorGeneric };
+
+  const fields: Record<string, string> = {};
+  const mm = (key: string) => {
+    const n = Math.round(Number(text(formData, key)));
+    if (!Number.isFinite(n) || n < MM.min || n > MM.max) fields[key] = t.errorMm(MM.min, MM.max);
+    return n;
+  };
+  const length = mm("length");
+  const width = mm("width");
+  const height = mm("height");
+  const quantity = Math.round(Number(text(formData, "quantity")));
+  if (!Number.isFinite(quantity) || quantity < 100) fields.quantity = t.errorMinQuantity(100);
+  const colors = Math.max(0, Math.min(4, Math.round(Number(text(formData, "printColors")) || 0)));
+  if (Object.keys(fields).length) return { ok: false, message: t.errorFixFields, fields };
+
+  const spec: PackagingSpec = {
+    style: line.customSpec.style,
+    innerDimensionsMm: { length, width, height },
+    board: text(formData, "board") || line.customSpec.board,
+    color: text(formData, "color") || line.customSpec.color,
+    print:
+      colors > 0
+        ? { colors, description: text(formData, "printDescription").slice(0, 200) || "Trykk" }
+        : null,
+    notes: text(formData, "notes").slice(0, 300) || null,
+  };
+
+  const request = await shop().quotes.createRequest(session.customer.id, {
+    name: specName(line.name, spec),
+    spec,
+    quantity,
+    basedOn: { orderNumber: order.orderNumber, lineId: line.id },
+    note: text(formData, "note").slice(0, 500) || null,
+    requestedBy: session.user.name,
+  });
+  redirect(`${minSidePath("/foresporsler")}?ny=${encodeURIComponent(request.id)}`);
 }

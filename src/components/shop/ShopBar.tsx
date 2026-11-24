@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { logout } from "@/shop/actions";
 import { getCartCount } from "@/shop/cart-view";
 import { t } from "@/shop/dictionary";
-import { shopPath } from "@/shop/paths";
+import { minSidePath, shopPath } from "@/shop/paths";
 import { getSession } from "@/shop/session";
 
 const linkClass = "rounded-full px-3 py-1.5 font-semibold text-white hover:bg-white/10";
@@ -25,6 +25,13 @@ async function SessionStatus() {
           )}
         </Link>
       </li>
+      {session && (
+        <li>
+          <Link href={minSidePath()} className={linkClass}>
+            {t.minSide}
+          </Link>
+        </li>
+      )}
       {session ? (
         <li className="flex items-center gap-2 sm:ml-auto">
           <span className="text-sm text-white/80">

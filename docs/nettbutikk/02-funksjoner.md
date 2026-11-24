@@ -25,7 +25,7 @@ Alle ideene fra idémyldringen, med fase og prioritet. Fasene er beskrevet i [05
 | Gjenta ordre | Legger alle linjene i kurven med ett klikk. Kunden kan justere før bestilling | B |
 | Lag variant | Skjema med verdiene fra originalen ferdig utfylt. Varianten lagres med kobling til originalen og viser hva som er endret | B |
 | Mine emballasjer | Kundens egne skreddersydde løsninger med mål, trykkfil og siste pris | B |
-| Fakturaer | Liste over fakturaer med status (mock-PDF) | B |
+| Fakturaer | Liste over fakturaer med status | B |
 | Adresser og brukere | Kundens leveringsadresser og hvem i firmaet som kan bestille | B |
 | Avrop fra lager | Kunden har varer på lager hos STOK og henter ut etter behov | Senere |
 | Godkjenning av ordre | Ordre over et beløp må godkjennes av en annen bruker i firmaet | Senere |

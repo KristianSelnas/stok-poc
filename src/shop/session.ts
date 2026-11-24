@@ -1,9 +1,11 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import type { Customer, CustomerUser } from "./domain";
 import { shop } from "./index";
+import { loginPath } from "./paths";
 
 /**
  * Demoinnlogging. Cookien inneholder «kunde-ID:bruker-ID». Ekte innlogging
@@ -20,4 +22,11 @@ export async function getSession(): Promise<Session | null> {
   const customer = await shop().customers.getCustomer(customerId);
   const user = customer?.users.find((u) => u.id === userId) ?? customer?.users[0];
   return customer && user ? { customer, user } : null;
+}
+
+/** Sesjonen, eller videresending til innlogging med retur til `next`. */
+export async function requireSession(next: string): Promise<Session> {
+  const session = await getSession();
+  if (!session) redirect(loginPath(next));
+  return session;
 }

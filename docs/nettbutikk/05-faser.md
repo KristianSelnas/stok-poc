@@ -5,7 +5,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 | Fase | Innhold | Status |
 |---|---|---|
 | A | Tjenestelag, mockdata og klassisk butikk | Ferdig |
-| B | Min side: ordrehistorikk, gjenta ordre og lag variant | Skissert |
+| B | Min side: ordrehistorikk, gjenta ordre og lag variant | Ferdig |
 | C | Konfigurator for skreddersydd kasse med pris og forhåndsvisning | Skissert |
 | D | AI: emballasjeveileder, fritekst til spesifikasjon og variant med naturlig språk | Skissert |
 | E | Utvidelser: bilde til emballasje, smart søk, bærekraft og prognose | Skissert |
@@ -81,10 +81,26 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ## Fase B: Min side
 
-- Ordrehistorikk og ordredetaljer
-- Gjenta ordre: legger linjene i kurven, med varsel hvis en variant er utgått eller prisen er endret
-- Lag variant: skjema med originalverdiene ferdig utfylt. Varianten lagres som original pluss endringer, så fase D kan lage den samme diffen
-- Mine emballasjer, fakturaer, adresser og brukere
+**Leveranse:** Kunden ser ordrehistorikken, gjentar en ordre og lager en variant av en skreddersydd eske. Del 2 av demomanuset fungerer.
+
+- [x] Oversikt med siste ordre, ubetalte fakturaer, emballasjer og forespørsler
+- [x] Ordrehistorikk og ordredetaljer, med gjenkjøp og varianter merket
+- [x] Gjenta ordre: legger katalogvarene i kurven og viser hvilken ordre de kom fra. Ordredetaljene varsler hvis prisen er endret eller varen ikke kan bestilles lenger
+- [x] Lag variant av katalogvare: velg en annen variant av samme produkt og antall
+- [x] Lag variant av skreddersydd emballasje: skjema med originalverdiene, endringer og foreløpig pris fortløpende. Lagres som forespørsel med original og endringer
+- [x] `QuoteService` med mock i minnet, og siden Forespørsler
+- [x] Mine emballasjer, samlet fra ordrehistorikken, med «Lag variant» og «Bestill på nytt»
+- [x] Fakturaer (`OrderService.listInvoices`), og Firma og brukere med prisavtale og adresser
+- [x] Lenke til Min side i butikklinjen når kunden er logget inn
+- [x] Gå gjennom del 2 av demomanuset i nettleseren (Playwright, desktop og mobil)
+
+**Merknader fra fase B:**
+
+- Alle sider på Min side bruker query-parametere i stedet for dynamiske segmenter (`?ordre=10327`), av samme grunn som ordrebekreftelsen.
+- Nye forespørsler ligger i minnet som nye ordre, og nullstilles med knappen på innloggingssiden.
+- Skreddersydde linjer legges ikke i kurven ved gjenkjøp. «Bestill på nytt» åpner variantskjemaet uten endringer, så kunden sender en forespørsel på samme emballasje.
+- Havbris' «Kartong laks 25 kg» er et tilbudsprodukt med varenummer. Den vises på ordren med beskjed om å bestille via «Be om tilbud», og regnes ikke som en av Mine emballasjer.
+- Fakturaer, adresser og brukere kan bare leses. Endringer gjøres av kundeservice i demoen.
 
 ## Fase C: Konfigurator
 

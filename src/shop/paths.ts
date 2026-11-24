@@ -23,3 +23,17 @@ export function catalogPath(params: CatalogParams = {}): string {
   const query = search.toString();
   return `${shopPath()}${query ? `?${query}` : ""}#produkter`;
 }
+
+/** Sti på Min side, f.eks. `minSidePath("/ordre")` gir `/no/min-side/ordre`. */
+export function minSidePath(path = ""): string {
+  return marketPath(SHOP_MARKET, `/min-side${path}`);
+}
+
+export const orderPath = (orderNumber: string) =>
+  `${minSidePath("/ordre")}?ordre=${encodeURIComponent(orderNumber)}`;
+
+export const variantPath = (orderNumber: string, lineId: string) =>
+  `${minSidePath("/variant")}?ordre=${encodeURIComponent(orderNumber)}&linje=${encodeURIComponent(lineId)}`;
+
+export const loginPath = (next?: string) =>
+  next ? `${shopPath("/logg-inn")}?neste=${encodeURIComponent(next)}` : shopPath("/logg-inn");

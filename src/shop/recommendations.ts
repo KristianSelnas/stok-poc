@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { Product, Variant } from "./domain";
+import type { PackagingSpec, Product, Variant } from "./domain";
 import { shop } from "./index";
 
 export type FrequentItem = {
@@ -49,4 +49,46 @@ export async function getFrequentItems(customerId: string, limit = 4): Promise<F
     if (items.length >= limit) break;
   }
   return items;
+}
+
+export type CustomPackaging = {
+  name: string;
+  spec: PackagingSpec;
+  lastUnitPrice: number;
+  lastQuantity: number;
+  lastOrderedAt: string;
+  timesOrdered: number;
+  /** Siste ordrelinje, brukt som original for «Lag variant» og «Bestill på nytt». */
+  lastOrderNumber: string;
+  lastLineId: string;
+};
+
+/** Kundens skreddersydde emballasjer, samlet fra ordrehistorikken. Nyeste først. */
+export async function getCustomPackagings(customerId: string): Promise<CustomPackaging[]> {
+  const { orders } = shop();
+  const summaries = await orders.listOrders(customerId);
+  const full = await Promise.all(summaries.map((s) => orders.getOrder(customerId, s.orderNumber)));
+  const byName = new Map<string, CustomPackaging>();
+  for (const order of full) {
+    if (!order) continue;
+    for (const line of order.lines) {
+      if (!line.customSpec) continue;
+      const existing = byName.get(line.name);
+      if (existing) {
+        existing.timesOrdered += 1;
+        continue;
+      }
+      byName.set(line.name, {
+        name: line.name,
+        spec: line.customSpec,
+        lastUnitPrice: line.unitPrice,
+        lastQuantity: line.quantity,
+        lastOrderedAt: order.createdAt,
+        timesOrdered: 1,
+        lastOrderNumber: order.orderNumber,
+        lastLineId: line.id,
+      });
+    }
+  }
+  return [...byName.values()];
 }

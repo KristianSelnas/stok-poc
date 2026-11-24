@@ -213,6 +213,63 @@ export type PlaceOrderInput = {
 };
 
 // ---------------------------------------------------------------------------
+// Faktura (ERP)
+// ---------------------------------------------------------------------------
+
+export type InvoiceStatus = "paid" | "open" | "overdue";
+
+export type Invoice = {
+  invoiceNumber: string;
+  orderNumber: string;
+  issuedAt: string;
+  dueAt: string;
+  /** Beløp inkl. mva. */
+  amount: number;
+  status: InvoiceStatus;
+};
+
+// ---------------------------------------------------------------------------
+// Forespørsler på skreddersydd emballasje (CRM)
+// ---------------------------------------------------------------------------
+
+/** Én endring mellom originalen og varianten, f.eks. høyde fra 150 til 200 mm. */
+export type SpecChange = { field: string; label: string; from: string; to: string };
+
+export type QuoteRequestStatus = "submitted" | "inReview" | "quoted";
+
+/**
+ * Forespørsel på en skreddersydd emballasje. En variant lagres som originalen
+ * (`original`) pluss endringene (`changes`), så samme diff kan vises både når
+ * kunden fyller ut skjemaet (fase B) og når AI-en lager varianten (fase D).
+ */
+export type QuoteRequest = {
+  id: string;
+  customerId: string;
+  createdAt: string;
+  status: QuoteRequestStatus;
+  requestedBy: string;
+  name: string;
+  spec: PackagingSpec;
+  quantity: number;
+  /** Ordrelinjen varianten er laget fra. Mangler for nye forespørsler (fase C). */
+  basedOn: { orderNumber: string; lineId: string } | null;
+  original: { spec: PackagingSpec; quantity: number; unitPrice: number } | null;
+  changes: SpecChange[];
+  /** Foreløpig pris per stk. eks. mva. Selger bekrefter i tilbudet. */
+  estimatedUnitPrice: number | null;
+  note: string | null;
+};
+
+export type QuoteRequestInput = {
+  name: string;
+  spec: PackagingSpec;
+  quantity: number;
+  basedOn: QuoteRequest["basedOn"];
+  note: string | null;
+  requestedBy: string;
+};
+
+// ---------------------------------------------------------------------------
 // Handlekurv (BFF)
 // ---------------------------------------------------------------------------
 

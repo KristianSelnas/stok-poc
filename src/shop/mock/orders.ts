@@ -1,8 +1,10 @@
 import "server-only";
 
-import type { Order, OrderLine, OrderSummary } from "../domain";
+import type { Invoice, Order, OrderLine, OrderSummary } from "../domain";
 import { OrderError, type OrderService } from "../services";
 import { customersData, latency, ordersData } from "./data";
+
+const DAY = 86_400_000;
 import { mockCatalog } from "./catalog";
 import { mockPricing } from "./pricing";
 import { calculateTotals, roundToBundle, unitPriceFor } from "./rules";
@@ -13,7 +15,7 @@ import { calculateTotals, roundToBundle, unitPriceFor } from "./rules";
  * plattformen starter en ny instans (beslutning N8).
  */
 const store = globalThis as typeof globalThis & { __stokDemoOrders?: Order[] };
-const placedOrders = () => (store.__stokDemoOrders ??= []);
+export const placedOrders = () => (store.__stokDemoOrders ??= []);
 
 /** Sletter ordrene som er lagt inn i demoen. */
 export function resetMockOrders() {
@@ -44,7 +46,35 @@ function summarize(order: Order): OrderSummary {
   };
 }
 
+/**
+ * Fakturaer lages av sendte og leverte ordre: fakturadato to dager etter
+ * ordren og forfall etter kundens betalingsfrist. Fakturaer som har forfalt
+ * for mer enn ti dager siden, regnes som betalt.
+ */
+function invoiceFor(order: Order, paymentTermsDays: number, now: number): Invoice | null {
+  if (!["shipped", "delivered"].includes(order.status)) return null;
+  const issued = new Date(order.createdAt).getTime() + 2 * DAY;
+  const due = issued + paymentTermsDays * DAY;
+  const status = now > due + 10 * DAY ? "paid" : now > due ? "overdue" : "open";
+  return {
+    invoiceNumber: `F${order.orderNumber}`,
+    orderNumber: order.orderNumber,
+    issuedAt: new Date(issued).toISOString(),
+    dueAt: new Date(due).toISOString(),
+    amount: order.totals.gross,
+    status,
+  };
+}
+
 export const mockOrders: OrderService = {
+  async listInvoices(customerId) {
+    await latency();
+    const customer = customersData.find((c) => c.id === customerId);
+    if (!customer) return [];
+    const now = Date.now();
+    return allOrders(customerId).flatMap((o) => invoiceFor(o, customer.paymentTermsDays, now) ?? []);
+  },
+
   async listOrders(customerId) {
     await latency();
     return allOrders(customerId).map(summarize);

@@ -6,6 +6,7 @@ import { mockCustomers } from "./customers";
 import { mockInventory } from "./inventory";
 import { mockOrders, resetMockOrders } from "./orders";
 import { mockPricing } from "./pricing";
+import { mockQuotes, resetMockQuotes } from "./quotes";
 
 export const mockServices: ShopServices = {
   catalog: mockCatalog,
@@ -13,9 +14,11 @@ export const mockServices: ShopServices = {
   pricing: mockPricing,
   customers: mockCustomers,
   orders: mockOrders,
+  quotes: mockQuotes,
 };
 
-/** Nullstiller demoen: sletter ordre som er lagt inn siden oppstart. */
+/** Nullstiller demoen: sletter ordre og forespørsler som er lagt inn siden oppstart. */
 export function resetMockData() {
   resetMockOrders();
+  resetMockQuotes();
 }

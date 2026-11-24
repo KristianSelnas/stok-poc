@@ -10,6 +10,8 @@ import type { CartService } from "./services";
  * Den overlever derfor omstart av serveren. Endringer må skje i server actions.
  */
 const CART_COOKIE = "stok-handlekurv";
+/** Ordren kurven er fylt fra ved «Gjenta ordre». Følger med på ny ordre som `basedOn`. */
+const ORIGIN_COOKIE = "stok-handlekurv-gjenkjop";
 const MAX_LINES = 50;
 
 function parse(value: string | undefined): Cart {
@@ -61,5 +63,20 @@ export const cookieCart: CartService = {
   },
   async clear() {
     await write({ lines: [] });
+    (await cookies()).delete(ORIGIN_COOKIE);
   },
 };
+
+export async function getCartOrigin(): Promise<string | null> {
+  return (await cookies()).get(ORIGIN_COOKIE)?.value ?? null;
+}
+
+export async function setCartOrigin(orderNumber: string) {
+  (await cookies()).set(ORIGIN_COOKIE, orderNumber, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 24,
+  });
+}

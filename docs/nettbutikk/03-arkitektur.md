@@ -31,8 +31,8 @@ Sidene og server actions kaller aldri mockene direkte. De henter tjenestene fra 
 | `InventoryService` | ERP | Lagerstatus og leveringstid per variant |
 | `PricingService` | ERP | Listepris, avtalepris per kunde og mengderabatt |
 | `CustomerService` | CRM | Firma, brukere, leveringsadresser og prisavtale |
-| `OrderService` | ERP | Ordre, ordrelinjer, status og fakturaer |
-| `QuoteService` | CRM | Forespørsler på skreddersydde løsninger og varianter |
+| `OrderService` | ERP | Ordre, ordrelinjer, status og fakturaer (`listInvoices`) |
+| `QuoteService` | CRM | Forespørsler på skreddersydde løsninger og varianter. Tatt i bruk i fase B |
 | `CartService` | BFF | Handlekurven. Ligger i BFF-en, også når de andre tjenestene er ekte |
 | `AssistantService` | LLMProxy | AI-funksjonene, se [04-ai.md](04-ai.md) |
 
@@ -130,16 +130,31 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 | `/no/butikk/kasse` | Leveringsadresse, innkjøpsnummer, leveringsdato | A |
 | `/no/butikk/bekreftelse?ordre=…` | Ordrebekreftelse | A |
 | `/no/butikk/logg-inn` | Velger med demokunder | A |
-| `/no/min-side` | Oversikt | B |
-| `/no/min-side/ordre`, `/no/min-side/ordre/[ordrenummer]` | Ordrehistorikk og ordredetaljer, med «Gjenta» og «Lag variant» | B |
+| `/no/min-side` | Oversikt: siste ordre, ubetalte fakturaer, emballasjer og forespørsler | B |
+| `/no/min-side/ordre` | Ordrehistorikk | B |
+| `/no/min-side/ordre?ordre=…` | Ordredetaljer med «Gjenta ordren», «Lag variant» og «Bestill på nytt» | B |
+| `/no/min-side/variant?ordre=…&linje=…` | Variant av en ordrelinje: annen variant av katalogvaren, eller endret spesifikasjon på skreddersydd emballasje | B |
+| `/no/min-side/foresporsler` | Forespørsler med endringer mot originalen | B |
 | `/no/min-side/emballasjer` | Mine emballasjer | B |
+| `/no/min-side/fakturaer` | Fakturaer | B |
+| `/no/min-side/firma` | Prisavtale, adresser og brukere | B |
 | `/no/butikk/konfigurator` | Konfigurator for skreddersydd kasse | C |
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
 
 Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er lenker med parametere i adressen, så de kan deles og fungerer uten JavaScript. Som standard vises bare varer som kan bestilles direkte. `vis=alle` tar med varer som krever tilbud.
 
-Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side (fase B) må løse det samme, enten med query-parameter eller med `generateStaticParams` og Suspense rundt menyen.
+Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
+
+## Varianter
+
+En variant lagres som originalen pluss endringene (`QuoteRequest.original` og `QuoteRequest.changes`). `diffSpec` i `src/shop/specs.ts` lager endringslisten, og samme funksjon brukes i skjemaet (forhåndsvisning i nettleseren) og på serveren når forespørselen lagres. Serveren henter originalen fra ordren selv, så diffen er alltid mot det kunden faktisk kjøpte. AI-en i fase D skal levere en `PackagingSpec` og bruke den samme funksjonen.
+
+Foreløpig pris på en variant regnes ut i `estimateVariantUnitPrice` i `src/shop/mock/rules.ts`. Utgangspunktet er prisen på originalen, justert for areal, kvalitet, antall trykkfarger og antall.
+
+«Gjenta ordren» legger katalogvarene i kurven og husker ordrenummeret i en cookie. Den nye ordren får `basedOn: { kind: "reorder" }`. Skreddersydde linjer legges ikke i kurven. De bestilles på nytt via variantskjemaet, eventuelt uten endringer.
+
+Fakturaer lages av mocken fra sendte og leverte ordre, med kundens betalingsfrist.
 
 ## Innlogging i demoen
 
@@ -171,7 +186,7 @@ Faste UI-tekster i butikken legges i en egen ordbok, `src/shop/dictionary.ts`, m
 src/
 ├── app/(site)/[market]/
 │   ├── butikk/                Butikksidene
-│   └── min-side/              Min side (fase B)
+│   └── min-side/              Min side
 ├── components/shop/           Komponenter for butikken
 └── shop/
     ├── domain.ts              Domenetyper
@@ -184,7 +199,9 @@ src/
     ├── session.ts             getSession() for demoinnlogging
     ├── cart.ts                Handlekurven i cookie (CartService)
     ├── cart-view.ts           Kurven med produkt, pris og lager per linje
-    ├── actions.ts             Server actions: innlogging, kurv og bestilling
+    ├── actions.ts             Server actions: innlogging, kurv, bestilling, gjenkjøp og varianter
+    ├── specs.ts               Spesifikasjoner: diff, navn og visning
+    ├── recommendations.ts     «Kjøp igjen» og Mine emballasjer, ut fra ordrehistorikken
     ├── paths.ts               shopPath() og productPath()
     ├── format.ts              Kroner, tall og datoer
     └── dictionary.ts          UI-tekster
