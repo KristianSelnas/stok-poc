@@ -9,22 +9,50 @@ import { getSession } from "@/shop/session";
 
 const linkClass = "rounded-full px-3 py-1.5 font-semibold text-white hover:bg-white/10";
 
+function CartIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+    >
+      <path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2" />
+      <circle cx="9.5" cy="19.5" r="1.25" />
+      <circle cx="17" cy="19.5" r="1.25" />
+    </svg>
+  );
+}
+
+/** Handlekurven ligger først i høyre del av menyen, med antall varer når kurven ikke er tom. */
+function CartLink({ count }: { count: number | null }) {
+  return (
+    <li className="sm:ml-auto">
+      <Link href={shopPath("/handlekurv")} className={`${linkClass} flex items-center gap-2`}>
+        <CartIcon />
+        {t.cart}
+        {count ? (
+          <>
+            <span
+              aria-hidden="true"
+              className="flex h-5 min-w-5 items-center justify-center rounded-full bg-stok-green px-1.5 text-xs font-bold text-stok-blue"
+            >
+              {count}
+            </span>
+            <span className="sr-only">, {t.itemCount(count)}</span>
+          </>
+        ) : null}
+      </Link>
+    </li>
+  );
+}
+
 async function SessionStatus() {
   const [session, count] = await Promise.all([getSession(), getCartCount()]);
   return (
     <>
-      <li>
-        <Link href={shopPath("/handlekurv")} className={linkClass}>
-          {t.cart}
-          {count > 0 && (
-            <span className="ml-1.5 rounded-full bg-stok-green px-2 py-0.5 text-xs font-bold text-stok-blue">
-              <span className="sr-only">(</span>
-              {count}
-              <span className="sr-only"> varer)</span>
-            </span>
-          )}
-        </Link>
-      </li>
       {session && (
         <li>
           <Link href={minSidePath()} className={linkClass}>
@@ -32,8 +60,9 @@ async function SessionStatus() {
           </Link>
         </li>
       )}
+      <CartLink count={count} />
       {session ? (
-        <li className="flex items-center gap-2 sm:ml-auto">
+        <li className="flex items-center gap-2">
           <span className="text-sm text-white/80">
             <span className="sr-only">{t.loggedInAs} </span>
             {session.user.name}, <span className="font-semibold text-white">{session.customer.name}</span>
@@ -45,7 +74,7 @@ async function SessionStatus() {
           </form>
         </li>
       ) : (
-        <li className="sm:ml-auto">
+        <li>
           <Link
             href={shopPath("/logg-inn")}
             className={`${linkClass} bg-stok-green text-stok-blue hover:bg-white`}
@@ -73,15 +102,7 @@ export function ShopBar() {
             {t.configurator}
           </Link>
         </li>
-        <Suspense
-          fallback={
-            <li>
-              <Link href={shopPath("/handlekurv")} className={linkClass}>
-                {t.cart}
-              </Link>
-            </li>
-          }
-        >
+        <Suspense fallback={<CartLink count={null} />}>
           <SessionStatus />
         </Suspense>
       </ul>

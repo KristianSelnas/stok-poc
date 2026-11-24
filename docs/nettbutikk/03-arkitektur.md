@@ -141,7 +141,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 | `/no/min-side/firma` | Prisavtale, adresser og brukere | B |
 | `/no/butikk/konfigurator?type=…&l=…&b=…&h=…` | Konfigurator for skreddersydd eske, se [Konfiguratoren](#konfiguratoren) | C |
 
-Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
+Butikken bruker samme layout, header og bunntekst som nettsiden. Når markedet er `no`, får headeren en lenke til forsiden av nettbutikken. Handlekurven, med antall varer, nås fra butikkmenyen under headeren.
 
 Katalogen er slått sammen med butikkens forside. Med 100 produkter gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale (`CatalogFilters`). Listen oppdateres når et valg endres, uten å hoppe til toppen, og «Nullstill» fjerner filtrene. Valgene ligger i adressen, så de kan deles. Uten JavaScript sender skjemaet valgene med knappen «Vis». Alle produkter vises, også de som krever tilbud, gruppert etter type som på bewifood.com.
 
@@ -204,7 +204,7 @@ Sider som avhenger av innlogget kunde, rendres dynamisk. Katalogdata kan fortsat
 | Data | Lagring |
 |---|---|
 | Katalog, priser, kunder og tidligere ordre | JSON-filer i `src/shop/mock/data/`, sjekket inn |
-| Handlekurv | Cookie, per nettleser |
+| Handlekurv | Cookie per bruker i nettleseren, pluss en gjestekurv som flettes inn ved innlogging |
 | Nye ordre og forespørsler | I minnet i mock-ordretjenesten |
 
 Mock-ordretjenesten slår sammen ordrene fra JSON med ordrene som er lagt inn i demoen. Nye ordre ligger på `globalThis`, så de også overlever hot reload under utvikling.

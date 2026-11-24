@@ -23,7 +23,7 @@ export const t = {
   catalogFilters: "Filtrer produkter",
   matching: (query: string) => ` som passer «${query}»`,
   cart: "Handlekurv",
-  cartWithCount: (count: number) => (count === 1 ? "Handlekurv, 1 vare" : `Handlekurv, ${count} varer`),
+  itemCount: (count: number) => (count === 1 ? "1 vare" : `${count} varer`),
   checkout: "Til kassen",
   login: "Logg inn",
   logout: "Logg ut",

@@ -43,7 +43,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 - [x] `/no/butikk/logg-inn` med velger for demokundene, og utlogging
 - [x] `getSession()` som leser kunden fra cookie
 - [x] Handlekurv i cookie med server actions: legg til, endre antall, fjern
-- [x] Kurvikon med antall i headeren
+- [x] Handlekurv med antall varer i butikkmenyen
 
 ### A5. Butikksider
 

@@ -41,16 +41,16 @@ async function Packagings() {
               <div className="mt-auto flex flex-wrap gap-3 pt-5">
                 <Link
                   href={variantPath(p.lastOrderNumber, p.lastLineId)}
-                  aria-label={t.makeVariantFor(p.name)}
                   className={buttonClasses("primary", "px-5 py-2")}
                 >
-                  {t.makeVariant}
+                  {t.orderAgain}
                 </Link>
                 <Link
                   href={variantPath(p.lastOrderNumber, p.lastLineId)}
+                  aria-label={t.makeVariantFor(p.name)}
                   className={buttonClasses("outline", "px-5 py-2")}
                 >
-                  {t.orderAgain}
+                  {t.makeVariant}
                 </Link>
               </div>
             </li>

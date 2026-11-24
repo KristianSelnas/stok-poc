@@ -2,7 +2,7 @@ import type { Cart } from "../domain";
 
 /**
  * Handlekurven. Den ligger i BFF-en, også når de andre tjenestene er ekte.
- * Implementasjonen i `src/shop/cart.ts` lagrer kurven i en cookie.
+ * Implementasjonen i `src/shop/cart.ts` lagrer kurven i en cookie per bruker.
  */
 export interface CartService {
   getCart(): Promise<Cart>;
