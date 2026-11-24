@@ -206,9 +206,16 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ### D4. Variant med naturlig språk
 
-- [ ] Variantsiden leser endringer fra adressen, og skjemaet starter med dem
-- [ ] «Beskriv endringen» på ordresiden for skreddersydde linjer
-- [ ] `proposeVariant` i chatpanelet viser endringene som en tabell med «Se over og send»
+- [x] Variantsiden leser endringer fra adressen, og skjemaet starter med dem
+- [x] «Beskriv endringen» på ordresiden for skreddersydde linjer
+- [x] `proposeVariant` i chatpanelet viser endringene som en tabell med «Se over og send»
+
+**Merknader fra D4:**
+
+- Endringene ligger i adressen med samme feltnavn som i konfiguratoren (`/no/min-side/variant?ordre=10329&linje=l3&h=200&antall=500`). `parseVariantSuggestion` i `src/shop/specs.ts` hopper over ukjente valg og ugyldige tall, og `createVariantRequest` sjekker alt på nytt når forespørselen sendes.
+- «Beskriv endringen» ligger sammenfoldet under hver skreddersydde linje på ordresiden. Forslaget åpner variantskjemaet med en melding om at endringene kommer fra emballasjeveilederen.
+- Testet med Lunde Bakeri: «20 cm dype og 500 stk.» på ordre 10329 ga høyde 150 → 200 mm og antall 800 → 500, til 13,80 kr per stk. Forespørselen ble sendt som T-2401.
+- Et tomt merknadsfelt kan ikke uttrykkes i adressen. Merknaden kan fjernes i skjemaet.
 
 ### D5. Brief til selger
 

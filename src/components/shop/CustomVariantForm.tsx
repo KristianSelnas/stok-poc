@@ -7,7 +7,7 @@ import { t } from "@/shop/dictionary";
 import type { PackagingSpec } from "@/shop/domain";
 import { formatNok } from "@/shop/format";
 import { estimateVariantUnitPrice } from "@/shop/mock/rules";
-import { boardOptions, colorOptions, diffSpec, specName } from "@/shop/specs";
+import { boardOptions, colorOptions, diffSpec, specName, type VariantFormValues } from "@/shop/specs";
 
 import { buttonClasses } from "../ui/Button";
 import { ChangesTable } from "./SpecSummary";
@@ -27,14 +27,17 @@ export function CustomVariantForm({
   original,
   orderNumber,
   lineId,
+  suggested,
 }: {
   original: Original;
   orderNumber: string;
   lineId: string;
+  /** Endringer fra emballasjeveilederen (fase D4). Overstyrer originalverdiene. */
+  suggested?: Partial<VariantFormValues>;
 }) {
   const [state, formAction, pending] = useActionState(createVariantRequest, null);
   const o = original.spec;
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<VariantFormValues>(() => ({
     length: String(o.innerDimensionsMm.length),
     width: String(o.innerDimensionsMm.width),
     height: String(o.innerDimensionsMm.height),
@@ -44,7 +47,8 @@ export function CustomVariantForm({
     printDescription: o.print?.description ?? "",
     notes: o.notes ?? "",
     quantity: String(original.quantity),
-  });
+    ...suggested,
+  }));
   const set = (key: keyof typeof values) => (e: { target: { value: string } }) =>
     setValues((v) => ({ ...v, [key]: e.target.value }));
   const error = (key: string) => (state && !state.ok ? state.fields?.[key] : undefined);

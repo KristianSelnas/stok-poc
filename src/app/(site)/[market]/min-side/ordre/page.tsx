@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
+import { DescribeVariant } from "@/components/shop/assistant/DescribeVariant";
 import { CartSummary } from "@/components/shop/CartSummary";
 import { MinSideSkeleton } from "@/components/shop/PageSkeleton";
 import { SpecSummary } from "@/components/shop/SpecSummary";
@@ -175,9 +176,16 @@ async function OrderDetail({ session, orderNumber }: { session: Session; orderNu
                       {formatNumber(line.quantity)} stk. × {formatNok(line.unitPrice)}
                     </p>
                     {line.customSpec && (
-                      <div className="mt-3">
-                        <SpecSummary spec={line.customSpec} />
-                      </div>
+                      <>
+                        <div className="mt-3">
+                          <SpecSummary spec={line.customSpec} />
+                        </div>
+                        <DescribeVariant
+                          orderNumber={order.orderNumber}
+                          lineId={line.id}
+                          lineName={line.name}
+                        />
+                      </>
                     )}
                     {current?.quoteOnly && <p className="mt-2 text-sm">{t.quoteOnlyLine}</p>}
                     {current && !current.orderable && !current.quoteOnly && (

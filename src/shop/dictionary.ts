@@ -200,6 +200,7 @@ export const t = {
   // Variant
   variantTitle: "Lag variant",
   variantLead: "Endre det som skal være annerledes. Resten er som i originalen.",
+  variantSuggested: "Endringene fra emballasjeveilederen er fylt ut. Se over og send forespørselen.",
   variantCatalogLead: "Velg en annen variant av produktet, eller endre antallet.",
   original: "Original",
   newVariant: "Ny variant",
@@ -380,6 +381,15 @@ export const t = {
   describeUndone: "Skjemaet har verdiene fra før.",
   describeNoSpec:
     "Jeg fikk ikke laget en spesifikasjon av beskrivelsen. Prøv å skrive mer om varen, mål eller antall.",
+
+  // Variant med naturlig språk (fase D4)
+  describeChangeLabel: (name: string) => `Beskriv endringen av ${name}`,
+  describeChangeSummary: "Beskriv endringen",
+  describeChangePlaceholder: "F.eks. «20 cm dyp og 500 stk.»",
+  describeChangeButton: "Lag variant",
+  describeChangeWorking: "Lager varianten …",
+  describeChangeNoVariant:
+    "Jeg fikk ikke laget en variant av beskrivelsen. Skriv hva som skal endres, f.eks. mål eller antall.",
 
   // Feil
   errorNotOrderable: "Denne varen kan ikke bestilles i nettbutikken.",

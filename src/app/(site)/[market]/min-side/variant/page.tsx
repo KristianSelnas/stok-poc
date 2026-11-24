@@ -14,6 +14,7 @@ import { formatNok, formatNumber } from "@/shop/format";
 import { shop } from "@/shop/index";
 import { minSidePath, orderPath, variantPath } from "@/shop/paths";
 import { requireSession, type Session } from "@/shop/session";
+import { parseVariantSuggestion, type VariantFormValues } from "@/shop/specs";
 
 export const metadata: Metadata = { title: "Lag variant" };
 
@@ -97,13 +98,21 @@ async function CatalogVariant({ session, line }: { session: Session; line: Order
 function CustomVariant({
   order,
   line,
+  suggested,
 }: {
   order: Order;
   line: OrderLine & { customSpec: NonNullable<OrderLine["customSpec"]> };
+  suggested: Partial<VariantFormValues>;
 }) {
+  const hasSuggestion = Object.keys(suggested).length > 0;
   return (
     <>
       <p className="mb-6 max-w-3xl">{t.variantLead}</p>
+      {hasSuggestion && (
+        <p className="mb-6 max-w-3xl rounded-2xl bg-stok-green/15 px-5 py-3 font-semibold text-stok-blue ring-1 ring-stok-green/40">
+          {t.variantSuggested}
+        </p>
+      )}
       <details className="mb-6 max-w-3xl rounded-3xl bg-white p-5 ring-1 ring-stok-blue/10">
         <summary className="cursor-pointer font-semibold text-stok-blue">
           {t.original}: {line.name}, {formatNumber(line.quantity)} stk. à {formatNok(line.unitPrice)}
@@ -121,6 +130,8 @@ function CustomVariant({
         }}
         orderNumber={order.orderNumber}
         lineId={line.id}
+        suggested={suggested}
+        key={JSON.stringify(suggested)}
       />
     </>
   );
@@ -145,7 +156,14 @@ async function VariantContent({ searchParams }: { searchParams: Props["searchPar
       <h1 className="mt-4 mb-2 text-4xl">{t.variantTitle}</h1>
       <p className="mb-4 text-lg text-stok-blue">{line.name}</p>
       {line.customSpec ? (
-        <CustomVariant order={order} line={{ ...line, customSpec: line.customSpec }} />
+        <CustomVariant
+          order={order}
+          line={{ ...line, customSpec: line.customSpec }}
+          suggested={parseVariantSuggestion((key) => {
+            const value = params[key];
+            return typeof value === "string" ? value : null;
+          })}
+        />
       ) : (
         <CatalogVariant session={session} line={line} />
       )}
@@ -153,7 +171,10 @@ async function VariantContent({ searchParams }: { searchParams: Props["searchPar
   );
 }
 
-/** Variant av en ordrelinje: `?ordre=10329&linje=l3`. */
+/**
+ * Variant av en ordrelinje: `?ordre=10329&linje=l3`. Endringer fra
+ * emballasjeveilederen kan ligge i adressen, f.eks. `&h=200&antall=500`.
+ */
 export default function VariantPage({ searchParams }: Props) {
   return (
     <Suspense fallback={<MinSideSkeleton />}>
