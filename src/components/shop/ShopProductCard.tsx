@@ -12,11 +12,15 @@ export function ShopProductCard({
   product,
   typeTitle,
   fromPrice,
+  headingLevel = "h3",
 }: {
   product: ProductSummary;
   typeTitle?: string;
   fromPrice?: number | null;
+  /** `h4` når kortene står under en overskrift på nivå 3, f.eks. i katalogen gruppert etter type. */
+  headingLevel?: "h3" | "h4";
 }) {
+  const Heading = headingLevel;
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stok-blue/10 transition-shadow hover:shadow-lg">
       <ProductImageBox
@@ -30,11 +34,11 @@ export function ShopProductCard({
             {typeTitle}
           </p>
         )}
-        <h3 className="mt-1 text-lg">
+        <Heading className="mt-1 text-lg">
           <Link href={productPath(product.slug)} className="after:absolute after:inset-0">
             {product.name}
           </Link>
-        </h3>
+        </Heading>
         {product.shortDescription && <p className="mt-2 line-clamp-2 text-sm">{product.shortDescription}</p>}
         <div className="mt-auto flex items-end justify-between gap-3 pt-4 text-sm">
           <span className="text-stok-text">

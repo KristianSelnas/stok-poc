@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { BoxPreview } from "@/components/shop/BoxPreview";
+import { CatalogFilters } from "@/components/shop/CatalogFilters";
 import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { ShopProductCard } from "@/components/shop/ShopProductCard";
 import { buttonClasses } from "@/components/ui/Button";
@@ -11,7 +12,7 @@ import { quickAddToCart } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import { formatNok, formatNumber, formatShopDate } from "@/shop/format";
 import { shop } from "@/shop/index";
-import { catalogPath, configuratorPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
+import { configuratorPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
 import { getShopTaxonomy, listShopProducts } from "@/shop/queries";
 import { getFrequentItems } from "@/shop/recommendations";
 import { getSession } from "@/shop/session";
@@ -212,8 +213,10 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
     getSession(),
   ]);
 
-  const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
-  const hasFilters = !!(params.q || params.type || params.gruppe || params.materiale);
+  // Produktene grupperes etter type, som på bewifood.com.
+  const sections = types
+    .map((type) => ({ type, items: products.filter((p) => p.type === type.slug) }))
+    .filter((section) => section.items.length > 0);
 
   const prices = await shop().pricing.getPrices(
     products.flatMap((p) => p.skus),
@@ -226,81 +229,33 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
-        <form action={`${shopPath()}#produkter`} className="flex flex-wrap items-end gap-2">
-          {params.q && <input type="hidden" name="q" value={params.q} />}
-          <div>
-            <label htmlFor="type" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-              {t.filterType}
-            </label>
-            <select id="type" name="type" defaultValue={params.type ?? ""} className={fieldClass}>
-              <option value="">{t.allTypes}</option>
-              {types.map((type) => (
-                <option key={type.slug} value={type.slug}>
-                  {type.title}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="gruppe" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-              {t.filterGroup}
-            </label>
-            <select id="gruppe" name="gruppe" defaultValue={params.gruppe ?? ""} className={fieldClass}>
-              <option value="">{t.allGroups}</option>
-              {groups.map((group) => (
-                <option key={group.slug} value={group.slug}>
-                  {group.title}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="materiale" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-              {t.filterMaterial}
-            </label>
-            <select
-              id="materiale"
-              name="materiale"
-              defaultValue={params.materiale ?? ""}
-              className={fieldClass}
-            >
-              <option value="">{t.allMaterials}</option>
-              {materials.map((material) => (
-                <option key={material.slug} value={material.slug}>
-                  {material.title}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button type="submit" className={buttonClasses("outline", "px-5 py-2")}>
-            {t.showResults}
-          </button>
-        </form>
-
-        {hasFilters && (
-          <Link href={catalogPath()} scroll={false} className="pb-2 font-semibold text-stok-blue underline">
-            {t.resetFilters}
-          </Link>
-        )}
-      </div>
+      <CatalogFilters params={params} types={types} groups={groups} materials={materials} />
 
       <p role="status" className="mt-8 mb-4 font-meta text-sm font-medium text-stok-blue">
         {t.resultCount(products.length)}
         {params.q && t.matching(params.q)}
       </p>
-      {products.length ? (
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
-            <li key={product.slug}>
-              <ShopProductCard
-                product={product}
-                typeTitle={typeTitle.get(product.type)}
-                fromPrice={fromPrice(product.skus)}
-              />
-            </li>
+      {sections.length ? (
+        <div className="space-y-12">
+          {sections.map(({ type, items }) => (
+            <section key={type.slug} aria-labelledby={`type-${type.slug}`}>
+              <h3 id={`type-${type.slug}`} className="mb-5 text-2xl">
+                {type.title} <span className="font-body text-base font-normal">({items.length})</span>
+              </h3>
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {items.map((product) => (
+                  <li key={product.slug}>
+                    <ShopProductCard
+                      product={product}
+                      fromPrice={fromPrice(product.skus)}
+                      headingLevel="h4"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
-        </ul>
+        </div>
       ) : (
         <p className="rounded-3xl bg-white p-8 text-lg">{t.noResults}</p>
       )}
@@ -367,7 +322,7 @@ function ConfiguratorTeaser() {
 
 /**
  * Butikkens forside er også katalogen: søk, «Kjøp igjen» og alle produkter
- * med nedtrekkslister for type, produktgruppe og materiale. Filtrene ligger i
+ * med nedtrekkslister for type, produktgruppe og materiale, gruppert etter type. Filtrene ligger i
  * adressen (`?type=eske&gruppe=mat`).
  */
 export default function ShopHome({ searchParams }: Props) {

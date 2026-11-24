@@ -143,7 +143,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
 
-Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale i et vanlig skjema. Valgene havner i adressen, så de kan deles og fungerer uten JavaScript. Alle produkter vises, også de som krever tilbud.
+Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er nedtrekkslister for type, produktgruppe og materiale (`CatalogFilters`). Listen oppdateres når et valg endres, uten å hoppe til toppen, og «Nullstill» fjerner filtrene. Valgene ligger i adressen, så de kan deles. Uten JavaScript sender skjemaet valgene med knappen «Vis». Alle produkter vises, også de som krever tilbud, gruppert etter type som på bewifood.com.
 
 Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
 
