@@ -6,11 +6,9 @@ import { DocumentsIcon } from "@sanity/icons/Documents";
 import { EarthGlobeIcon } from "@sanity/icons/EarthGlobe";
 import { HomeIcon } from "@sanity/icons/Home";
 import { MenuIcon } from "@sanity/icons/Menu";
-import { PackageIcon } from "@sanity/icons/Package";
 import { PinIcon } from "@sanity/icons/Pin";
 import { StarFilledIcon } from "@sanity/icons/StarFilled";
 import { TagIcon } from "@sanity/icons/Tag";
-import { TagsIcon } from "@sanity/icons/Tags";
 import { UserIcon } from "@sanity/icons/User";
 import { UsersIcon } from "@sanity/icons/Users";
 import type { ListItemBuilder, StructureBuilder, StructureResolver } from "sanity/structure";
@@ -98,13 +96,6 @@ export const structure: StructureResolver = (S) =>
                   { field: "slug.current", direction: "asc" },
                 ]),
                 languageList(S, market, "industry", "Bransjer", CaseIcon),
-                group(S, market, "catalog", "Produktkatalog", PackageIcon, [
-                  languageList(S, market, "product", "Produkter", PackageIcon),
-                  languageList(S, market, "productGroup", "Produktgrupper", TagsIcon, [
-                    { field: "order", direction: "asc" },
-                  ]),
-                  languageList(S, market, "material", "Materialer", TagIcon),
-                ]),
                 group(S, market, "news", "Nyheter", BulbOutlineIcon, [
                   languageList(S, market, "newsArticle", "Artikler", BulbOutlineIcon, [
                     { field: "publishedAt", direction: "desc" },

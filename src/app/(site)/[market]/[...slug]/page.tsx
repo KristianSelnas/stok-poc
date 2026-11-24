@@ -8,36 +8,42 @@ import { NewsArticlePage } from "@/components/templates/NewsArticlePage";
 import { ProductPage } from "@/components/templates/ProductPage";
 import { PageSkeleton } from "@/components/ui/PageSkeleton";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { getIndustry, getNewsArticle, getPage, getProduct, getRoutes, getSiteSettings } from "@/lib/content";
+import { getIndustry, getNewsArticle, getPage, getRoutes, getSiteSettings } from "@/lib/content";
 import { isMarket, marketIds, marketPath, type MarketId } from "@/lib/markets";
 import { buildMetadata } from "@/lib/metadata";
+import { getSiteCatalog, getSiteProduct, type SiteProduct, toCards } from "@/lib/products";
 import { documentPath, resolveRoute, translationPaths } from "@/lib/routes";
 import { newsArticleJsonLd, productJsonLd } from "@/lib/structuredData";
-import type { Industry, NewsArticle, Page as PageDocument, Product } from "@/sanity/types";
+import type { Industry, NewsArticle, Page as PageDocument } from "@/sanity/types";
 import { productPath, SHOP_MARKET } from "@/shop/paths";
-import { getShopSlugs } from "@/shop/queries";
 
 /**
  * Alle undersider går gjennom denne ruten. `resolveRoute` finner
  * dokumenttypen ut fra adressen, f.eks. `/no/bransjer/fisk-og-sjomat`.
+ * Produktsidene (`/no/produkter/<slug>`) henter fra produktkatalogen, resten
+ * fra Sanity.
  */
 
 /** Bygger alle kjente adresser ved deploy. Nye dokumenter rendres ved første besøk. */
 export async function generateStaticParams() {
   const params = await Promise.all(
-    marketIds.map(async (market) =>
-      (await getRoutes(market)).flatMap((route) => {
-        const path = documentPath(route._type, route.slug, market);
+    marketIds.map(async (market) => {
+      const [routes, catalog] = await Promise.all([getRoutes(market), getSiteCatalog(market)]);
+      return [
+        ...routes.map((route) => ({ type: route._type as string, slug: route.slug })),
+        ...catalog.products.map((product) => ({ type: "product", slug: product.slug })),
+      ].flatMap((route) => {
+        const path = documentPath(route.type, route.slug, market);
         return path ? [{ market, slug: path.slice(1).split("/") }] : [];
-      }),
-    ),
+      });
+    }),
   );
   return params.flat();
 }
 
 type Loaded =
   | { type: "industry"; slug: string; doc: Industry | null }
-  | { type: "product"; slug: string; doc: Product | null }
+  | { type: "product"; slug: string; doc: SiteProduct | null }
   | { type: "newsArticle"; slug: string; doc: NewsArticle | null }
   | { type: "page"; slug: string; doc: PageDocument | null };
 
@@ -47,7 +53,7 @@ async function loadDocument(market: MarketId, segments: string[]): Promise<Loade
     case "industry":
       return { type, slug, doc: await getIndustry(market, slug) };
     case "product":
-      return { type, slug, doc: await getProduct(market, slug) };
+      return { type, slug, doc: await getSiteProduct(market, slug) };
     case "newsArticle":
       return { type, slug, doc: await getNewsArticle(market, slug) };
     default:
@@ -59,20 +65,27 @@ export async function generateMetadata({ params }: PageProps<"/[market]/[...slug
   const { market, slug } = await params;
   if (!isMarket(market)) return {};
   const loaded = await loadDocument(market, slug);
-  const doc = loaded.doc;
-  if (!doc) return {};
+  if (!loaded.doc) return {};
   const path = documentPath(loaded.type, loaded.slug, market) ?? `/${loaded.slug}`;
+  if (loaded.type === "product") {
+    const { product } = loaded.doc;
+    return buildMetadata({
+      seo: null,
+      title: product.name,
+      fallbackDescription: product.shortDescription ?? undefined,
+      fallbackImage: product.images[0]?.url,
+      market,
+      path,
+      alternates: {},
+    });
+  }
+  const doc = loaded.doc;
   return buildMetadata({
     seo: doc.seo,
     title: doc.title,
     // Bruk ingress eller kort beskrivelse når SEO-beskrivelsen mangler.
-    fallbackDescription:
-      ("lead" in doc && doc.lead) ||
-      ("shortDescription" in doc && doc.shortDescription) ||
-      ("excerpt" in doc && doc.excerpt) ||
-      undefined,
-    fallbackImage:
-      ("image" in doc && doc.image?.url) || ("images" in doc && doc.images?.[0]?.url) || undefined,
+    fallbackDescription: ("lead" in doc && doc.lead) || ("excerpt" in doc && doc.excerpt) || undefined,
+    fallbackImage: ("image" in doc && doc.image?.url) || undefined,
     market,
     path,
     alternates: translationPaths(doc.translations),
@@ -102,15 +115,17 @@ async function DocumentPage({ params, searchParams }: PageProps<"/[market]/[...s
     case "industry":
       return <IndustryPage industry={loaded.doc} market={market} />;
     case "product": {
-      const inShop =
-        market === SHOP_MARKET && !!loaded.doc.slug && (await getShopSlugs()).includes(loaded.doc.slug);
+      const { product, related } = loaded.doc;
+      const catalog = await getSiteCatalog(market);
       return (
         <>
           <JsonLd data={productJsonLd(loaded.doc, await getSiteSettings(market), market)} />
           <ProductPage
-            product={loaded.doc}
+            data={loaded.doc}
+            related={toCards(catalog, related)}
             market={market}
-            shopHref={inShop && loaded.doc.slug ? productPath(loaded.doc.slug) : undefined}
+            // Nettbutikken bruker den norske katalogen, så alle norske produkter finnes der.
+            shopHref={market === SHOP_MARKET ? productPath(product.slug) : undefined}
           />
         </>
       );

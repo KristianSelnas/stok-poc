@@ -10,13 +10,22 @@ export function shopPath(path = ""): string {
 
 export const productPath = (slug: string) => shopPath(`/produkter/${slug}`);
 
-/** Filtrene i katalogen på butikkens forside, slik de står i adressen. */
-export type CatalogParams = { q?: string; gruppe?: string; bransje?: string; vis?: "alle" };
+/**
+ * Filtrene i katalogen på butikkens forside, slik de står i adressen. Samme
+ * navn som i nettsidens produktkatalog: produktgruppe, type og materiale.
+ */
+export type CatalogParams = {
+  q?: string;
+  type?: string;
+  gruppe?: string;
+  materiale?: string;
+  vis?: "alle";
+};
 
 /** Adresse til katalogen med filtre, med hopp ned til produktlisten. */
 export function catalogPath(params: CatalogParams = {}): string {
   const search = new URLSearchParams();
-  for (const key of ["q", "gruppe", "bransje", "vis"] as const) {
+  for (const key of ["q", "type", "gruppe", "materiale", "vis"] as const) {
     const value = params[key];
     if (value) search.set(key, value);
   }

@@ -9,7 +9,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 | C | Konfigurator for skreddersydd kasse med pris og forhåndsvisning | Ferdig |
 | D | AI: emballasjeveileder, fritekst til spesifikasjon og variant med naturlig språk | Skissert |
 | E | Utvidelser: bilde til emballasje, smart søk, bærekraft og prognose | Skissert |
-| N | Nettsidens produktsider henter produkter fra katalogen | Skissert |
+| N | Nettsidens produktsider henter produkter fra katalogen | Ferdig |
 
 ## Fase A: Tjenestelag og klassisk butikk
 
@@ -175,8 +175,19 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ## Fase N: Nettsiden bruker produktkatalogen
 
-- Nettsidens produktkatalog og produktsider viser alle produktene fra `CatalogService`
-- Produktgrupper og materialer flyttes fra Sanity til katalogen
-- Bransjesider viser produkter fra katalogen etter bransjeslug
-- `product`, `productGroup` og `material` fjernes fra Sanity-skjemaet, og modulen «Produktrutenett» skrives om
-- Sitemap, strukturerte data og forhåndsvisning oppdateres
+- [x] Nettsidens produktkatalog og produktsider viser alle produktene fra `CatalogService` (103 i `/no`, 6 i `/is`)
+- [x] Produktgrupper, typer og materialer ligger i katalogen, med samme inndeling som bewifood.com (beslutning N15)
+- [x] Bransjesider viser produktene i produktgruppene som peker på bransjen (`ProductGroup.industry`)
+- [x] `product`, `productGroup` og `material` er fjernet fra Sanity-skjemaet, og modulen «Produktutvalg» velger type, produktgruppe eller bransje
+- [x] Sitemap, strukturerte data og forhåndsvisning er oppdatert
+- [ ] Kjør `pnpm remove:products` mot Sanity-datasettet, så gamle produktdokumenter og referanser forsvinner
+
+**Merknader fra fase N:**
+
+- Filtrene følger bewifood.com: produktgruppe (Beskyttende emballasje, Fisk og sjømat, Handel, Mat, Medisinsk, Tekniske komponenter, Transport og lagring), type (16, f.eks. Eske, Sekk, Brett, Spann) og materiale (HDPE, Kartong, Annet). Bare fiskeproduktene har materiale, som på bewifood.com.
+- Butikken har typene som filterknapper, og produktgruppe og materiale som nedtrekkslister. Adressene bruker `type`, `gruppe` og `materiale`, som nettsiden.
+- Rabattavtalene gjelder per type (`typeDiscounts`). Prosentene er de samme som før, så priser og ordrehistorikk er uendret.
+- Mat peker på bransjesiden Næringsmiddel, og Tekniske komponenter på Landbruk og industri. Handel og Medisinsk har ingen bransjeside.
+- Det islandske markedet har sitt eget sortiment på bewifood.com. De seks produktene som lå i Sanity, ligger nå i `src/shop/mock/data/catalog-is.json`, med egne typer (Kassar og Pokar).
+- Valglistene for type og produktgruppe i Studio kommer fra `src/shop/mock/data/taxonomy.json`, som `build-catalog.mts` lager. Med en ekte produktkatalog bør det bli en egen input i Studio.
+- Teksten på Produkter-siden i Sanity nevner fortsatt «bransje» til `pnpm seed:content --replace` er kjørt, eller teksten er rettet i Studio.

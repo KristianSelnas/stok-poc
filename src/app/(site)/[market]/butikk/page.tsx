@@ -35,13 +35,16 @@ async function readParams(searchParams: SearchParams): Promise<CatalogParams> {
     const value = raw[key];
     return (Array.isArray(value) ? value[0] : value)?.trim() ?? "";
   };
-  const { groups, industries } = await getShopTaxonomy();
-  const gruppe = one("gruppe");
-  const bransje = one("bransje");
+  const { groups, types, materials } = await getShopTaxonomy();
+  const valid = (key: string, options: { slug: string }[]) => {
+    const value = one(key);
+    return options.some((o) => o.slug === value) ? value : undefined;
+  };
   return {
     q: one("q").slice(0, 80) || undefined,
-    gruppe: groups.some((g) => g.slug === gruppe) ? gruppe : undefined,
-    bransje: industries.some((i) => i.slug === bransje) ? bransje : undefined,
+    type: valid("type", types),
+    gruppe: valid("gruppe", groups),
+    materiale: valid("materiale", materials),
     vis: one("vis") === "alle" ? "alle" : undefined,
   };
 }
@@ -55,7 +58,7 @@ async function SearchForm({ searchParams }: { searchParams: SearchParams }) {
   return <SearchFields params={params} />;
 }
 
-/** Søket gjelder alle grupper, men beholder bransje og visning. */
+/** Søket gjelder alle typer, men beholder produktgruppe, materiale og visning. */
 function SearchFields({ params = {} }: { params?: CatalogParams }) {
   return (
     <form action={`${shopPath()}#produkter`} role="search" className="mt-8 flex max-w-xl gap-2">
@@ -70,7 +73,8 @@ function SearchFields({ params = {} }: { params?: CatalogParams }) {
         placeholder={t.searchPlaceholder}
         className={`min-w-0 flex-1 ${fieldClass} px-5 py-3`}
       />
-      {params.bransje && <input type="hidden" name="bransje" value={params.bransje} />}
+      {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}
+      {params.materiale && <input type="hidden" name="materiale" value={params.materiale} />}
       {params.vis && <input type="hidden" name="vis" value={params.vis} />}
       <button type="submit" className={buttonClasses("secondary")}>
         {t.search}
@@ -171,8 +175,8 @@ async function Highlights() {
     }
   }
 
-  const [products, { groups }] = await Promise.all([listShopProducts(), getShopTaxonomy()]);
-  const groupTitle = new Map(groups.map((g) => [g.slug, g.title]));
+  const [products, { types }] = await Promise.all([listShopProducts(), getShopTaxonomy()]);
+  const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
   const popular = popularSlugs.flatMap((slug) => products.find((p) => p.slug === slug) ?? []);
   return (
     <section aria-labelledby="populaere" className="py-10 md:py-14">
@@ -183,7 +187,7 @@ async function Highlights() {
         <ul className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
           {popular.map((product) => (
             <li key={product.slug} className="w-[75%] shrink-0 snap-start sm:w-auto">
-              <ShopProductCard product={product} groupTitle={groupTitle.get(product.group)} />
+              <ShopProductCard product={product} typeTitle={typeTitle.get(product.type)} />
             </li>
           ))}
         </ul>
@@ -215,20 +219,20 @@ function Chip({ href, current, children }: { href: string; current: boolean; chi
 
 async function Catalog({ searchParams }: { searchParams: SearchParams }) {
   const params = await readParams(searchParams);
-  const [{ groups, industries }, products, session] = await Promise.all([
+  const [{ groups, types, materials }, products, session] = await Promise.all([
     getShopTaxonomy(),
-    listShopProducts({ query: params.q, industry: params.bransje }),
+    listShopProducts({ query: params.q, group: params.gruppe, material: params.materiale }),
     getSession(),
   ]);
 
   const orderableOnly = params.vis !== "alle";
-  const inGroup = (p: (typeof products)[number]) => !params.gruppe || p.group === params.gruppe;
+  const inType = (p: (typeof products)[number]) => !params.type || p.type === params.type;
   const orderable = products.filter((p) => p.salesMode !== "quote");
   const base = orderableOnly ? orderable : products;
-  const shown = base.filter(inGroup);
-  const groupCount = (slug: string) => base.filter((p) => p.group === slug).length;
-  const groupTitle = new Map(groups.map((g) => [g.slug, g.title]));
-  const hasFilters = !!(params.q || params.gruppe || params.bransje || params.vis);
+  const shown = base.filter(inType);
+  const typeCount = (slug: string) => base.filter((p) => p.type === slug).length;
+  const typeTitle = new Map(types.map((type) => [type.slug, type.title]));
+  const hasFilters = !!(params.q || params.type || params.gruppe || params.materiale || params.vis);
 
   const prices = await shop().pricing.getPrices(
     shown.flatMap((p) => p.skus),
@@ -242,26 +246,23 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
   return (
     <>
       <div className="space-y-5">
-        <nav aria-label={t.productGroups}>
+        <nav aria-label={t.productTypes}>
           <ul className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
             <li>
-              <Chip href={catalogPath({ ...params, gruppe: undefined })} current={!params.gruppe}>
+              <Chip href={catalogPath({ ...params, type: undefined })} current={!params.type}>
                 {t.allInGroup} <span className="font-normal">{base.length}</span>
               </Chip>
             </li>
-            {groups.map((group) => {
-              const count = groupCount(group.slug);
-              if (!count && params.gruppe !== group.slug) return null;
+            {types.map((type) => {
+              const count = typeCount(type.slug);
+              if (!count && params.type !== type.slug) return null;
               return (
-                <li
-                  key={group.slug}
-                  className={params.gruppe === group.slug ? "order-first sm:order-none" : ""}
-                >
+                <li key={type.slug} className={params.type === type.slug ? "order-first sm:order-none" : ""}>
                   <Chip
-                    href={catalogPath({ ...params, gruppe: group.slug })}
-                    current={params.gruppe === group.slug}
+                    href={catalogPath({ ...params, type: type.slug })}
+                    current={params.type === type.slug}
                   >
-                    {group.title} <span className="font-normal">{count}</span>
+                    {type.title} <span className="font-normal">{count}</span>
                   </Chip>
                 </li>
               );
@@ -277,31 +278,49 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
             <ul aria-labelledby="visning" className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
               <li>
                 <Chip href={catalogPath({ ...params, vis: undefined })} current={orderableOnly}>
-                  {t.orderableNow} <span className="font-normal">{orderable.filter(inGroup).length}</span>
+                  {t.orderableNow} <span className="font-normal">{orderable.filter(inType).length}</span>
                 </Chip>
               </li>
               <li>
                 <Chip href={catalogPath({ ...params, vis: "alle" })} current={!orderableOnly}>
                   {t.showAllIncludingQuote}{" "}
-                  <span className="font-normal">{products.filter(inGroup).length}</span>
+                  <span className="font-normal">{products.filter(inType).length}</span>
                 </Chip>
               </li>
             </ul>
           </div>
 
-          <form action={`${shopPath()}#produkter`} className="flex items-end gap-2">
+          <form action={`${shopPath()}#produkter`} className="flex flex-wrap items-end gap-2">
             {params.q && <input type="hidden" name="q" value={params.q} />}
-            {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}
+            {params.type && <input type="hidden" name="type" value={params.type} />}
             {params.vis && <input type="hidden" name="vis" value={params.vis} />}
             <div>
-              <label htmlFor="bransje" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-                {t.industry}
+              <label htmlFor="gruppe" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
+                {t.filterGroup}
               </label>
-              <select id="bransje" name="bransje" defaultValue={params.bransje ?? ""} className={fieldClass}>
-                <option value="">{t.allIndustries}</option>
-                {industries.map((i) => (
-                  <option key={i.slug} value={i.slug}>
-                    {i.title}
+              <select id="gruppe" name="gruppe" defaultValue={params.gruppe ?? ""} className={fieldClass}>
+                <option value="">{t.allGroups}</option>
+                {groups.map((group) => (
+                  <option key={group.slug} value={group.slug}>
+                    {group.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="materiale" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
+                {t.filterMaterial}
+              </label>
+              <select
+                id="materiale"
+                name="materiale"
+                defaultValue={params.materiale ?? ""}
+                className={fieldClass}
+              >
+                <option value="">{t.allMaterials}</option>
+                {materials.map((material) => (
+                  <option key={material.slug} value={material.slug}>
+                    {material.title}
                   </option>
                 ))}
               </select>
@@ -332,7 +351,7 @@ async function Catalog({ searchParams }: { searchParams: SearchParams }) {
             <li key={product.slug}>
               <ShopProductCard
                 product={product}
-                groupTitle={groupTitle.get(product.group)}
+                typeTitle={typeTitle.get(product.type)}
                 fromPrice={fromPrice(product.skus)}
               />
             </li>
@@ -404,7 +423,7 @@ function ConfiguratorTeaser() {
 
 /**
  * Butikkens forside er også katalogen: søk, «Kjøp igjen» og alle produkter
- * med filterknapper. Filtrene ligger i adressen (`?gruppe=eske&vis=alle`).
+ * med filterknapper. Filtrene ligger i adressen (`?type=eske&gruppe=mat&vis=alle`).
  */
 export default function ShopHome({ searchParams }: Props) {
   return (

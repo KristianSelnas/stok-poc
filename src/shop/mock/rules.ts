@@ -43,9 +43,9 @@ export function tierRules(variant: Pick<Variant, "unitsPerBundle" | "unitsPerPal
   ];
 }
 
-/** Avtalerabatt i prosent for en produktgruppe. */
-export function agreementDiscount(agreement: PriceAgreement, group: string): number {
-  return agreement.groupDiscounts[group] ?? agreement.discountPercent;
+/** Avtalerabatt i prosent for en produkttype. */
+export function agreementDiscount(agreement: PriceAgreement, type: string): number {
+  return agreement.typeDiscounts[type] ?? agreement.discountPercent;
 }
 
 /**
@@ -56,11 +56,11 @@ export function computePrice(
   sku: string,
   listPrice: number,
   variant: Pick<Variant, "unitsPerBundle" | "unitsPerPallet">,
-  group: string,
+  type: string,
   agreement: PriceAgreement | null,
 ): PriceInfo {
   const fixed = agreement?.fixedPrices[sku];
-  const base = fixed ?? (agreement ? listPrice * (1 - agreementDiscount(agreement, group) / 100) : listPrice);
+  const base = fixed ?? (agreement ? listPrice * (1 - agreementDiscount(agreement, type) / 100) : listPrice);
   const tiers: PriceTier[] = tierRules(variant).map((rule) => ({
     minQuantity: rule.minQuantity,
     unitPrice: roundPrice(base * (1 - rule.discount / 100)),

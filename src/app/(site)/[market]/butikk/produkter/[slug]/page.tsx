@@ -7,7 +7,6 @@ import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { VariantPurchase } from "@/components/shop/VariantPurchase";
 import { buttonClasses } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { getRoutes } from "@/lib/content";
 import { documentHref } from "@/lib/links";
 import { marketPath } from "@/lib/markets";
 import { t } from "@/shop/dictionary";
@@ -90,20 +89,14 @@ function PurchaseSkeleton() {
   );
 }
 
-/** Lenke til produktsiden på nettsiden, når produktet finnes der. */
-async function websiteHref(slug: string): Promise<string | undefined> {
-  const routes = await getRoutes(SHOP_MARKET);
-  return routes.some((r) => r._type === "product" && r.slug === slug)
-    ? documentHref("product", slug, SHOP_MARKET)
-    : undefined;
-}
-
 async function ProductContent({ params }: { params: Props["params"] }) {
   const { slug } = await params;
   const product = await getShopProduct(slug);
   if (!product) notFound();
-  const [{ groups }, siteHref] = await Promise.all([getShopTaxonomy(), websiteHref(slug)]);
-  const group = groups.find((g) => g.slug === product.group);
+  const { types } = await getShopTaxonomy();
+  const type = types.find((item) => item.slug === product.type);
+  // Nettsiden viser alle produktene i katalogen (fase N).
+  const siteHref = documentHref("product", product.slug, SHOP_MARKET);
   const images = product.images.length
     ? product.images
     : product.variants.flatMap((v) => v.image ?? []).slice(0, 1);
@@ -123,15 +116,12 @@ async function ProductContent({ params }: { params: Props["params"] }) {
                   {t.shopHome}
                 </Link>
               </li>
-              {group && (
+              {type && (
                 <>
                   <li aria-hidden="true">/</li>
                   <li>
-                    <Link
-                      href={catalogPath({ gruppe: group.slug })}
-                      className="text-stok-blue hover:underline"
-                    >
-                      {group.title}
+                    <Link href={catalogPath({ type: type.slug })} className="text-stok-blue hover:underline">
+                      {type.title}
                     </Link>
                   </li>
                 </>
@@ -165,9 +155,9 @@ async function ProductContent({ params }: { params: Props["params"] }) {
             </div>
 
             <div>
-              {group && (
+              {type && (
                 <p className="mb-2 font-meta text-sm font-medium tracking-wide text-stok-green-dark uppercase">
-                  {group.title}
+                  {type.title}
                 </p>
               )}
               <h1 className="text-4xl md:text-5xl">{product.name}</h1>

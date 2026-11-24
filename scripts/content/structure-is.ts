@@ -67,7 +67,6 @@ export const industriesIs: IndustryContent[] = [
       }),
       contactCta,
     ],
-    featuredProducts: [],
   },
 ];
 

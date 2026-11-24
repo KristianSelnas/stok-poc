@@ -34,6 +34,7 @@ Butikken er en egen del av nettstedet under `/no/butikk` og `/no/min-side`, med 
 | N12 | STOK eier rettighetene til bildene på bewifood.com, og de kan brukes i demoen | 24.11.2026 |
 | N13 | Konfiguratoren tegner esken i SVG (3D-kasse og utbrettet stansemønster), uten nye pakker | 24.11.2026 |
 | N14 | Pris og leveringstid i konfiguratoren regnes ut på serveren i `QuoteService.estimate`, med kundens avtalerabatt | 24.11.2026 |
+| N15 | Katalogen bruker samme inndeling som filtrene på bewifood.com: produktgruppe (7, flere per produkt), type (16, én per produkt) og materiale (3), med norske navn der bewifood.com bruker engelske. Nettsiden og nettbutikken filtrerer på de samme tre | 24.11.2026 |
 
 ## Åpne spørsmål
 

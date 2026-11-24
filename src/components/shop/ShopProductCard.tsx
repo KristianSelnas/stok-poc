@@ -10,11 +10,11 @@ import { ProductImageBox } from "./ProductImageBox";
 /** Produktkort i butikken. Hele kortet er klikkbart. `fromPrice` vises når den er kjent. */
 export function ShopProductCard({
   product,
-  groupTitle,
+  typeTitle,
   fromPrice,
 }: {
   product: ProductSummary;
-  groupTitle?: string;
+  typeTitle?: string;
   fromPrice?: number | null;
 }) {
   return (
@@ -25,9 +25,9 @@ export function ShopProductCard({
         className="aspect-[4/3]"
       />
       <div className="flex flex-1 flex-col p-5">
-        {groupTitle && (
+        {typeTitle && (
           <p className="font-meta text-xs font-medium tracking-wide text-stok-green-dark uppercase">
-            {groupTitle}
+            {typeTitle}
           </p>
         )}
         <h3 className="mt-1 text-lg">

@@ -1,10 +1,15 @@
-import type { Catalog, CatalogProduct } from "@/sanity/types";
+import type { ProductSummary } from "@/shop/domain";
 
-/** Filtrene i produktkatalogen og navnet på URL-parameteren for hvert av dem. */
+import type { SiteCatalog } from "./products";
+
+/**
+ * Filtrene i produktkatalogen og navnet på URL-parameteren for hvert av dem.
+ * De samme tre som på bewifood.com: produktgruppe, type og materiale.
+ */
 export const catalogFilters = [
-  { key: "gruppe", option: "groups", product: (p: CatalogProduct) => (p.groupSlug ? [p.groupSlug] : []) },
-  { key: "bransje", option: "industries", product: (p: CatalogProduct) => p.industrySlugs ?? [] },
-  { key: "materiale", option: "materials", product: (p: CatalogProduct) => p.materialSlugs ?? [] },
+  { key: "gruppe", option: "groups", product: (p: ProductSummary) => p.groups },
+  { key: "type", option: "types", product: (p: ProductSummary) => [p.type] },
+  { key: "materiale", option: "materials", product: (p: ProductSummary) => p.materials },
 ] as const;
 
 export type CatalogFilterKey = (typeof catalogFilters)[number]["key"];
@@ -12,7 +17,7 @@ export type CatalogSelection = Partial<Record<CatalogFilterKey, string>>;
 
 /** Leser gyldige filtervalg fra URL-parametere. Ukjente verdier ignoreres. */
 export function parseSelection(
-  catalog: Catalog,
+  catalog: SiteCatalog,
   searchParams: Record<string, string | string[] | undefined>,
 ): CatalogSelection {
   const selection: CatalogSelection = {};
@@ -26,11 +31,11 @@ export function parseSelection(
   return selection;
 }
 
-export function filterProducts(catalog: Catalog, selection: CatalogSelection): CatalogProduct[] {
+export function filterProducts(catalog: SiteCatalog, selection: CatalogSelection): ProductSummary[] {
   return catalog.products.filter((product) =>
     catalogFilters.every((filter) => {
       const selected = selection[filter.key];
-      return !selected || (filter.product(product) as string[]).includes(selected);
+      return !selected || filter.product(product).includes(selected);
     }),
   );
 }

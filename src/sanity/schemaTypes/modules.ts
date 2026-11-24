@@ -13,6 +13,7 @@ import { UsersIcon } from "@sanity/icons/Users";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 import { featureIcons } from "../../lib/featureIcons";
+import taxonomy from "../../shop/mock/data/taxonomy.json";
 import { referenceFilterByLanguage } from "../lib/referenceFilter";
 
 /**
@@ -34,6 +35,14 @@ const titleField = (required = true) =>
     type: "string",
     validation: (rule) => (required ? rule.required() : rule),
   });
+
+/**
+ * Valg fra produktkatalogen. Studio kan ikke spørre katalogen, så listen
+ * lages av `scripts/shop/build-catalog.mts` sammen med mock-katalogen. Med en
+ * ekte produktkatalog bør dette bli en egen input som henter valgene.
+ */
+const catalogOptions = (kind: "groups" | "types") =>
+  [...taxonomy.no[kind], ...taxonomy.is[kind]].map(({ slug, title }) => ({ title, value: slug }));
 
 const countLabel = (count: unknown, singular: string, plural: string) => {
   const n = Array.isArray(count) ? count.length : 0;
@@ -300,25 +309,29 @@ export const productGrid = defineType({
       name: "source",
       title: "Utvalg",
       type: "string",
-      initialValue: "manual",
+      description: "Produktene hentes fra produktkatalogen.",
+      initialValue: "type",
       options: {
         list: [
-          { title: "Velg produkter", value: "manual" },
-          { title: "Produkter i en gruppe", value: "group" },
-          { title: "Produkter i en bransje", value: "industry" },
+          { title: "Produkter av en type", value: "type" },
+          { title: "Produkter i en produktgruppe", value: "group" },
+          { title: "Produkter for en bransje", value: "industry" },
         ],
         layout: "radio",
       },
     }),
-    languageReferences("products", "Produkter", "product", {
-      showWhen: { field: "source", value: "manual", default: "manual" },
+    defineField({
+      name: "productType",
+      title: "Type",
+      type: "string",
+      options: { list: catalogOptions("types") },
+      hidden: ({ parent }) => (parent?.source ?? "type") !== "type",
     }),
     defineField({
       name: "productGroup",
       title: "Produktgruppe",
-      type: "reference",
-      to: [{ type: "productGroup" }],
-      options: { filter: referenceFilterByLanguage },
+      type: "string",
+      options: { list: catalogOptions("groups") },
       hidden: ({ parent }) => parent?.source !== "group",
     }),
     defineField({
@@ -342,7 +355,7 @@ export const productGrid = defineType({
     select: { title: "title", source: "source" },
     prepare: ({ title, source }) => ({
       title: title || "Produktutvalg",
-      subtitle: `Produktutvalg · ${source === "group" ? "gruppe" : source === "industry" ? "bransje" : "manuelt"}`,
+      subtitle: `Produktutvalg · ${source === "group" ? "produktgruppe" : source === "industry" ? "bransje" : "type"}`,
     }),
   },
 });
@@ -352,7 +365,7 @@ export const productCatalog = defineType({
   title: "Produktkatalog",
   type: "object",
   icon: SearchIcon,
-  description: "Alle produkter med filtre for gruppe, bransje og materiale.",
+  description: "Alle produkter fra produktkatalogen med filtre for produktgruppe, type og materiale.",
   fields: [titleField(false), defineField({ name: "intro", title: "Ingress", type: "text", rows: 2 })],
   preview: {
     select: { title: "title" },

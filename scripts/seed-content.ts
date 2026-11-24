@@ -1,6 +1,7 @@
 /**
- * Legger inn innholdet for fase 3 i Sanity: bransjer, produkter, nyheter,
- * kontaktpersoner og sidene Produkter, Nyheter og Kontakt, for begge markeder.
+ * Legger inn innholdet for fase 3 i Sanity: bransjer, nyheter, kontaktpersoner
+ * og sidene Produkter, Nyheter og Kontakt, for begge markeder. Produktene
+ * ligger i produktkatalogen, ikke i Sanity (fase N).
  *
  * Skriptet er laget for å kunne kjøres flere ganger:
  * - Dokumenter opprettes bare hvis de mangler. Med `--replace` overskrives de.
@@ -28,8 +29,6 @@ import { basePages } from "./content/base";
 import { slugify } from "../src/lib/slugify";
 import { documentPath } from "../src/lib/routes";
 import { markets, type MarketId } from "../src/lib/markets";
-import catalogIs from "./content/catalog-is.json";
-import catalogNo from "./content/catalog-no.json";
 import newsNo from "./content/news-no.json";
 import organizationIs from "./content/organization-is.json";
 import organizationNo from "./content/organization-no.json";
@@ -47,24 +46,6 @@ const dryRun = process.argv.includes("--dry-run");
 const replace = process.argv.includes("--replace");
 const client = getCliClient({ apiVersion: "2026-11-01" });
 const converter = new DocumentConverter(client, dryRun);
-
-/** Formatet på filene i `scripts/content/`, generert fra data hentet fra bewifood.com. */
-type CatalogFile = {
-  productGroups: { slug: string; title: string; order: number }[];
-  materials: { slug: string; title: string }[];
-  products: {
-    slug: string;
-    title: string;
-    shortDescription: string | null;
-    group: string | null;
-    materials: string[];
-    industries: string[];
-    images: { url: string; alt: string }[];
-    description: JsonBlock[];
-    properties: { key: string; value: string }[];
-    datasheetUrl: string | null;
-  }[];
-};
 
 type OrganizationFile = {
   customerService: { phone: string; email: string };
@@ -94,7 +75,6 @@ type NewsFile = {
 };
 
 type MarketContent = {
-  catalog: CatalogFile;
   organization: OrganizationFile;
   news: NewsFile | null;
   industries: IndustryContent[];
@@ -104,7 +84,6 @@ type MarketContent = {
 
 const content: Record<MarketId, MarketContent> = {
   no: {
-    catalog: catalogNo as CatalogFile,
     organization: organizationNo as OrganizationFile,
     news: newsNo as NewsFile,
     industries: industriesNo,
@@ -112,7 +91,6 @@ const content: Record<MarketId, MarketContent> = {
     frontPageNews: frontPageNewsNo,
   },
   is: {
-    catalog: catalogIs as CatalogFile,
     organization: organizationIs as OrganizationFile,
     news: null,
     industries: industriesIs,
@@ -123,60 +101,20 @@ const content: Record<MarketId, MarketContent> = {
 
 const slugValue = (current: string) => ({ _type: "slug", current });
 
-async function uploadFile(url: string): Promise<string | null> {
-  if (dryRun) return `file-dryrun-${url.split("/").pop()}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    console.warn(`  ! Fant ikke datablad ${url} (${response.status})`);
-    return null;
-  }
-  const asset = await client.assets.upload("file", Buffer.from(await response.arrayBuffer()), {
-    filename: url.split("/").pop(),
-  });
-  return asset._id;
-}
-
 async function buildDocuments(marketId: MarketId): Promise<SanityDocument[]> {
   const language = markets[marketId].language;
-  const { catalog, organization, news, industries, pages } = content[marketId];
+  const { organization, news, industries, pages } = content[marketId];
   const docs: SanityDocument[] = [];
   const add = (type: string, key: string, body: JsonObject) =>
     docs.push({ ...body, _id: docId(type, language, key), _type: type, language });
 
-  for (const group of catalog.productGroups) {
-    add("productGroup", group.slug, { title: group.title, slug: slugValue(group.slug), order: group.order });
-  }
-  for (const material of catalog.materials) {
-    add("material", material.slug, { title: material.title, slug: slugValue(material.slug) });
-  }
-
   for (const industry of industries) {
-    const { featuredProducts, slug, modules, image, ...fields } = industry;
+    const { slug, modules, image, ...fields } = industry;
     add("industry", slug, {
       ...(await converter.convertObject(fields, language)),
       slug: slugValue(slug),
       ...(image ? { image: await converter.convert(image, language) } : {}),
       modules: await converter.convert(modules, language),
-      featuredProducts: featuredProducts.map((product, i) => ref("product", language, product, `p${i}`)),
-    });
-  }
-
-  for (const product of catalog.products) {
-    const datasheet = product.datasheetUrl ? await uploadFile(product.datasheetUrl) : null;
-    add("product", product.slug, {
-      title: product.title,
-      slug: slugValue(product.slug),
-      ...(product.shortDescription ? { shortDescription: product.shortDescription } : {}),
-      images: await converter.convert(
-        product.images.map((img) => remoteImage(img.url, img.alt)),
-        language,
-      ),
-      description: await converter.convert(blocksFromJson(product.description), language),
-      properties: await converter.convert(product.properties, language, "properties"),
-      ...(datasheet ? { datasheet: { _type: "file", asset: { _type: "reference", _ref: datasheet } } } : {}),
-      ...(product.group ? { productGroup: ref("productGroup", language, product.group) } : {}),
-      industries: product.industries.map((slug, i) => ref("industry", language, slug, `i${i}`)),
-      materials: product.materials.map((slug, i) => ref("material", language, slug, `m${i}`)),
     });
   }
 

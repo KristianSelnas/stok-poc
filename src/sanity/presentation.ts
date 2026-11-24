@@ -28,11 +28,14 @@ const mainDocuments = defineDocuments(
       filter: `_id == "${singletonId("frontPage", market.language)}"`,
     },
     // Typer med prefiks før generelle sider, så `/no/bransjer/x` ikke tolkes som en side.
-    ...(Object.keys(routePrefixes) as PrefixedType[]).map((type) => ({
-      route: `/${market.id}/${routePrefixes[type][market.id]}/:slug`,
-      filter: `_type == "${type}" && language == "${market.language}" && slug.current == $slug`,
-      params: slugParam,
-    })),
+    // Produktene ligger i produktkatalogen, ikke i Sanity (fase N).
+    ...(Object.keys(routePrefixes) as PrefixedType[])
+      .filter((type) => type !== "product")
+      .map((type) => ({
+        route: `/${market.id}/${routePrefixes[type][market.id]}/:slug`,
+        filter: `_type == "${type}" && language == "${market.language}" && slug.current == $slug`,
+        params: slugParam,
+      })),
     {
       route: `/${market.id}/:slug+`,
       filter: `_type == "page" && language == "${market.language}" && slug.current == $slug`,
@@ -80,7 +83,6 @@ export const presentationResolve: PresentationPluginOptions["resolve"] = {
     }),
     page: routableLocation("page"),
     industry: routableLocation("industry"),
-    product: routableLocation("product"),
     newsArticle: routableLocation("newsArticle"),
     navigation: everywhere,
     siteSettings: everywhere,

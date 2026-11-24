@@ -1,7 +1,9 @@
 import "server-only";
 
-import type { ShopServices } from "../services";
-import { mockCatalog } from "./catalog";
+import type { MarketId } from "@/lib/markets";
+
+import type { CatalogService, ShopServices } from "../services";
+import { mockCatalog, mockCatalogIs } from "./catalog";
 import { mockCustomers } from "./customers";
 import { mockInventory } from "./inventory";
 import { mockOrders, resetMockOrders } from "./orders";
@@ -16,6 +18,9 @@ export const mockServices: ShopServices = {
   orders: mockOrders,
   quotes: mockQuotes,
 };
+
+/** Katalogen per marked, til nettsidens produktsider. Nettbutikken bruker bare den norske. */
+export const mockMarketCatalogs: Record<MarketId, CatalogService> = { no: mockCatalog, is: mockCatalogIs };
 
 /** Nullstiller demoen: sletter ordre og forespørsler som er lagt inn siden oppstart. */
 export function resetMockData() {

@@ -70,12 +70,18 @@ const manualPrices: Record<string, number> = {
 /** Kr per m² bølgepapp etter kvalitet. */
 const boardRates: Record<string, number> = { "E-bølge": 10, "B-bølge": 12, "BC dobbelbølge": 19 };
 
-const groupFallback: Record<string, number> = {
+/** Kr per stk. etter type, når varianten mangler vekt. */
+const typeFallback: Record<string, number> = {
   eske: 12,
   brett: 8,
-  "sekker-og-film": 14,
-  "ark-og-beskyttelse": 6,
-  "tilbehor-og-maskiner": 45,
+  sekk: 14,
+  film: 14,
+  ark: 6,
+  honeycomb: 6,
+  pakkemaskin: 45,
+  tilbehor: 45,
+  "hvac-lokk": 45,
+  annet: 45,
 };
 
 function round(value: number): number {
@@ -98,7 +104,7 @@ function listPrice(product: Product, variant: Variant): number {
     // Plast: omtrent 90 kr per kg ferdig vare, pluss et fast tillegg.
     return round(5 + variant.weightKg * 90);
   }
-  return round((groupFallback[product.group] ?? 25) * (0.9 + random() * 0.4));
+  return round((typeFallback[product.type] ?? 25) * (0.9 + random() * 0.4));
 }
 
 // ---------------------------------------------------------------------------
@@ -324,7 +330,7 @@ async function main() {
             variant.sku,
             prices[variant.sku],
             variant,
-            product.group,
+            product.type,
             customer.priceAgreement,
           );
           // Eldre ordre har litt lavere pris (prisjustering i januar).

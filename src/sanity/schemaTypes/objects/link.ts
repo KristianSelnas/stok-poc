@@ -4,12 +4,7 @@ import { defineField, defineType } from "sanity";
 import { referenceFilterByLanguage } from "../../lib/referenceFilter";
 
 /** Dokumenttyper en intern lenke kan peke på. Adressen bygges i `src/lib/routes.ts`. */
-export const linkableTypes = [
-  { type: "page" },
-  { type: "industry" },
-  { type: "product" },
-  { type: "newsArticle" },
-];
+export const linkableTypes = [{ type: "page" }, { type: "industry" }, { type: "newsArticle" }];
 
 /** Felt for hvor lenken peker. Deles av `link` og `linkAnnotation`. */
 const targetFields = [

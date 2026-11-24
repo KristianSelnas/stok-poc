@@ -4,13 +4,11 @@
  * skjema eller spørringer).
  */
 import type {
-  CatalogQueryResult,
   FrontPageQueryResult,
   IndustryQueryResult,
   NavigationQueryResult,
   NewsArticleQueryResult,
   PageQueryResult,
-  ProductQueryResult,
   RoutesQueryResult,
   SiteSettingsQueryResult,
   SitemapQueryResult,
@@ -36,16 +34,12 @@ export type MenuItem = NonNullable<Navigation["mainMenu"]>[number];
 export type LinkGroup = NonNullable<MenuItem["groups"]>[number];
 export type SocialLink = NonNullable<SiteSettings["socialLinks"]>[number];
 
-// Fase 3: bransjer, produkter, nyheter og kontakt
+// Fase 3: bransjer, nyheter og kontakt. Produktene ligger i produktkatalogen (fase N).
 
 export type Industry = NonNullable<IndustryQueryResult>;
-export type Product = NonNullable<ProductQueryResult>;
 export type NewsArticle = NonNullable<NewsArticleQueryResult>;
-export type Catalog = CatalogQueryResult;
-export type CatalogProduct = Catalog["products"][number];
 export type Routes = RoutesQueryResult;
 
-export type ProductCard = NonNullable<ModuleOf<"productGrid">["products"]>[number];
 export type NewsCard = NonNullable<ModuleOf<"newsList">["articles"]>[number];
 export type Person = NonNullable<ModuleOf<"contactPeople">["people"]>[number];
 export type Location = NonNullable<ModuleOf<"locations">["items"]>[number];
