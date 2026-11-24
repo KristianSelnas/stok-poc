@@ -21,6 +21,7 @@
 | B15 | Den islandske versjonen dekker forside, kontaktside, én bransjeside og noen produkter | 23.11.2026 |
 | B16 | Markedene skilles med prefiks på ett domene (`/no`, `/is`) | 23.11.2026 |
 | B17 | PoC-en bruker Sanity-prosjektet `up8wp88l` med datasettet `production` i alle miljøer. Et ekte prosjekt får en ny instans | 23.11.2026 |
+| B18 | bewifood.com er STOKs eget nettsted, så STOK eier rettighetene til bildene og vi kan bruke dem i demoen | 24.11.2026 |
 
 ## Åpne spørsmål
 
@@ -32,7 +33,7 @@
 ### Innhold
 
 3. Finnes det kontaktpersoner hos STOK som kan kvalitetssikre de norske og islandske tekstene?
-4. Har STOK rettigheter til bildene på bewifood.com, og kan vi bruke dem i en offentlig demo?
+4. ~~Har STOK rettigheter til bildene på bewifood.com, og kan vi bruke dem i en offentlig demo?~~ Avklart, se B18.
 5. Hvor ligger produktdataene i dag (ERP, PIM eller bare på nettsiden)?
 6. Hvilken e-post skal kundeservice ha? Innstillingene bruker kundeservice@bewifood.com, men STOK oppgir kundeservice@stok.no i artikkelen om navneskiftet.
 7. Kan vi bruke bilder av kontaktpersonene? De er hentet fra bewifood.com uten bilder, så kortene viser initialer. Én person (Vidar Undebakke) mangler e-post på bewifood.com.
