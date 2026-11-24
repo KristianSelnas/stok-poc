@@ -196,7 +196,13 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ### D3. Fritekst til spesifikasjon
 
-- [ ] Felt øverst i konfiguratoren: «Beskriv hva som skal pakkes». Assistenten fyller ut skjemaet og forklarer valgene i én setning
+- [x] Felt øverst i konfiguratoren: «Beskriv hva som skal pakkes». Assistenten fyller ut skjemaet og forklarer valgene i høyst to setninger
+
+**Merknader fra D3:**
+
+- Feltet (`DescribeBox`) ligger inne i konfiguratorens skjema og kaller assistenten med `context: { kind: "configurator" }`. Forslaget fyller ut feltene direkte, uten ny navigering, og kunden kan angre.
+- Assistenten bruker kundens tidligere esker når de passer. Med «Gaveeske til 2 flasker vin» tok den utgangspunkt i Nordlys' sorte gaveeske med hvit logo.
+- `ScriptedAssistant` forstår bare beskrivelser med mål («400 x 300 x 200 mm») eller vinflasker. Andre beskrivelser gir en melding om å skrive mål og antall.
 
 ### D4. Variant med naturlig språk
 

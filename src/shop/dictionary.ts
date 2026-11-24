@@ -368,6 +368,19 @@ export const t = {
   assistantPriceOnRequest: "Pris på forespørsel",
   assistantGuidePrice: "Veiledende pris. Logg inn for å se avtalepris.",
 
+  // Fritekst i konfiguratoren (fase D3)
+  describeTitle: "Beskriv hva som skal pakkes",
+  describeLead: "Skriv med egne ord, så fyller emballasjeveilederen ut skjemaet. Du kan justere alt etterpå.",
+  describeLabel: "Hva skal pakkes, og hvordan skal det sendes eller lagres?",
+  describePlaceholder: "F.eks. «Vi sender 2 kg kaffe i poser, 1 000 pakker i måneden, med logo på toppen»",
+  describeButton: "Fyll ut skjemaet",
+  describeWorking: "Lager spesifikasjon …",
+  describeFilled: "Skjemaet er fylt ut. Se over valgene under.",
+  describeUndo: "Angre",
+  describeUndone: "Skjemaet har verdiene fra før.",
+  describeNoSpec:
+    "Jeg fikk ikke laget en spesifikasjon av beskrivelsen. Prøv å skrive mer om varen, mål eller antall.",
+
   // Feil
   errorNotOrderable: "Denne varen kan ikke bestilles i nettbutikken.",
   errorQuantity: "Skriv inn et antall større enn 0.",

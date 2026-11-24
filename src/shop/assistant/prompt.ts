@@ -67,7 +67,7 @@ function taskContext(context: AssistantContext): string {
     case "chat":
       return `Kunden er på siden ${context.path}.`;
     case "configurator":
-      return "Kunden skriver i konfiguratoren for skreddersydde esker. Svar med proposeSpec i denne turen, med rimelige antakelser der kunden ikke har sagt noe, og forklar valgene i én eller to setninger. Still ikke oppfølgingsspørsmål.";
+      return "Kunden skriver i konfiguratoren for skreddersydde esker. Svar med proposeSpec i denne turen, med rimelige antakelser der kunden ikke har sagt noe. Still ikke oppfølgingsspørsmål. Teksten vises under feltet: forklar de viktigste valgene i høyst to korte setninger, uten punktliste, og gjenta ikke mål eller antall som står i skjemaet.";
     case "variant":
       return `Kunden beskriver en endring av linje ${context.lineId} i ordre ${context.orderNumber}. Hent ordren og svar med proposeVariant i denne turen. Forklar endringene i én setning. Still ikke oppfølgingsspørsmål.`;
   }
