@@ -8,8 +8,8 @@ import { t } from "./dictionary";
 import { canResetDemo, resetDemo, shop } from "./index";
 import { roundToBundle } from "./mock/rules";
 import { minSidePath, shopPath } from "./paths";
-import { specName } from "./specs";
-import type { PackagingSpec } from "./domain";
+import type { PackagingSpec, QuoteEstimate } from "./domain";
+import { parseCustomBox, specName, validateCustomBox, type CustomBoxValues } from "./specs";
 import { OrderError } from "./services";
 import { getSession, SESSION_COOKIE } from "./session";
 
@@ -206,6 +206,48 @@ export async function createVariantRequest(
     spec,
     quantity,
     basedOn: { orderNumber: order.orderNumber, lineId: line.id },
+    note: text(formData, "note").slice(0, 500) || null,
+    requestedBy: session.user.name,
+  });
+  redirect(`${minSidePath("/foresporsler")}?ny=${encodeURIComponent(request.id)}`);
+}
+
+// ---------------------------------------------------------------------------
+// Konfiguratoren (fase C)
+// ---------------------------------------------------------------------------
+
+export type EstimateResult = { ok: true; estimate: QuoteEstimate } | { ok: false };
+
+/**
+ * Estimert pris og leveringstid for konfiguratoren. Kalles fortløpende mens
+ * kunden endrer. Uten innlogging gir den veiledende pris.
+ */
+export async function estimateCustomBox(values: Partial<CustomBoxValues>): Promise<EstimateResult> {
+  const { spec, quantity } = parseCustomBox((key) => values?.[key]);
+  if (Object.keys(validateCustomBox(spec, quantity)).length) return { ok: false };
+  const session = await getSession();
+  const estimate = await shop().quotes.estimate(session?.customer.id ?? null, spec, quantity);
+  return { ok: true, estimate };
+}
+
+export type CustomBoxFormState = { ok: false; message: string; fields?: Record<string, string> } | null;
+
+/** Sender en ny skreddersydd eske fra konfiguratoren som forespørsel til selger. */
+export async function createCustomRequest(
+  _prev: CustomBoxFormState,
+  formData: FormData,
+): Promise<CustomBoxFormState> {
+  const session = await getSession();
+  if (!session) return { ok: false, message: t.errorLoginRequired };
+  const parsed = parseCustomBox((key) => text(formData, key));
+  const fields = validateCustomBox(parsed.spec, parsed.quantity);
+  if (Object.keys(fields).length) return { ok: false, message: t.errorFixFields, fields };
+
+  const request = await shop().quotes.createRequest(session.customer.id, {
+    name: specName(parsed.name, parsed.spec),
+    spec: parsed.spec,
+    quantity: parsed.quantity,
+    basedOn: null,
     note: text(formData, "note").slice(0, 500) || null,
     requestedBy: session.user.name,
   });

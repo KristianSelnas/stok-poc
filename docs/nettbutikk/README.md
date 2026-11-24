@@ -4,7 +4,7 @@ Demo av en nettbutikk for STOK Emballage. Butikken fungerer som en vanlig B2B-ne
 
 Butikken er en egen del av nettstedet under `/no/butikk` og `/no/min-side`, med lenker fra toppmenyen og produktsidene.
 
-**Status:** Fase A (klassisk butikk) og fase B (Min side) er ferdige. Fase C (konfigurator) er neste.
+**Status:** Fase A (klassisk butikk), fase B (Min side) og fase C (konfigurator) er ferdige. Fase D (AI) er neste.
 
 ## Dokumenter
 
@@ -14,7 +14,7 @@ Butikken er en egen del av nettstedet under `/no/butikk` og `/no/min-side`, med 
 | [02-funksjoner.md](02-funksjoner.md) | Alle funksjonsideer, sortert og prioritert |
 | [03-arkitektur.md](03-arkitektur.md) | BFF, tjenestegrensesnitt, mocker, produktdata og ruter |
 | [04-ai.md](04-ai.md) | AI-funksjoner via Kantegas LLMProxy: verktøy, avgrensning og reserveplan |
-| [05-faser.md](05-faser.md) | Faser, med detaljert plan for fase A |
+| [05-faser.md](05-faser.md) | Faser, med detaljerte planer for fase A–C |
 
 ## Beslutninger
 
@@ -32,6 +32,8 @@ Butikken er en egen del av nettstedet under `/no/butikk` og `/no/min-side`, med 
 | N10 | Mock-katalogen bygges fra produktene på bewifood.com, med ekte varenumre, varianter og pallestørrelser. Priser, lager og ordre lager vi selv | 23.11.2026 |
 | N11 | Nettsidens produktkatalog viser alle produktene fra produktkatalogen. Redaktører velger ikke enkeltprodukter i Sanity inntil videre | 23.11.2026 |
 | N12 | STOK eier rettighetene til bildene på bewifood.com, og de kan brukes i demoen | 24.11.2026 |
+| N13 | Konfiguratoren tegner esken i SVG (3D-kasse og utbrettet stansemønster), uten nye pakker | 24.11.2026 |
+| N14 | Pris og leveringstid i konfiguratoren regnes ut på serveren i `QuoteService.estimate`, med kundens avtalerabatt | 24.11.2026 |
 
 ## Åpne spørsmål
 

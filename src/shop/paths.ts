@@ -37,3 +37,11 @@ export const variantPath = (orderNumber: string, lineId: string) =>
 
 export const loginPath = (next?: string) =>
   next ? `${shopPath("/logg-inn")}?neste=${encodeURIComponent(next)}` : shopPath("/logg-inn");
+
+/** Konfiguratoren, eventuelt ferdig utfylt. Tomme felt utelates fra adressen. */
+export function configuratorPath(values?: Partial<Record<string, string>>): string {
+  const search = new URLSearchParams();
+  for (const [key, value] of Object.entries(values ?? {})) if (value) search.set(key, value);
+  const query = search.toString();
+  return `${shopPath("/konfigurator")}${query ? `?${query}` : ""}`;
+}

@@ -6,7 +6,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 |---|---|---|
 | A | Tjenestelag, mockdata og klassisk butikk | Ferdig |
 | B | Min side: ordrehistorikk, gjenta ordre og lag variant | Ferdig |
-| C | Konfigurator for skreddersydd kasse med pris og forhåndsvisning | Skissert |
+| C | Konfigurator for skreddersydd kasse med pris og forhåndsvisning | Ferdig |
 | D | AI: emballasjeveileder, fritekst til spesifikasjon og variant med naturlig språk | Skissert |
 | E | Utvidelser: bilde til emballasje, smart søk, bærekraft og prognose | Skissert |
 | N | Nettsidens produktsider henter produkter fra katalogen | Skissert |
@@ -104,10 +104,57 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ## Fase C: Konfigurator
 
-- Konfigurator for de vanligste kassetypene (FEFCO 0201 og 0427) med mål, papp-kvalitet, farge og trykk
-- Forhåndsvisning som tegnes på nytt ved endring. Vi vurderer SVG med utbrettet stansemønster mot en enkel 3D-kasse
-- Regelmotor for estimert pris og leveringstid i mock-`QuoteService`
-- Forespørsel til selger, som legges i mock-CRM
+**Leveranse:** Nordlys Netthandel lager en forsendelseseske etter egne mål, ser kassen tegnet på nytt mens målene endres, får estimert pris og leveringstid og sender en forespørsel til selger. Del 3 av demomanuset fungerer.
+
+**Valg i fasen:**
+
+- Forhåndsvisningen tegnes i SVG, med to visninger: en enkel 3D-kasse (skråprojeksjon) og et forenklet utbrettet stansemønster. Ingen nye pakker. En ekte 3D-modell (three.js) gir lite ekstra i demoen og koster mye.
+- Pris og leveringstid regnes ut i `QuoteService.estimate` på serveren, ikke i nettleseren. Da kan avtalerabatten brukes, og en ekte adapter kan spørre ERP eller et kalkylesystem. Skjemaet spør serveren med en kort forsinkelse etter hver endring.
+- Konfigurasjonen ligger i adressen (`?type=0201&l=400&b=300&h=200&…`). Da kan den deles, den overlever innlogging, og AI-en i fase D kan åpne konfiguratoren ferdig utfylt.
+- Besøkende som ikke er logget inn, kan bruke konfiguratoren og ser veiledende pris. De må logge inn for å sende forespørselen.
+
+### C1. Stansemønster og regler
+
+- [x] `src/shop/dieline.ts`: utbrettet stansemønster for FEFCO 0201 og 0427 med paneler, kuttlinjer og rillelinjer, og arkstørrelsen. Uten avhengigheter, så både forhåndsvisningen og prisreglene bruker den
+- [x] Grenser for mål og antall per kassetype, og felles validering i `src/shop/specs.ts`. Samme funksjon brukes i skjemaet og i server action
+- [x] Regelmotor i `src/shop/mock/rules.ts`: pris per stk. ut fra arkareal, kvalitet, farge, trykk og antall, engangskostnad for stansekniv og trykkplater, avtalerabatt på esker og leveringstid
+
+### C2. QuoteService
+
+- [x] `QuoteService.estimate(customerId, spec, quantity)` som gir pris per stk., engangskostnad, sum, leveringstid og hvilke deler prisen består av
+- [x] `QuoteRequest` får `estimatedToolingCost` og `estimatedLeadTimeDays`. Nye forespørsler fra konfiguratoren får estimatet fra regelmotoren, varianter som før
+- [x] Siden Forespørsler viser engangskostnad og leveringstid når de finnes
+
+### C3. Konfiguratoren
+
+- [x] `/no/butikk/konfigurator` med valg av kassetype, mål, kvalitet, farge, trykk, antall og navn på emballasjen
+- [x] Forhåndsvisning i SVG som tegnes på nytt ved hver endring, med valg mellom 3D og utbrettet. Mål vises på tegningen, og trykk vises som et logofelt
+- [x] Estimert pris per stk., engangskostnad, sum og leveringstid, oppdatert fortløpende. Avtalepris for innloggede kunder
+- [x] Konfigurasjonen speiles i adressen, og «Logg inn for å sende» tar den med tilbake
+- [x] «Send forespørsel» lager en forespørsel i `QuoteService` og går til Forespørsler
+
+### C4. Lenker inn til konfiguratoren
+
+- [x] Kort om skreddersydd eske på butikkens forside
+- [x] «Tilpass mål og trykk» på produktsidene til Bølgepappeske, Postboks og Flaskeeske, med målene fra valgt variant
+- [x] Lenke i butikklinjen
+
+### C5. Dokumentasjon og kvalitet
+
+- [x] Regelmotoren, `estimate` og adresseformatet beskrevet i `03-arkitektur.md`
+- [x] `pnpm typecheck`, `pnpm lint` og `pnpm format:check` uten feil
+- [x] Gå gjennom del 3 av demomanuset i nettleseren (Playwright, desktop og mobil)
+
+**Merknader fra fase C:**
+
+- Kalkylen er stilt inn så en brun 400 x 300 x 200 mm amerikanereske koster omtrent som lagervaren (8,70 kr ved 1 000 stk.). 0427 får stansekniv som engangskostnad, 0201 ikke. Reglene står i [03-arkitektur.md](03-arkitektur.md#konfiguratoren).
+- Minste antall er 250 stk. i konfiguratoren og 100 stk. i variantskjemaet på Min side, siden en variant gjenbruker verktøyet.
+- Konfiguratoren har en `key` per kunde, så den starter på nytt med avtalepris etter innlogging.
+- På mobil ligger tegningen over skjemaet. Den er ikke synlig mens kunden skriver inn mål lenger ned.
+- Produktsiden leser nå sluggen inne i `<Suspense>`. Før ga `await params` øverst på siden feilen «Next.js encountered URL data during prerendering or a navigation» ved klientnavigasjon, fordi Partial Prefetching lager ett App Shell per rute. Feilen fantes fra fase A, men vises bare én gang per oppstart av dev-serveren. Ukjente slugger gir fortsatt siden «Siden finnes ikke», men med status 200 og `noindex` i stedet for 404, siden `notFound()` nå kalles etter at shellet er sendt.
+- Playwright-MCP-en i sandkassen leter etter Chrome i `/opt/google/chrome/chrome`, som ikke finnes for Linux på ARM. En symbolsk lenke til Playwrights egen Chromium løser det.
+
+**Utenfor fase C:** «Be om tilbud» på tilbudsprodukter som ikke er esker (for eksempel Pers box) lenker fortsatt til kontaktsiden. Det krever en forespørsel uten `PackagingSpec`, og passer bedre sammen med selger-briefen i fase D.
 
 ## Fase D: AI
 

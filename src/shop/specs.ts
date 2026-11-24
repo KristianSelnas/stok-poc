@@ -1,3 +1,4 @@
+import { t } from "./dictionary";
 import type { PackagingSpec, SpecChange } from "./domain";
 
 /**
@@ -70,4 +71,184 @@ export function diffSpec(original: Comparable, next: Comparable): SpecChange[] {
   return fields
     .filter(([, , from, to]) => from !== to)
     .map(([field, label, from, to]) => ({ field, label, from, to }));
+}
+
+// ---------------------------------------------------------------------------
+// Konfiguratoren (fase C)
+// ---------------------------------------------------------------------------
+
+export const styleOptions = ["0201", "0427"] as const;
+
+export const styleShortLabels: Record<string, string> = {
+  "0201": "Amerikanereske",
+  "0427": "Postboks med lokk",
+};
+
+export const boardDescriptions: Record<string, string> = {
+  "E-bølge": "1,5 mm. Små esker og fint trykk",
+  "B-bølge": "3 mm. Det vanlige valget til forsendelse",
+  "C-bølge": "4 mm. Bedre stablestyrke",
+  "BC dobbelbølge": "7 mm. Tunge eller skjøre varer",
+};
+
+type Range = [min: number, max: number];
+
+/** Innvendige mål (mm) som maskinene kan lage, per kassetype. */
+export const customLimits: Record<string, { length: Range; width: Range; height: Range }> = {
+  "0201": { length: [100, 1200], width: [80, 800], height: [50, 1000] },
+  "0427": { length: [100, 600], width: [80, 450], height: [20, 200] },
+};
+
+export const customQuantity = { min: 250, max: 100_000 };
+
+/** Produkter i katalogen som kan tilpasses i konfiguratoren, med kassetype. */
+export const configurableProducts: Record<string, string> = {
+  bolgepappeske: "0201",
+  flaskeeske: "0201",
+  postboks: "0427",
+};
+
+/** Startverdier i konfiguratoren per kassetype. */
+export const defaultCustomBox: Record<string, { spec: PackagingSpec; quantity: number }> = {
+  "0201": {
+    spec: {
+      style: "0201",
+      innerDimensionsMm: { length: 300, width: 200, height: 150 },
+      board: "B-bølge",
+      color: "Brun",
+      print: null,
+      notes: null,
+    },
+    quantity: 1000,
+  },
+  "0427": {
+    spec: {
+      style: "0427",
+      innerDimensionsMm: { length: 310, width: 220, height: 80 },
+      board: "E-bølge",
+      color: "Hvit",
+      print: null,
+      notes: null,
+    },
+    quantity: 1000,
+  },
+};
+
+/**
+ * Feltene i konfiguratoren. Samme navn brukes i adressen
+ * (`/no/butikk/konfigurator?type=0201&l=400&…`), i skjemaet og i server action.
+ */
+export type CustomBoxValues = {
+  type: string;
+  l: string;
+  b: string;
+  h: string;
+  kvalitet: string;
+  farge: string;
+  trykk: string;
+  trykktekst: string;
+  merknad: string;
+  antall: string;
+  navn: string;
+};
+
+export const customBoxKeys = [
+  "type",
+  "l",
+  "b",
+  "h",
+  "kvalitet",
+  "farge",
+  "trykk",
+  "trykktekst",
+  "merknad",
+  "antall",
+  "navn",
+] as const satisfies readonly (keyof CustomBoxValues)[];
+
+/** Feltverdiene for en spesifikasjon, f.eks. fra en katalogvare eller fra AI-en i fase D. */
+export function customBoxValues(spec: PackagingSpec, quantity: number, name = ""): CustomBoxValues {
+  return {
+    type: spec.style,
+    l: String(spec.innerDimensionsMm.length),
+    b: String(spec.innerDimensionsMm.width),
+    h: String(spec.innerDimensionsMm.height),
+    kvalitet: spec.board,
+    farge: spec.color,
+    trykk: String(spec.print?.colors ?? 0),
+    trykktekst: spec.print?.description ?? "",
+    merknad: spec.notes ?? "",
+    antall: String(quantity),
+    navn: name,
+  };
+}
+
+/**
+ * Leser feltene fra adressen, skjemaet eller nettleseren. Ukjente valg får
+ * startverdien. Tall tas med som de er, også ugyldige, så `validateCustomBox` kan melde fra.
+ */
+export function parseCustomBox(get: (key: keyof CustomBoxValues) => string | null | undefined): {
+  values: CustomBoxValues;
+  spec: PackagingSpec;
+  quantity: number;
+  name: string;
+} {
+  const raw = (key: keyof CustomBoxValues) => (get(key) ?? "").toString().trim();
+  const style = (styleOptions as readonly string[]).includes(raw("type")) ? raw("type") : "0201";
+  const defaults = defaultCustomBox[style];
+  const d = defaults.spec;
+  const pick = (value: string, options: string[], fallback: string) =>
+    options.includes(value) ? value : fallback;
+  const numberOr = (value: string, fallback: number) => (value === "" ? fallback : Math.round(Number(value)));
+
+  const values: CustomBoxValues = {
+    type: style,
+    l: raw("l") || String(d.innerDimensionsMm.length),
+    b: raw("b") || String(d.innerDimensionsMm.width),
+    h: raw("h") || String(d.innerDimensionsMm.height),
+    kvalitet: pick(raw("kvalitet"), boardOptions, d.board),
+    farge: pick(raw("farge"), colorOptions, d.color),
+    trykk: pick(raw("trykk"), ["0", "1", "2", "3", "4"], "0"),
+    trykktekst: raw("trykktekst").slice(0, 200),
+    merknad: raw("merknad").slice(0, 300),
+    antall: raw("antall") || String(defaults.quantity),
+    navn: raw("navn").slice(0, 80),
+  };
+  const colors = Number(values.trykk);
+  const spec: PackagingSpec = {
+    style,
+    innerDimensionsMm: {
+      length: numberOr(values.l, d.innerDimensionsMm.length),
+      width: numberOr(values.b, d.innerDimensionsMm.width),
+      height: numberOr(values.h, d.innerDimensionsMm.height),
+    },
+    board: values.kvalitet,
+    color: values.farge,
+    print: colors > 0 ? { colors, description: values.trykktekst || "Trykk" } : null,
+    notes: values.merknad || null,
+  };
+  const quantity = numberOr(values.antall, defaults.quantity);
+  const name = values.navn || styleShortLabels[style];
+  return { values, spec, quantity, name };
+}
+
+/** Feil per felt (`l`, `b`, `h`, `antall`). Tomt objekt betyr at alt er gyldig. */
+export function validateCustomBox(
+  spec: PackagingSpec,
+  quantity: number,
+): Partial<Record<"l" | "b" | "h" | "antall", string>> {
+  const errors: Partial<Record<"l" | "b" | "h" | "antall", string>> = {};
+  const limits = customLimits[spec.style] ?? customLimits["0201"];
+  const check = (key: "l" | "b" | "h", value: number, [min, max]: Range) => {
+    if (!Number.isFinite(value) || value < min || value > max) {
+      errors[key] = t.errorMmRange(nb.format(min), nb.format(max));
+    }
+  };
+  check("l", spec.innerDimensionsMm.length, limits.length);
+  check("b", spec.innerDimensionsMm.width, limits.width);
+  check("h", spec.innerDimensionsMm.height, limits.height);
+  if (!Number.isFinite(quantity) || quantity < customQuantity.min || quantity > customQuantity.max) {
+    errors.antall = t.errorQuantityRange(nb.format(customQuantity.min), nb.format(customQuantity.max));
+  }
+  return errors;
 }

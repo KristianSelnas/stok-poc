@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { logout } from "@/shop/actions";
 import { getCartCount } from "@/shop/cart-view";
 import { t } from "@/shop/dictionary";
-import { minSidePath, shopPath } from "@/shop/paths";
+import { configuratorPath, minSidePath, shopPath } from "@/shop/paths";
 import { getSession } from "@/shop/session";
 
 const linkClass = "rounded-full px-3 py-1.5 font-semibold text-white hover:bg-white/10";
@@ -66,6 +66,11 @@ export function ShopBar() {
         <li className="mr-2">
           <Link href={shopPath()} className="font-heading text-lg font-bold text-white">
             {t.shopHome}
+          </Link>
+        </li>
+        <li>
+          <Link href={configuratorPath()} className={linkClass}>
+            {t.configurator}
           </Link>
         </li>
         <Suspense

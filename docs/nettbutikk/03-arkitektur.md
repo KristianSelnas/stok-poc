@@ -32,7 +32,7 @@ Sidene og server actions kaller aldri mockene direkte. De henter tjenestene fra 
 | `PricingService` | ERP | Listepris, avtalepris per kunde og mengderabatt |
 | `CustomerService` | CRM | Firma, brukere, leveringsadresser og prisavtale |
 | `OrderService` | ERP | Ordre, ordrelinjer, status og fakturaer (`listInvoices`) |
-| `QuoteService` | CRM | Forespørsler på skreddersydde løsninger og varianter. Tatt i bruk i fase B |
+| `QuoteService` | CRM og kalkyle | Forespørsler på skreddersydde løsninger og varianter (fase B), og estimert pris og leveringstid på nye esker (`estimate`, fase C) |
 | `CartService` | BFF | Handlekurven. Ligger i BFF-en, også når de andre tjenestene er ekte |
 | `AssistantService` | LLMProxy | AI-funksjonene, se [04-ai.md](04-ai.md) |
 
@@ -138,7 +138,7 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 | `/no/min-side/emballasjer` | Mine emballasjer | B |
 | `/no/min-side/fakturaer` | Fakturaer | B |
 | `/no/min-side/firma` | Prisavtale, adresser og brukere | B |
-| `/no/butikk/konfigurator` | Konfigurator for skreddersydd kasse | C |
+| `/no/butikk/konfigurator?type=…&l=…&b=…&h=…` | Konfigurator for skreddersydd eske, se [Konfiguratoren](#konfiguratoren) | C |
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
 
@@ -155,6 +155,42 @@ Foreløpig pris på en variant regnes ut i `estimateVariantUnitPrice` i `src/sho
 «Gjenta ordren» legger katalogvarene i kurven og husker ordrenummeret i en cookie. Den nye ordren får `basedOn: { kind: "reorder" }`. Skreddersydde linjer legges ikke i kurven. De bestilles på nytt via variantskjemaet, eventuelt uten endringer.
 
 Fakturaer lages av mocken fra sendte og leverte ordre, med kundens betalingsfrist.
+
+## Konfiguratoren
+
+`/no/butikk/konfigurator` lar kunden lage en ny eske av typen FEFCO 0201 (amerikanereske) eller 0427 (postboks med lokk).
+
+**Adressen.** Konfigurasjonen ligger i query-parametere, og skjemaet oppdaterer adressen med `history.replaceState` ved hver endring. Feltene har samme navn i adressen, i skjemaet og i server action:
+
+| Parameter | Innhold | Eksempel |
+|---|---|---|
+| `type` | FEFCO-kode | `0201` |
+| `l`, `b`, `h` | Innvendig lengde, bredde og høyde i mm | `400`, `300`, `200` |
+| `kvalitet` | Bølgetype | `B-bølge` |
+| `farge` | Brun, Hvit eller Sort | `Hvit` |
+| `trykk`, `trykktekst` | Antall trykkfarger (0–4) og beskrivelse | `2`, `Logo på to sider` |
+| `antall` | Antall stk. | `1000` |
+| `navn`, `merknad` | Navn på emballasjen og merknad til produksjonen | |
+
+`parseCustomBox` og `validateCustomBox` i `src/shop/specs.ts` leser og sjekker feltene, både i nettleseren, på siden og i server action. `customBoxValues` gjør en `PackagingSpec` om til feltene, og `configuratorPath` lager adressen. Produktsidene bruker dem til «Tilpass mål og trykk», og AI-en i fase D kan bruke dem til å åpne konfiguratoren ferdig utfylt.
+
+**Forhåndsvisningen** (`BoxPreview`) tegnes i SVG, enten som kasse i skråprojeksjon eller som utbrettet stansemønster. Stansemønsteret kommer fra `src/shop/dieline.ts`, som også gir arkstørrelsen til prisreglene.
+
+**Pris og leveringstid** hentes fra `QuoteService.estimate` via server action `estimateCustomBox`, 300 ms etter siste endring. Innloggede kunder får avtalerabatten sin på produktgruppen «eske», andre ser veiledende pris. Kalkylen i mocken (`estimateCustomBox` i `src/shop/mock/rules.ts`):
+
+| Del | Regel |
+|---|---|
+| Papp | Arkareal × pris per m² for kvaliteten (E 7, B 10, C 11, BC 16 kr) × påslag for farge (hvit 15 %, sort 30 %) |
+| Trykk | 0,60 kr per stk. per farge |
+| Omstilling | 1 500 kr fordelt på antallet |
+| Mengderabatt | 8 % fra 5 000 stk., 12 % fra 10 000 stk. |
+| Avtalerabatt | Kundens rabatt på esker |
+| Engangskostnad | Stansekniv 3 500 kr for 0427 (0201 lages uten), og trykkplater 900 kr per farge |
+| Leveringstid | 10 virkedager, +5 med stansekniv, +3 med trykk, +2 for BC dobbelbølge, +5 over 10 000 stk. |
+
+Kalkylen er laget så en brun 400 x 300 x 200 mm 0201-eske koster omtrent det samme som lagervaren i katalogen (8,70 kr per stk. ved 1 000 stk.). Med ekte systemer kommer estimatet fra ERP eller et kalkylesystem, og konfiguratoren endres ikke.
+
+**Forespørselen** sendes med server action `createCustomRequest`, som leser og sjekker feltene på nytt og lager en forespørsel uten `basedOn`. Mocken legger på estimert pris, engangskostnad og leveringstid fra samme kalkyle. Siden Forespørsler viser dem.
 
 ## Innlogging i demoen
 
@@ -193,14 +229,15 @@ src/
     ├── services/              Grensesnitt, ett per bakenforliggende system
     ├── mock/                  Mock-implementasjoner
     │   ├── data/              JSON med produkter, priser, lager, kunder og ordre
-    │   └── rules.ts           Regler for mengderabatt, avtalepris, frakt og mva
+    │   └── rules.ts           Regler for mengderabatt, avtalepris, frakt, mva og kalkyle for esker
     ├── index.ts               shop(): velger implementasjon ut fra SHOP_BACKEND
     ├── queries.ts             Katalogdata med `use cache`
     ├── session.ts             getSession() for demoinnlogging
     ├── cart.ts                Handlekurven i cookie (CartService)
     ├── cart-view.ts           Kurven med produkt, pris og lager per linje
     ├── actions.ts             Server actions: innlogging, kurv, bestilling, gjenkjøp og varianter
-    ├── specs.ts               Spesifikasjoner: diff, navn og visning
+    ├── specs.ts               Spesifikasjoner: diff, navn, visning og feltene i konfiguratoren
+    ├── dieline.ts             Utbrettet stansemønster for FEFCO 0201 og 0427
     ├── recommendations.ts     «Kjøp igjen» og Mine emballasjer, ut fra ordrehistorikken
     ├── paths.ts               shopPath() og productPath()
     ├── format.ts              Kroner, tall og datoer

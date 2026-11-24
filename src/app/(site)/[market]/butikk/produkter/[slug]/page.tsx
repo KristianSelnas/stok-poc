@@ -13,9 +13,12 @@ import { marketPath } from "@/lib/markets";
 import { t } from "@/shop/dictionary";
 import type { Product } from "@/shop/domain";
 import { shop } from "@/shop/index";
-import { catalogPath, productPath, SHOP_MARKET, shopPath } from "@/shop/paths";
+import { catalogPath, configuratorPath, productPath, SHOP_MARKET, shopPath } from "@/shop/paths";
 import { getShopProduct, getShopTaxonomy, listShopProducts } from "@/shop/queries";
 import { getSession } from "@/shop/session";
+import { configurableProducts, customBoxValues, defaultCustomBox } from "@/shop/specs";
+
+type Props = PageProps<"/[market]/butikk/produkter/[slug]">;
 
 export async function generateStaticParams({ params }: { params: { market: string } }) {
   const slugs = (await listShopProducts()).map((p) => ({ slug: p.slug }));
@@ -24,9 +27,7 @@ export async function generateStaticParams({ params }: { params: { market: strin
   return params.market === SHOP_MARKET ? slugs : slugs.slice(0, 1);
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[market]/butikk/produkter/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getShopProduct((await params).slug);
   if (!product) return {};
   return {
@@ -59,7 +60,27 @@ async function Purchase({ product }: { product: Product }) {
       loginHref={`${shopPath("/logg-inn")}?neste=${encodeURIComponent(path)}`}
       cartHref={shopPath("/handlekurv")}
       quoteHref={marketPath(SHOP_MARKET, "/kontakt")}
+      customizeHrefs={customizeHrefs(product)}
     />
+  );
+}
+
+/** Lenker til konfiguratoren med målene fra hver variant, for esker som kan tilpasses. */
+function customizeHrefs(product: Product): Record<string, string> | undefined {
+  const style = configurableProducts[product.slug];
+  if (!style) return undefined;
+  const base = defaultCustomBox[style];
+  return Object.fromEntries(
+    product.variants.flatMap((v) => {
+      const d = v.innerDimensions ?? v.outerDimensions;
+      if (!d?.length || !d.width || !d.height) return [];
+      const mm = (cm: number) => Math.round(cm * 10);
+      const spec = {
+        ...base.spec,
+        innerDimensionsMm: { length: mm(d.length), width: mm(d.width), height: mm(d.height) },
+      };
+      return [[v.sku, configuratorPath(customBoxValues(spec, base.quantity, product.name))]];
+    }),
   );
 }
 
@@ -77,7 +98,7 @@ async function websiteHref(slug: string): Promise<string | undefined> {
     : undefined;
 }
 
-export default async function ShopProductPage({ params }: PageProps<"/[market]/butikk/produkter/[slug]">) {
+async function ProductContent({ params }: { params: Props["params"] }) {
   const { slug } = await params;
   const product = await getShopProduct(slug);
   if (!product) notFound();
@@ -260,5 +281,37 @@ export default async function ShopProductPage({ params }: PageProps<"/[market]/b
         </section>
       )}
     </>
+  );
+}
+
+function ProductPageSkeleton() {
+  return (
+    <section className="bg-stok-light">
+      <Container className="py-10 md:py-14">
+        <div aria-busy="true" className="animate-pulse motion-reduce:animate-none">
+          <div className="mb-8 h-5 w-64 rounded-full bg-white" />
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="aspect-square rounded-[2rem] bg-white" />
+            <div className="space-y-4">
+              <div className="h-12 w-3/4 rounded-2xl bg-white" />
+              <div className="h-6 w-full rounded-full bg-white" />
+              <div className="mt-8 h-96 rounded-3xl bg-white" />
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+/**
+ * Produktsiden. Sluggen leses inne i `<Suspense>`, så ruten har et App Shell
+ * med plassholder og navigasjonen hit blir umiddelbar (Partial Prefetching).
+ */
+export default function ShopProductPage({ params }: Props) {
+  return (
+    <Suspense fallback={<ProductPageSkeleton />}>
+      <ProductContent params={params} />
+    </Suspense>
   );
 }
