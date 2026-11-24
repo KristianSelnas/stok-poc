@@ -200,6 +200,7 @@ export const t = {
   // Variant
   variantTitle: "Lag variant",
   variantLead: "Endre det som skal være annerledes. Resten er som i originalen.",
+  variantSuggested: "Endringene fra emballasjeveilederen er fylt ut. Se over og send forespørselen.",
   variantCatalogLead: "Velg en annen variant av produktet, eller endre antallet.",
   original: "Original",
   newVariant: "Ny variant",
@@ -326,6 +327,69 @@ export const t = {
   paymentTerms: "Betalingsbetingelser",
   freeShippingLimit: "Fri frakt fra",
   companyEditNote: "Endringer i adresser og brukere gjøres av kundeservice i denne demoen.",
+
+  // Emballasjeveilederen (fase D)
+  assistantOpen: "Spør emballasjeveilederen",
+  assistantTitle: "Emballasjeveilederen",
+  assistantClose: "Lukk emballasjeveilederen",
+  assistantNew: "Ny samtale",
+  assistantIntro:
+    "Beskriv hva dere skal pakke, sende eller lagre, så finner jeg emballasje i katalogen eller lager en skreddersydd eske.",
+  assistantSuggestions: "Forslag",
+  /** Forslag til spørsmål per bransje (`Customer.industry`). `default` brukes ellers og uten innlogging. */
+  assistantNeedSuggestions: {
+    Netthandel: ["Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt."],
+    "Fisk og sjømat": ["Vi skal sende 20 kg fersk laks med fly. Hva anbefaler dere?"],
+    Bakeri: ["Vi trenger esker til kaker som kundene henter i butikken."],
+    default: [
+      "Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.",
+      "Hvilken fiskekasse passer til 20 kg laks?",
+    ],
+  } as Record<string, string[]>,
+  assistantVariantSuggestion: (orderNumber: string, heightCm: number) =>
+    `Samme som ordre ${orderNumber}, men ${heightCm} cm dype og 500 stk.`,
+  assistantCatalogSuggestion: "Vi trenger tape og strekkfilm til pallene.",
+  assistantInputLabel: "Skriv til emballasjeveilederen",
+  assistantPlaceholder: "F.eks. «Vi skal sende 20 kg laks med fly»",
+  assistantSend: "Send",
+  assistantStop: "Stopp",
+  assistantThinking: "Tenker …",
+  assistantYou: "Du",
+  assistantScripted: "Demo uten AI-tilkobling. Assistenten forstår setningene i forslagene.",
+  assistantDisclaimer: "Assistenten kan ta feil. Du ser over og bekrefter alt før noe sendes.",
+  assistantError: "Assistenten svarer ikke akkurat nå. Prøv igjen om litt.",
+  assistantSuggestedBox: "Forslag til skreddersydd eske",
+  assistantSuggestedProducts: "Forslag fra katalogen",
+  assistantSuggestedVariant: (orderNumber: string) => `Variant av ordre ${orderNumber}`,
+  assistantOpenConfigurator: "Åpne i konfiguratoren",
+  assistantReviewVariant: "Se over og send",
+  assistantAddToCart: "Legg i kurv",
+  assistantAdded: "Lagt i kurven",
+  assistantGoToCart: "Gå til handlekurven",
+  assistantPriceOnRequest: "Pris på forespørsel",
+  assistantGuidePrice: "Veiledende pris. Logg inn for å se avtalepris.",
+
+  // Fritekst i konfiguratoren (fase D3)
+  describeTitle: "Beskriv hva som skal pakkes",
+  describeLead: "Skriv med egne ord, så fyller emballasjeveilederen ut skjemaet. Du kan justere alt etterpå.",
+  describeLabel: "Hva skal pakkes, og hvordan skal det sendes eller lagres?",
+  describePlaceholder: "F.eks. «Vi sender 2 kg kaffe i poser, 1 000 pakker i måneden, med logo på toppen»",
+  describeButton: "Fyll ut skjemaet",
+  describeWorking: "Lager spesifikasjon …",
+  describeFilled: "Skjemaet er fylt ut. Se over valgene under.",
+  describeUndo: "Angre",
+  describeUndone: "Skjemaet har verdiene fra før.",
+  describeNoSpec:
+    "Jeg fikk ikke laget en spesifikasjon av beskrivelsen. Prøv å skrive mer om varen, mål eller antall.",
+
+  // Variant med naturlig språk (fase D4)
+  describeChangeLabel: (name: string) => `Beskriv endringen av ${name}`,
+  describeChangeSummary: "Beskriv endringen",
+  describeChangePlaceholder: "F.eks. «20 cm dyp og 500 stk.»",
+  describeChangeButton: "Lag variant",
+  describeChangeWorking: "Lager varianten …",
+  describeChangeNoVariant:
+    "Jeg fikk ikke laget en variant av beskrivelsen. Skriv hva som skal endres, f.eks. mål eller antall.",
 
   // Feil
   errorNotOrderable: "Denne varen kan ikke bestilles i nettbutikken.",

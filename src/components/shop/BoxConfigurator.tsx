@@ -14,6 +14,7 @@ import {
   colorOptions,
   customLimits,
   customQuantity,
+  customBoxValues,
   type CustomBoxValues,
   parseCustomBox,
   specName,
@@ -23,6 +24,7 @@ import {
 } from "@/shop/specs";
 
 import { buttonClasses } from "../ui/Button";
+import { DescribeBox } from "./assistant/DescribeBox";
 import { BoxPreview } from "./BoxPreview";
 
 const inputClass =
@@ -49,6 +51,8 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
   const [estimate, setEstimate] = useState({ key: JSON.stringify(initialValues), value: initialEstimate });
   const [state, formAction, pending] = useActionState(createCustomRequest, null);
   const latestKey = useRef("");
+  /** Verdiene før assistenten fylte ut skjemaet, så kunden kan angre. */
+  const beforeAssistant = useRef<CustomBoxValues | null>(null);
 
   const { spec, quantity, name } = parseCustomBox((key) => values[key]);
   const errors = validateCustomBox(spec, quantity);
@@ -164,6 +168,15 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
 
       {/* Feltene */}
       <div className="space-y-6 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+        <DescribeBox
+          onSpec={(proposal) => {
+            beforeAssistant.current = values;
+            setValues(customBoxValues(proposal.spec, proposal.quantity, proposal.name));
+          }}
+          onUndo={() => {
+            if (beforeAssistant.current) setValues(beforeAssistant.current);
+          }}
+        />
         <fieldset className={cardClass}>
           <legend className="sr-only">{t.boxType}</legend>
           <p aria-hidden className="mb-3 text-xl font-bold text-stok-blue">

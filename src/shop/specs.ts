@@ -252,3 +252,47 @@ export function validateCustomBox(
   }
   return errors;
 }
+
+// ---------------------------------------------------------------------------
+// Variant med naturlig språk (fase D4)
+// ---------------------------------------------------------------------------
+
+/** Feltene i variantskjemaet på Min side. */
+export type VariantFormValues = {
+  length: string;
+  width: string;
+  height: string;
+  board: string;
+  color: string;
+  printColors: string;
+  printDescription: string;
+  notes: string;
+  quantity: string;
+};
+
+/**
+ * Endringer til variantskjemaet fra adressen, f.eks. fra emballasjeveilederen
+ * (`/no/min-side/variant?ordre=10329&linje=l3&h=200&antall=500`). Feltene har
+ * samme navn som i konfiguratoren. Ukjente valg og tall som ikke er positive
+ * heltall, hoppes over. Serveren sjekker alt på nytt når forespørselen sendes.
+ */
+export function parseVariantSuggestion(
+  get: (key: keyof CustomBoxValues) => string | null | undefined,
+): Partial<VariantFormValues> {
+  const raw = (key: keyof CustomBoxValues) => (get(key) ?? "").toString().trim();
+  const whole = (value: string) => (/^\d{1,6}$/.test(value) && Number(value) > 0 ? value : undefined);
+  const suggestion: Partial<VariantFormValues> = {
+    length: whole(raw("l")),
+    width: whole(raw("b")),
+    height: whole(raw("h")),
+    board: boardOptions.includes(raw("kvalitet")) ? raw("kvalitet") : undefined,
+    color: colorOptions.includes(raw("farge")) ? raw("farge") : undefined,
+    printColors: ["0", "1", "2", "3", "4"].includes(raw("trykk")) ? raw("trykk") : undefined,
+    printDescription: raw("trykktekst").slice(0, 200) || undefined,
+    notes: raw("merknad").slice(0, 300) || undefined,
+    quantity: whole(raw("antall")),
+  };
+  return Object.fromEntries(
+    Object.entries(suggestion).filter(([, value]) => value !== undefined),
+  ) as Partial<VariantFormValues>;
+}

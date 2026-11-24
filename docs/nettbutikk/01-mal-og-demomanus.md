@@ -25,7 +25,7 @@ Tre fiktive kunder med ulike behov. Hver kunde har egne avtalepriser, adresser o
 |---|---|---|
 | **Havbris Sjømat AS**, Ålesund | Fisk og sjømat | Fiskekasser, filetbrett og isoporkasser i store volum. Bestiller jevnlig |
 | **Lunde Bakeri AS**, Bergen | Næringsmiddel | Brødkasser og matkasser. Har noen skreddersydde esker med trykk |
-| **Nordlys Netthandel AS**, Trondheim | E-handel | Forsendelsesesker etter mål, vinesker og tape. Trenger ofte nye mål |
+| **Nordlys Netthandel AS**, Trondheim | E-handel | Forsendelsesesker etter mål, gaveesker og tape. Trenger ofte nye mål |
 
 ## Demomanus
 
@@ -56,7 +56,7 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 ### Del 4: AI-assistent (fase D)
 
 1. Nordlys Netthandel skriver: «Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.»
-2. Assistenten stiller ett eller to oppfølgingsspørsmål og foreslår en skreddersydd eske, med vinesken Nordlys har bestilt før som utgangspunkt.
+2. Assistenten spør hvor mange esker Nordlys trenger og om esken skal ha trykk. Så foreslår den en ny skreddersydd eske med innredning for 6 flasker, i dobbelbølge og fuktbestandig papp, med pris og leveringstid.
 3. Kunden velger den skreddersydde, og konfiguratoren åpnes med verdiene ferdig utfylt.
 4. Lunde Bakeri skriver på Min side: «Samme som ordre 10329, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
 

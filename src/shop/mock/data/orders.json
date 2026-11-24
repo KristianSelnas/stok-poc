@@ -73,15 +73,15 @@
         "id": "l2",
         "sku": null,
         "productSlug": null,
-        "quantity": 600,
-        "name": "Forsendelseseske, 400 x 300 x 200 mm",
-        "unitPrice": 9.4,
+        "quantity": 1200,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
         "customSpec": {
           "style": "0201",
           "innerDimensionsMm": {
-            "length": 400,
-            "width": 300,
-            "height": 200
+            "length": 300,
+            "width": 200,
+            "height": 150
           },
           "board": "B-bølge",
           "color": "Brun",
@@ -93,15 +93,15 @@
         "id": "l3",
         "sku": null,
         "productSlug": null,
-        "quantity": 1300,
-        "name": "Forsendelseseske, 300 x 200 x 150 mm",
-        "unitPrice": 6.9,
+        "quantity": 700,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
         "customSpec": {
           "style": "0201",
           "innerDimensionsMm": {
-            "length": 300,
-            "width": 200,
-            "height": 150
+            "length": 400,
+            "width": 300,
+            "height": 200
           },
           "board": "B-bølge",
           "color": "Brun",
@@ -124,10 +124,10 @@
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 15942,
+      "net": 16192,
       "shipping": 0,
-      "vat": 3985.5,
-      "gross": 19927.5
+      "vat": 4048,
+      "gross": 20240
     },
     "basedOn": null
   },
@@ -393,27 +393,7 @@
         "id": "l1",
         "sku": null,
         "productSlug": null,
-        "quantity": 600,
-        "name": "Forsendelseseske, 400 x 300 x 200 mm",
-        "unitPrice": 9.4,
-        "customSpec": {
-          "style": "0201",
-          "innerDimensionsMm": {
-            "length": 400,
-            "width": 300,
-            "height": 200
-          },
-          "board": "B-bølge",
-          "color": "Brun",
-          "print": null,
-          "notes": null
-        }
-      },
-      {
-        "id": "l2",
-        "sku": null,
-        "productSlug": null,
-        "quantity": 1500,
+        "quantity": 1100,
         "name": "Forsendelseseske, 300 x 200 x 150 mm",
         "unitPrice": 6.9,
         "customSpec": {
@@ -428,6 +408,15 @@
           "print": null,
           "notes": null
         }
+      },
+      {
+        "id": "l2",
+        "sku": "9110-1",
+        "productSlug": "strekkfilm",
+        "name": "Strekkfilm manuell 500 mm, 17 my, 300 m",
+        "quantity": 24,
+        "unitPrice": 82.8,
+        "customSpec": null
       },
       {
         "id": "l3",
@@ -453,10 +442,10 @@
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 17988,
+      "net": 11575.2,
       "shipping": 0,
-      "vat": 4497,
-      "gross": 22485
+      "vat": 2893.8,
+      "gross": 14469
     },
     "basedOn": null
   },
@@ -969,23 +958,20 @@
         "id": "l2",
         "sku": null,
         "productSlug": null,
-        "quantity": 200,
-        "name": "Vineske for 6 flasker, 280 x 190 x 360 mm",
-        "unitPrice": 16.5,
+        "quantity": 400,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
         "customSpec": {
           "style": "0201",
           "innerDimensionsMm": {
-            "length": 280,
-            "width": 190,
-            "height": 360
+            "length": 400,
+            "width": 300,
+            "height": 200
           },
-          "board": "BC dobbelbølge",
+          "board": "B-bølge",
           "color": "Brun",
-          "print": {
-            "colors": 1,
-            "description": "Logo på to sider"
-          },
-          "notes": "Innredning for 6 flasker à 0,75 l"
+          "print": null,
+          "notes": null
         }
       },
       {
@@ -1032,10 +1018,10 @@
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 26109.6,
+      "net": 26569.6,
       "shipping": 0,
-      "vat": 6527.4,
-      "gross": 32637
+      "vat": 6642.4,
+      "gross": 33212
     },
     "basedOn": null
   },
@@ -1347,23 +1333,20 @@
         "id": "l1",
         "sku": null,
         "productSlug": null,
-        "quantity": 300,
-        "name": "Vineske for 6 flasker, 280 x 190 x 360 mm",
-        "unitPrice": 16.5,
+        "quantity": 500,
+        "name": "Forsendelseseske, 400 x 300 x 200 mm",
+        "unitPrice": 9.4,
         "customSpec": {
           "style": "0201",
           "innerDimensionsMm": {
-            "length": 280,
-            "width": 190,
-            "height": 360
+            "length": 400,
+            "width": 300,
+            "height": 200
           },
-          "board": "BC dobbelbølge",
+          "board": "B-bølge",
           "color": "Brun",
-          "print": {
-            "colors": 1,
-            "description": "Logo på to sider"
-          },
-          "notes": "Innredning for 6 flasker à 0,75 l"
+          "print": null,
+          "notes": null
         }
       },
       {
@@ -1433,10 +1416,10 @@
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 21834.8,
+      "net": 21584.8,
       "shipping": 0,
-      "vat": 5458.7,
-      "gross": 27293.5
+      "vat": 5396.2,
+      "gross": 26981
     },
     "basedOn": null
   },
@@ -1785,15 +1768,15 @@
         "id": "l3",
         "sku": null,
         "productSlug": null,
-        "quantity": 600,
-        "name": "Forsendelseseske, 400 x 300 x 200 mm",
-        "unitPrice": 9.4,
+        "quantity": 1000,
+        "name": "Forsendelseseske, 300 x 200 x 150 mm",
+        "unitPrice": 6.9,
         "customSpec": {
           "style": "0201",
           "innerDimensionsMm": {
-            "length": 400,
-            "width": 300,
-            "height": 200
+            "length": 300,
+            "width": 200,
+            "height": 150
           },
           "board": "B-bølge",
           "color": "Brun",
@@ -1825,10 +1808,10 @@
     "note": null,
     "orderedBy": "Amir Haddad",
     "totals": {
-      "net": 22276,
+      "net": 23536,
       "shipping": 0,
-      "vat": 5569,
-      "gross": 27845
+      "vat": 5884,
+      "gross": 29420
     },
     "basedOn": null
   },

@@ -7,7 +7,7 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 | A | Tjenestelag, mockdata og klassisk butikk | Ferdig |
 | B | Min side: ordrehistorikk, gjenta ordre og lag variant | Ferdig |
 | C | Konfigurator for skreddersydd kasse med pris og forhåndsvisning | Ferdig |
-| D | AI: emballasjeveileder, fritekst til spesifikasjon og variant med naturlig språk | Skissert |
+| D | AI: emballasjeveileder, fritekst til spesifikasjon og variant med naturlig språk | Pågår |
 | E | Utvidelser: bilde til emballasje, smart søk, bærekraft og prognose | Skissert |
 | N | Nettsidens produktsider henter produkter fra katalogen | Ferdig |
 
@@ -158,12 +158,75 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 
 ## Fase D: AI
 
-- Avklare API-format og nøkkel mot LLMProxy
-- `AssistantService` med `LlmAssistant` og `ScriptedAssistant`
-- Emballasjeveileder i chatpanel
-- Fritekst til spesifikasjon, som åpner konfiguratoren
-- Variant med naturlig språk på ordresiden
-- Brief til selger på forespørsler
+**Leveranse:** Nordlys Netthandel beskriver behovet i et chatpanel, svarer på et oppfølgingsspørsmål og åpner konfiguratoren ferdig utfylt. Lunde Bakeri beskriver en variant av ordre 10329 med egne ord og ser endringene i variantskjemaet. Selger får en brief sammen med forespørselen. Del 4 av demomanuset fungerer, også uten LLMProxy.
+
+**Valg i fasen:**
+
+- Anthropics TypeScript-SDK (`@anthropic-ai/sdk`) med `baseURL` mot LLMProxy og `authToken: null`, som i KaVita. Vi bruker 0.x-versjonen KaVita bruker. Versjon 1 sender nøkkelen som `Authorization: Bearer` i stedet for `x-api-key`.
+- En route handler (`POST /api/butikk/assistent`) strømmer hendelser som NDJSON: tekst, hvilket verktøy som kjøres, forslag og slutt. Server actions kan ikke strømme tekst underveis.
+- Samtalen ligger i nettleseren og sendes med hver tur, som i KaVita. Serveren lagrer ingenting. Kunde-ID kommer fra cookien (prinsipp 5 i [04-ai.md](04-ai.md)).
+- Serveren sjekker forslagene fra modellen med de samme funksjonene som skjemaene (`validateCustomBox`, `roundToBundle`, `diffSpec`). Den legger på pris og leveringstid fra tjenestelaget før forslaget sendes til nettleseren som et kort.
+- Forslagene åpnes via adressen. Konfiguratoren leser den allerede (fase C). Variantsiden får endringene i adressen, så kunden ser samme skjema og diff som i fase B.
+- `ScriptedAssistant` gjenkjenner setningene i demomanuset og kaller de samme verktøyene mot tjenestelaget. Da er priser og ordre de samme som med `LlmAssistant`.
+
+### D1. Tilgang og AssistantService
+
+- [x] Sjekke modell-ID og API-format mot LLMProxy. Testet fra sandkassen med verktøykall og strømming. Egen nøkkel i `.env.local` og Vercel gjenstår (Kristian)
+- [x] `KANTEGA_LLMPROXY_KEY`, `SHOP_ASSISTANT` og `SHOP_ASSISTANT_MODEL` i `.env.example`
+- [x] `src/shop/assistant/`: hendelser og forslag, `AssistantService`, verktøy mot tjenestelaget, `LlmAssistant` og `ScriptedAssistant`
+- [x] Systemprompt med avgrensning og kundens kontekst (navn, bransje, hva kunden har bestilt før)
+- [x] `POST /api/butikk/assistent` som strømmer svaret
+
+### D2. Emballasjeveileder i chatpanel
+
+- [x] Knapp nede til høyre i butikken og på Min side som åpner et chatpanel. Samtalen tas vare på i `sessionStorage` mens kunden går mellom sidene
+- [x] Tekst strømmes, og panelet viser hva assistenten gjør («Søker i katalogen»)
+- [x] Kort for produktforslag med pris og «Legg i kurv», og kort for skreddersydd eske med mål, estimert pris, leveringstid og «Åpne i konfiguratoren»
+- [x] Forslag til spørsmål når samtalen er tom
+- [x] Assistenten bruker kundens skreddersydde emballasjer fra ordrehistorikken som utgangspunkt, f.eks. «Brødeske med logo» i Lunde Bakeris ordre 10329
+
+**Merknader fra D2:**
+
+- Panelet ligger i layoutene til butikken og Min side (`ShopAssistant`). Det lukkes når kunden følger en lenke i et kort, så siden ikke skjules. Samtalen ligger i `sessionStorage` per kunde og bruker, og ny innlogging gir ny samtale.
+- Forslagene til spørsmål avhenger av bransjen, pluss en variant av emballasjen kunden bestiller oftest («Samme som ordre 10329, men 20 cm dype og 500 stk.» for Lunde Bakeri).
+- Uten tydelig instruks valgte modellen `proposeVariant` av en eske kunden hadde bestilt før, i stedet for en ny spesifikasjon, og hoppet over oppfølgingsspørsmålene. Systemprompten sier nå at nye behov gir spørsmål først og så `proposeSpec`, og at `proposeVariant` bare brukes når kunden selv viser til en tidligere ordre.
+- Vinesken er fjernet fra Nordlys' ordrehistorikk, siden den ikke finnes på bewifood.com. I demomanuset lager assistenten en ny eske til vinflaskene. Bare Nordlys' ordre endret seg da dataene ble laget på nytt, og ordrenumrene er de samme.
+- «Se over og send» på variantkortet åpner variantskjemaet, men skjemaet leser ikke endringene fra adressen før D4.
+- Min side gir feilen «Next.js encountered the unstable value `Date.now()`» i dev, fra `listInvoices` i `src/shop/mock/orders.ts`. Den fantes før fase D.
+
+### D3. Fritekst til spesifikasjon
+
+- [x] Felt øverst i konfiguratoren: «Beskriv hva som skal pakkes». Assistenten fyller ut skjemaet og forklarer valgene i høyst to setninger
+
+**Merknader fra D3:**
+
+- Feltet (`DescribeBox`) ligger inne i konfiguratorens skjema og kaller assistenten med `context: { kind: "configurator" }`. Forslaget fyller ut feltene direkte, uten ny navigering, og kunden kan angre.
+- Assistenten bruker kundens tidligere esker når de passer. Med «Gaveeske til 2 flasker vin» tok den utgangspunkt i Nordlys' sorte gaveeske med hvit logo.
+- `ScriptedAssistant` forstår bare beskrivelser med mål («400 x 300 x 200 mm») eller vinflasker. Andre beskrivelser gir en melding om å skrive mål og antall.
+
+### D4. Variant med naturlig språk
+
+- [x] Variantsiden leser endringer fra adressen, og skjemaet starter med dem
+- [x] «Beskriv endringen» på ordresiden for skreddersydde linjer
+- [x] `proposeVariant` i chatpanelet viser endringene som en tabell med «Se over og send»
+
+**Merknader fra D4:**
+
+- Endringene ligger i adressen med samme feltnavn som i konfiguratoren (`/no/min-side/variant?ordre=10329&linje=l3&h=200&antall=500`). `parseVariantSuggestion` i `src/shop/specs.ts` hopper over ukjente valg og ugyldige tall, og `createVariantRequest` sjekker alt på nytt når forespørselen sendes.
+- «Beskriv endringen» ligger sammenfoldet under hver skreddersydde linje på ordresiden. Forslaget åpner variantskjemaet med en melding om at endringene kommer fra emballasjeveilederen.
+- Testet med Lunde Bakeri: «20 cm dype og 500 stk.» på ordre 10329 ga høyde 150 → 200 mm og antall 800 → 500, til 13,80 kr per stk. Forespørselen ble sendt som T-2401.
+- Et tomt merknadsfelt kan ikke uttrykkes i adressen. Merknaden kan fjernes i skjemaet.
+
+### D5. Brief til selger
+
+- [ ] Når forespørselen kommer fra en samtale, lager assistenten en kort brief: behov, krav, valg og åpne spørsmål
+- [ ] `QuoteRequest.brief`, vist på Forespørsler
+
+### D6. Dokumentasjon og kvalitet
+
+- [ ] Assistenten, verktøyene og reserveplanen beskrevet i `03-arkitektur.md` og `04-ai.md`
+- [ ] `pnpm typecheck`, `pnpm lint` og `pnpm format:check` uten feil
+- [ ] Gå gjennom del 4 av demomanuset i nettleseren med `scripted`, og med `llm` når nøkkelen er på plass (Playwright, desktop og mobil)
 
 ## Fase E: Utvidelser
 
@@ -191,5 +254,5 @@ Hver fase avsluttes med noe som kan vises, og legger til en del av [demomanuset]
 - Det islandske markedet har sitt eget sortiment på bewifood.com. De seks produktene som lå i Sanity, ligger nå i `src/shop/mock/data/catalog-is.json`, med egne typer (Kassar og Pokar).
 - Valglistene for type og produktgruppe i Studio kommer fra `src/shop/mock/data/taxonomy.json`, som `build-catalog.mts` lager. Med en ekte produktkatalog bør det bli en egen input i Studio.
 - Bølgepappeske, Postboks og Flaskeeske er fjernet, fordi de ikke finnes på bewifood.com. Katalogen har nå 100 produkter. Variantene av pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter er beholdt, så de kan bestilles. «Tilpass mål og trykk» vises ikke lenger på produktsider, siden ingen katalogvare er en eske i bølgepapp. Konfiguratoren virker som før.
-- Nordlys Netthandel har fått ny ordrehistorikk med forsendelsesesker og vinesker etter mål, gaveesker, pakketape og strekkfilm. `generate-mock-data.mts` gir nå hver variant og kunde sin egen strøm av tilfeldige tall. Derfor er alle priser, lagertall og ordre laget på nytt. Lunde Bakeris ordre med brødesken i demomanuset er nå 10329 (800 stk.).
+- Nordlys Netthandel har fått ny ordrehistorikk med forsendelsesesker etter mål, gaveesker, pakketape og strekkfilm. `generate-mock-data.mts` gir nå hver variant og kunde sin egen strøm av tilfeldige tall. Derfor er alle priser, lagertall og ordre laget på nytt. Lunde Bakeris ordre med brødesken i demomanuset er nå 10329 (800 stk.).
 - Teksten på Produkter-siden i Sanity nevner fortsatt «bransje» til `pnpm seed:content --replace` er kjørt, eller teksten er rettet i Studio.

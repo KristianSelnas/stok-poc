@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { market as getMarketParam } from "next/root-params";
+import { Suspense } from "react";
 
 import { MinSideNav } from "@/components/shop/MinSideNav";
+import { ShopAssistant } from "@/components/shop/assistant/ShopAssistant";
 import { ShopBar } from "@/components/shop/ShopBar";
 import { Container } from "@/components/ui/Container";
 import { SHOP_MARKET } from "@/shop/paths";
@@ -24,6 +26,9 @@ export default async function MinSideLayout({ children }: LayoutProps<"/[market]
           {children}
         </Container>
       </section>
+      <Suspense>
+        <ShopAssistant />
+      </Suspense>
     </>
   );
 }

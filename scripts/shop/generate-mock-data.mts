@@ -261,21 +261,6 @@ const profiles: Profile[] = [
       },
       {
         custom: {
-          name: "Vineske for 6 flasker, 280 x 190 x 360 mm",
-          unitPrice: 16.5,
-          customSpec: spec({
-            style: "0201",
-            innerDimensionsMm: { length: 280, width: 190, height: 360 },
-            board: "BC dobbelbølge",
-            color: "Brun",
-            print: { colors: 1, description: "Logo på to sider" },
-            notes: "Innredning for 6 flasker à 0,75 l",
-          }),
-        },
-        units: [200, 500],
-      },
-      {
-        custom: {
           name: "Gaveeske med logo, 300 x 200 x 80 mm",
           unitPrice: 9.8,
           customSpec: spec({

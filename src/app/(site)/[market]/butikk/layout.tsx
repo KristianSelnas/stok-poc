@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { market as getMarketParam } from "next/root-params";
+import { Suspense } from "react";
 
+import { ShopAssistant } from "@/components/shop/assistant/ShopAssistant";
 import { ShopBar } from "@/components/shop/ShopBar";
 import { SHOP_MARKET } from "@/shop/paths";
 
@@ -16,6 +18,9 @@ export default async function ShopLayout({ children }: LayoutProps<"/[market]/bu
     <>
       <ShopBar />
       {children}
+      <Suspense>
+        <ShopAssistant />
+      </Suspense>
     </>
   );
 }
