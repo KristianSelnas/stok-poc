@@ -257,7 +257,28 @@ export type QuoteRequest = {
   changes: SpecChange[];
   /** Foreløpig pris per stk. eks. mva. Selger bekrefter i tilbudet. */
   estimatedUnitPrice: number | null;
+  /** Engangskostnad for stansekniv og trykkplater, eks. mva. Bare for nye esker fra konfiguratoren. */
+  estimatedToolingCost: number | null;
+  /** Foreløpig leveringstid i virkedager. Bare for nye esker fra konfiguratoren. */
+  estimatedLeadTimeDays: number | null;
   note: string | null;
+};
+
+/** Én del av en estimert pris per stk., f.eks. papp eller trykk. Rabatter er negative. */
+export type EstimatePart = { label: string; amount: number };
+
+/** Estimert pris og leveringstid på en skreddersydd eske (fase C). Beløp i NOK eks. mva. */
+export type QuoteEstimate = {
+  unitPrice: number;
+  /** Engangskostnad for stansekniv og trykkplater. */
+  toolingCost: number;
+  /** Pris per stk. ganger antall, pluss engangskostnaden. */
+  total: number;
+  leadTimeDays: number;
+  /** Hva prisen per stk. består av. Summen er lik `unitPrice` før avrunding. */
+  parts: EstimatePart[];
+  /** Navnet på prisavtalen som er brukt, når kunden har en. */
+  agreement: string | null;
 };
 
 export type QuoteRequestInput = {

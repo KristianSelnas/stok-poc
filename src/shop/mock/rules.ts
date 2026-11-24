@@ -1,12 +1,23 @@
 /**
- * Forretningsregler i mocken: mengderabatt, avtalepris, frakt og mva.
+ * Forretningsregler i mocken: mengderabatt, avtalepris, frakt, mva og kalkyle
+ * for skreddersydde esker.
  *
  * I en ekte løsning ligger disse reglene i ERP. Mock-tjenestene og skriptet
  * som lager ordrehistorikken (scripts/shop/generate-mock-data.mts) bruker
  * samme regler, så prisene henger sammen. Filen har ingen avhengigheter, så
  * den kan kjøres direkte med Node.
  */
-import type { OrderTotals, PackagingSpec, PriceAgreement, PriceInfo, PriceTier, Variant } from "../domain.ts";
+import { sheetAreaM2 } from "../dieline.ts";
+import type {
+  EstimatePart,
+  OrderTotals,
+  PackagingSpec,
+  PriceAgreement,
+  PriceInfo,
+  PriceTier,
+  QuoteEstimate,
+  Variant,
+} from "../domain.ts";
 
 export const VAT_RATE = 0.25;
 export const SHIPPING_FEE = 750;
@@ -116,4 +127,93 @@ export function estimateVariantUnitPrice(
   const volume =
     next.quantity < original.quantity * 0.5 ? 1.1 : next.quantity > original.quantity * 2 ? 0.95 : 1;
   return Math.max(0.5, Math.round(original.unitPrice * area * board * colors * volume * 10) / 10);
+}
+
+// ---------------------------------------------------------------------------
+// Kalkyle for nye skreddersydde esker (fase C)
+// ---------------------------------------------------------------------------
+
+/** Papp-pris per m² ark, eks. mva. */
+const boardPricePerM2: Record<string, number> = {
+  "E-bølge": 7,
+  "B-bølge": 10,
+  "C-bølge": 11,
+  "BC dobbelbølge": 16,
+};
+
+/** Påslag for hvit og sort papp. */
+const colorFactor: Record<string, number> = { Brun: 1, Hvit: 1.15, Sort: 1.3 };
+
+const PRINT_PER_COLOR = 0.6;
+/** Omstilling av maskinene, fordelt på antallet. */
+const SETUP_COST = 1500;
+/** 0427 stanses og trenger en stansekniv. 0201 lages uten. */
+const DIE_COST = 3500;
+const PLATE_COST_PER_COLOR = 900;
+
+const round2 = (value: number) => Math.round(value * 100) / 100;
+const nbDecimal = new Intl.NumberFormat("nb-NO", { maximumFractionDigits: 2 });
+
+/** Mengderabatt i prosent på en skreddersydd eske. */
+export function customVolumeDiscount(quantity: number): number {
+  return quantity >= 10000 ? 12 : quantity >= 5000 ? 8 : 0;
+}
+
+/** Leveringstid i virkedager. */
+export function customLeadTimeDays(spec: PackagingSpec, quantity: number): number {
+  let days = 10;
+  if (spec.style === "0427") days += 5;
+  if (spec.print && spec.print.colors > 0) days += 3;
+  if (spec.board === "BC dobbelbølge") days += 2;
+  if (quantity > 10000) days += 5;
+  return days;
+}
+
+/**
+ * Estimert pris på en ny skreddersydd eske: papp ut fra arkarealet, trykk,
+ * omstilling fordelt på antallet, mengderabatt og avtalerabatt. Stansekniv og
+ * trykkplater er en engangskostnad. Selger bekrefter prisen i tilbudet.
+ */
+export function estimateCustomBox(
+  spec: PackagingSpec,
+  quantity: number,
+  agreement: { name: string; discountPercent: number } | null = null,
+): QuoteEstimate {
+  const area = sheetAreaM2(spec);
+  const colors = spec.print?.colors ?? 0;
+  const parts: EstimatePart[] = [
+    {
+      label: `Papp ${spec.board}, ${spec.color.toLowerCase()} (${nbDecimal.format(round2(area))} m²)`,
+      amount: round2(area * (boardPricePerM2[spec.board] ?? 10) * (colorFactor[spec.color] ?? 1)),
+    },
+  ];
+  if (colors > 0) {
+    parts.push({
+      label: `Trykk, ${colors} ${colors === 1 ? "farge" : "farger"}`,
+      amount: colors * PRINT_PER_COLOR,
+    });
+  }
+  parts.push({ label: "Omstilling av produksjonen", amount: round2(SETUP_COST / quantity) });
+
+  const subtotal = parts.reduce((sum, p) => sum + p.amount, 0);
+  const volume = customVolumeDiscount(quantity);
+  if (volume) parts.push({ label: `Mengderabatt (${volume} %)`, amount: -round2((subtotal * volume) / 100) });
+  if (agreement && agreement.discountPercent) {
+    const afterVolume = parts.reduce((sum, p) => sum + p.amount, 0);
+    parts.push({
+      label: `Avtalerabatt (${agreement.discountPercent} %)`,
+      amount: -round2((afterVolume * agreement.discountPercent) / 100),
+    });
+  }
+
+  const unitPrice = Math.max(0.5, roundPrice(parts.reduce((sum, p) => sum + p.amount, 0)));
+  const toolingCost = (spec.style === "0427" ? DIE_COST : 0) + colors * PLATE_COST_PER_COLOR;
+  return {
+    unitPrice,
+    toolingCost,
+    total: Math.round(unitPrice * quantity + toolingCost),
+    leadTimeDays: customLeadTimeDays(spec, quantity),
+    parts,
+    agreement: agreement?.name ?? null,
+  };
 }

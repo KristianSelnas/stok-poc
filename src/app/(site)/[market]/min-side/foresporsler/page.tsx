@@ -69,6 +69,21 @@ async function Requests({ searchParams }: { searchParams: Props["searchParams"] 
                     </>
                   )}
                 </p>
+                {(r.estimatedToolingCost !== null || r.estimatedLeadTimeDays !== null) && (
+                  <p className="mt-1 text-sm">
+                    {r.estimatedToolingCost !== null && (
+                      <>
+                        {t.toolingCostShort}: <strong>{formatNok(r.estimatedToolingCost)}</strong>
+                      </>
+                    )}
+                    {r.estimatedToolingCost !== null && r.estimatedLeadTimeDays !== null && " · "}
+                    {r.estimatedLeadTimeDays !== null && (
+                      <>
+                        {t.leadTimeLabel}: <strong>{t.leadTimeValue(r.estimatedLeadTimeDays)}</strong>
+                      </>
+                    )}
+                  </p>
+                )}
                 {r.note && (
                   <p className="mt-3 text-sm">
                     <span className="font-semibold text-stok-blue">{t.messageToSeller}:</span> {r.note}

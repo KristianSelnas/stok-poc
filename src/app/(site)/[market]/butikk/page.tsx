@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 
+import { BoxPreview } from "@/components/shop/BoxPreview";
 import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { ShopProductCard } from "@/components/shop/ShopProductCard";
 import { buttonClasses } from "@/components/ui/Button";
@@ -10,10 +11,11 @@ import { quickAddToCart } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import { formatNok, formatNumber, formatShopDate } from "@/shop/format";
 import { shop } from "@/shop/index";
-import { catalogPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
+import { catalogPath, configuratorPath, productPath, shopPath, type CatalogParams } from "@/shop/paths";
 import { getShopTaxonomy, listShopProducts } from "@/shop/queries";
 import { getFrequentItems } from "@/shop/recommendations";
 import { getSession } from "@/shop/session";
+import { defaultCustomBox } from "@/shop/specs";
 
 export const metadata: Metadata = { title: { absolute: "Nettbutikk | STOK Emballage" } };
 
@@ -368,6 +370,38 @@ function CatalogSkeleton() {
   );
 }
 
+// ---------------------------------------------------------------------------
+// Skreddersydd eske
+// ---------------------------------------------------------------------------
+
+const teaserSpec = { ...defaultCustomBox["0201"].spec, print: { colors: 2, description: "Logo" } };
+
+function ConfiguratorTeaser() {
+  return (
+    <section aria-labelledby="skreddersydd" className="pb-10 md:pb-14">
+      <Container>
+        <div className="grid items-center gap-6 rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10 md:grid-cols-[1fr_16rem] md:p-8">
+          <div>
+            <p className="font-meta text-sm font-medium tracking-wide text-stok-green-dark uppercase">
+              {t.configurator}
+            </p>
+            <h2 id="skreddersydd" className="mt-1 text-3xl">
+              {t.configuratorTeaserTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl">{t.configuratorTeaserText}</p>
+            <Link href={configuratorPath()} className={buttonClasses("primary", "mt-5")}>
+              {t.openConfigurator}
+            </Link>
+          </div>
+          <div aria-hidden className="hidden md:block">
+            <BoxPreview spec={teaserSpec} view="3d" />
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 /**
  * Butikkens forside er også katalogen: søk, «Kjøp igjen» og alle produkter
  * med filterknapper. Filtrene ligger i adressen (`?gruppe=eske&vis=alle`).
@@ -396,6 +430,8 @@ export default function ShopHome({ searchParams }: Props) {
       <Suspense fallback={<HighlightsSkeleton />}>
         <Highlights />
       </Suspense>
+
+      <ConfiguratorTeaser />
 
       <section
         id="produkter"

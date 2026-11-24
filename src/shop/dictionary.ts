@@ -234,7 +234,7 @@ export const t = {
   // Forespørsler
   requestsTitle: "Forespørsler",
   noRequests:
-    "Dere har ingen forespørsler. Lag en variant fra en tidligere ordre eller fra Mine emballasjer.",
+    "Dere har ingen forespørsler. Lag en variant fra en tidligere ordre eller fra Mine emballasjer, eller lag en ny eske i konfiguratoren.",
   requestSent: (id: string) =>
     `Forespørsel ${id} er sendt. En rådgiver hos STOK kommer tilbake med tilbud, vanligvis innen to virkedager.`,
   request: (id: string) => `Forespørsel ${id}`,
@@ -243,6 +243,55 @@ export const t = {
   requestStatus: { submitted: "Sendt", inReview: "Under behandling", quoted: "Tilbud sendt" },
   basedOnOrder: "Laget fra ordre",
   requestedBy: "Sendt av",
+
+  toolingCostShort: "Engangskostnad",
+  leadTimeLabel: "Leveringstid",
+  leadTimeValue: (days: number) => `${days} virkedager (ca. ${Math.ceil(days / 5)} uker)`,
+
+  // Konfigurator
+  configurator: "Skreddersydd eske",
+  configuratorTitle: "Lag en skreddersydd eske",
+  configuratorLead:
+    "Velg type, mål og trykk. Kassen tegnes på nytt mens du endrer, og du ser foreløpig pris og leveringstid. Forespørselen går til en rådgiver hos STOK.",
+  boxType: "Kassetype",
+  styleDescriptions: {
+    "0201": "Den vanligste esken til forsendelse og lager. Klaffer oppe og nede.",
+    "0427": "Stanset eske med lokk og innstikk. Passer til postordre og gaver.",
+  } as Record<string, string>,
+  sizeAndMaterial: "Mål og materiale",
+  dimensionLimits: (l: string, b: string, h: string) => `Lengde ${l}, bredde ${b} og høyde ${h} mm.`,
+  printAndQuantity: "Trykk og antall",
+  noPrint: "Uten trykk",
+  customQuantityHelp: (min: string) => `Minste antall er ${min} stk.`,
+  boxName: "Navn på emballasjen",
+  boxNameHelp: "Valgfritt. Brukes i forespørselen, f.eks. «Forsendelseseske stor».",
+  preview: "Forhåndsvisning",
+  view3d: "3D",
+  viewFlat: "Utbrettet",
+  previewLabel: (type: string, dims: string) => `Tegning av ${type.toLowerCase()}, ${dims}`,
+  flatPreviewLabel: (type: string, dims: string) =>
+    `Utbrettet stansemønster for ${type.toLowerCase()}, ${dims}`,
+  sheetSize: (w: string, h: string) => `Arkstørrelse ${w} x ${h} mm.`,
+  previewNote:
+    "Forenklet tegning. Heltrukne linjer kuttes, stiplede linjer rilles. STOK lager stansemønsteret før produksjon.",
+  estimate: "Estimat",
+  toolingCost: "Stansekniv og trykkplater (engangskostnad)",
+  noTooling: "Ingen",
+  totalFor: (quantity: string) => `Sum for ${quantity} stk.`,
+  priceBreakdown: "Slik er prisen per stk. regnet ut",
+  customEstimateHelp:
+    "Estimatet er regnet ut fra arkareal, kvalitet, trykk og antall. Selger bekrefter pris og leveringstid i tilbudet.",
+  guidePriceNote: "Veiledende pris. Logg inn for å se avtaleprisen.",
+  agreementPriceNote: (name: string) => `Avtalepris etter ${name}.`,
+  updatingEstimate: "Oppdaterer estimatet …",
+  estimateNeedsFix: "Rett opp feltene som er merket for å se pris.",
+  loginToSend: "Logg inn for å sende forespørselen",
+  customizeProduct: "Tilpass mål og trykk",
+  customizeProductHelp: "Trenger dere andre mål, en annen kvalitet eller trykk? Lag en skreddersydd variant.",
+  configuratorTeaserTitle: "Finner du ikke riktig eske?",
+  configuratorTeaserText:
+    "Lag en eske etter egne mål, med kvalitet og trykk dere velger. Du ser pris og leveringstid med en gang.",
+  openConfigurator: "Åpne konfiguratoren",
 
   // Mine emballasjer
   packagingsTitle: "Mine emballasjer",
@@ -291,4 +340,6 @@ export const t = {
   errorFixFields: "Rett opp feltene som er merket.",
   errorMm: (min: number, max: number) => `Skriv inn et mål mellom ${min} og ${max} mm.`,
   errorMinQuantity: (min: number) => `Minste antall er ${min} stk.`,
+  errorQuantityRange: (min: string, max: string) => `Skriv inn et antall mellom ${min} og ${max} stk.`,
+  errorMmRange: (min: string, max: string) => `Skriv inn et mål mellom ${min} og ${max} mm.`,
 };

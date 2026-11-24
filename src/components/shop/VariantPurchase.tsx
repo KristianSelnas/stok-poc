@@ -22,6 +22,8 @@ type Props = {
   loginHref: string;
   cartHref: string;
   quoteHref: string;
+  /** Lenke til konfiguratoren per varenummer, med målene fra varianten. Bare for esker som kan tilpasses. */
+  customizeHrefs?: Record<string, string>;
 };
 
 /**
@@ -36,6 +38,7 @@ export function VariantPurchase({
   loginHref,
   cartHref,
   quoteHref,
+  customizeHrefs,
 }: Props) {
   const firstOrderable = variants.find((v) => v.salesMode !== "quote") ?? variants[0];
   const [sku, setSku] = useState(firstOrderable.sku);
@@ -237,6 +240,15 @@ export function VariantPurchase({
           </>
         )}
       </div>
+
+      {customizeHrefs?.[variant.sku] && (
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10">
+          <p>{t.customizeProductHelp}</p>
+          <Link href={customizeHrefs[variant.sku]} className={buttonClasses("secondary", "mt-4")}>
+            {t.customizeProduct}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
