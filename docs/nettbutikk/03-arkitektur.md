@@ -31,8 +31,8 @@ Sidene og server actions kaller aldri mockene direkte. De henter tjenestene fra 
 | `InventoryService` | ERP | Lagerstatus og leveringstid per variant |
 | `PricingService` | ERP | Listepris, avtalepris per kunde og mengderabatt |
 | `CustomerService` | CRM | Firma, brukere, leveringsadresser og prisavtale |
-| `OrderService` | ERP | Ordre, ordrelinjer, status og fakturaer |
-| `QuoteService` | CRM | Forespørsler på skreddersydde løsninger og varianter |
+| `OrderService` | ERP | Ordre, ordrelinjer, status og fakturaer (`listInvoices`) |
+| `QuoteService` | CRM | Forespørsler på skreddersydde løsninger og varianter. Tatt i bruk i fase B |
 | `CartService` | BFF | Handlekurven. Ligger i BFF-en, også når de andre tjenestene er ekte |
 | `AssistantService` | LLMProxy | AI-funksjonene, se [04-ai.md](04-ai.md) |
 
@@ -123,19 +123,38 @@ Butikken ligger under `[market]`, men bare `no` er gyldig. Andre markeder gir 40
 
 | Rute | Innhold | Fase |
 |---|---|---|
-| `/no/butikk` | Butikkforside med produktgrupper, søk og utvalgte produkter | A |
-| `/no/butikk/produkter?gruppe=…&q=…` | Produktliste med filter og søk | A |
+| `/no/butikk?q=…&gruppe=…&bransje=…&vis=alle` | Butikkens forside og katalog: søk, «Kjøp igjen» og alle produkter med filterknapper | A |
+| `/no/butikk/produkter` | Sender videre til `/no/butikk` med samme parametere | A |
 | `/no/butikk/produkter/[slug]` | Produktside med variantvelger, pris, lager og «Legg i kurv» | A |
 | `/no/butikk/handlekurv` | Handlekurv | A |
 | `/no/butikk/kasse` | Leveringsadresse, innkjøpsnummer, leveringsdato | A |
-| `/no/butikk/bekreftelse/[ordrenummer]` | Ordrebekreftelse | A |
+| `/no/butikk/bekreftelse?ordre=…` | Ordrebekreftelse | A |
 | `/no/butikk/logg-inn` | Velger med demokunder | A |
-| `/no/min-side` | Oversikt | B |
-| `/no/min-side/ordre`, `/no/min-side/ordre/[ordrenummer]` | Ordrehistorikk og ordredetaljer, med «Gjenta» og «Lag variant» | B |
+| `/no/min-side` | Oversikt: siste ordre, ubetalte fakturaer, emballasjer og forespørsler | B |
+| `/no/min-side/ordre` | Ordrehistorikk | B |
+| `/no/min-side/ordre?ordre=…` | Ordredetaljer med «Gjenta ordren», «Lag variant» og «Bestill på nytt» | B |
+| `/no/min-side/variant?ordre=…&linje=…` | Variant av en ordrelinje: annen variant av katalogvaren, eller endret spesifikasjon på skreddersydd emballasje | B |
+| `/no/min-side/foresporsler` | Forespørsler med endringer mot originalen | B |
 | `/no/min-side/emballasjer` | Mine emballasjer | B |
+| `/no/min-side/fakturaer` | Fakturaer | B |
+| `/no/min-side/firma` | Prisavtale, adresser og brukere | B |
 | `/no/butikk/konfigurator` | Konfigurator for skreddersydd kasse | C |
 
 Butikken bruker samme layout, header og bunntekst som nettsiden. Headeren får en lenke til nettbutikken og et kurvikon med antall varer når markedet er `no`.
+
+Katalogen er slått sammen med butikkens forside. Med 103 produkter og sju grupper gir en egen listeside bare ett ekstra klikk. Filtrene er lenker med parametere i adressen, så de kan deles og fungerer uten JavaScript. Som standard vises bare varer som kan bestilles direkte. `vis=alle` tar med varer som krever tilbud.
+
+Ordrebekreftelsen bruker en query-parameter i stedet for et dynamisk segment. Med Cache Components kan ikke menyen (som leser adressen med `usePathname`) prerendres på sider med parametere som er ukjente ved bygg. Ordresidene på Min side bruker query-parametere av samme grunn.
+
+## Varianter
+
+En variant lagres som originalen pluss endringene (`QuoteRequest.original` og `QuoteRequest.changes`). `diffSpec` i `src/shop/specs.ts` lager endringslisten, og samme funksjon brukes i skjemaet (forhåndsvisning i nettleseren) og på serveren når forespørselen lagres. Serveren henter originalen fra ordren selv, så diffen er alltid mot det kunden faktisk kjøpte. AI-en i fase D skal levere en `PackagingSpec` og bruke den samme funksjonen.
+
+Foreløpig pris på en variant regnes ut i `estimateVariantUnitPrice` i `src/shop/mock/rules.ts`. Utgangspunktet er prisen på originalen, justert for areal, kvalitet, antall trykkfarger og antall.
+
+«Gjenta ordren» legger katalogvarene i kurven og husker ordrenummeret i en cookie. Den nye ordren får `basedOn: { kind: "reorder" }`. Skreddersydde linjer legges ikke i kurven. De bestilles på nytt via variantskjemaet, eventuelt uten endringer.
+
+Fakturaer lages av mocken fra sendte og leverte ordre, med kundens betalingsfrist.
 
 ## Innlogging i demoen
 
@@ -167,15 +186,60 @@ Faste UI-tekster i butikken legges i en egen ordbok, `src/shop/dictionary.ts`, m
 src/
 ├── app/(site)/[market]/
 │   ├── butikk/                Butikksidene
-│   └── min-side/              Min side (fase B)
+│   └── min-side/              Min side
 ├── components/shop/           Komponenter for butikken
 └── shop/
     ├── domain.ts              Domenetyper
-    ├── services/              Grensesnitt
+    ├── services/              Grensesnitt, ett per bakenforliggende system
     ├── mock/                  Mock-implementasjoner
-    │   └── data/              JSON med produkter, priser, kunder og ordre
+    │   ├── data/              JSON med produkter, priser, lager, kunder og ordre
+    │   └── rules.ts           Regler for mengderabatt, avtalepris, frakt og mva
+    ├── index.ts               shop(): velger implementasjon ut fra SHOP_BACKEND
+    ├── queries.ts             Katalogdata med `use cache`
     ├── session.ts             getSession() for demoinnlogging
-    ├── cart.ts                Server actions for handlekurven
-    ├── dictionary.ts          UI-tekster
-    └── index.ts               Velger implementasjon
+    ├── cart.ts                Handlekurven i cookie (CartService)
+    ├── cart-view.ts           Kurven med produkt, pris og lager per linje
+    ├── actions.ts             Server actions: innlogging, kurv, bestilling, gjenkjøp og varianter
+    ├── specs.ts               Spesifikasjoner: diff, navn og visning
+    ├── recommendations.ts     «Kjøp igjen» og Mine emballasjer, ut fra ordrehistorikken
+    ├── paths.ts               shopPath() og productPath()
+    ├── format.ts              Kroner, tall og datoer
+    └── dictionary.ts          UI-tekster
+
+scripts/shop/
+├── fetch-bewifood.mts         Henter produkter og bilder fra bewifood.com
+├── build-catalog.mts          Lager catalog.json fra rådataene, med tillegg for demoen
+├── generate-mock-data.mts     Lager prices.json, inventory.json og orders.json
+└── data/bewifood-raw.json     Rådata fra bewifood.com
 ```
+
+## Slik bytter du en mock med et ekte system
+
+1. Lag en adapter i `src/shop/adapters/`, for eksempel `adapters/erp/pricing.ts`, som oppfyller `PricingService` i `src/shop/services/pricing.ts`.
+2. Oversett svarene fra systemet til domenetypene i `src/shop/domain.ts`. Adapteren er det eneste stedet som kjenner systemets format.
+3. Koble adapteren inn i `src/shop/index.ts`, for eksempel med `SHOP_BACKEND=erp`. Tjenester kan byttes én og én, så det går fint å bruke ekte priser og mock-ordre samtidig.
+4. Reglene i `src/shop/mock/rules.ts` gjelder bare mockene. Med ekte ERP kommer pris, rabatt, frakt og mva fra ERP. Klientkoden bruker `unitPriceFor` og `roundToBundle` fra samme fil til å vise pris for et antall. De funksjonene bør flyttes ut av `mock/` når en ekte prisadapter kommer.
+
+Sider og server actions henter tjenestene med `shop()` og vet ikke hvilken implementasjon de får. Kunde-ID kommer alltid fra `getSession()` på serveren.
+
+## Oppdatere mockdataene
+
+```bash
+node scripts/shop/fetch-bewifood.mts       # henter på nytt fra bewifood.com (mellomlager i scripts/shop/.cache)
+node scripts/shop/build-catalog.mts        # lager catalog.json
+node scripts/shop/generate-mock-data.mts   # lager priser, lager og ordre
+```
+
+Skriptene trenger ingen pakker utover Node 24. `generate-mock-data.mts` bruker en fast startverdi for tilfeldige tall, så den gir samme data hver gang.
+
+### Tolkning av dataene fra bewifood.com
+
+| bewifood.com | I katalogen |
+|---|---|
+| «Lager» i varianttabellen | Lagervare (`stock`): på lager, sendes innen 2 virkedager |
+| «Forespørsel» i varianttabellen | Bestillingsvare (`madeToOrder`): kan bestilles, leveringstid 2–4 uker |
+| Produkt uten varianttabell | Tilbud (`quote`): kundetilpasset, knappen «Be om tilbud» |
+
+bewifood.com har 16 produktgrupper, og mange av dem har bare ett eller to produkter. Katalogen slår dem sammen til sju: Esker og kasser, Kar og spann, Brett, Sekker og film, Ark og beskyttelse, Transport og temperatur, og Tilbehør og maskiner.
+
+Katalogen har 103 produkter og 235 varianter. 100 produkter kommer fra bewifood.com. Tre er lagt til for demoen fordi bewifood.com mangler esker i bølgepapp: Bølgepappeske (FEFCO 0201), Postboks (FEFCO 0427) og Flaskeeske. Seks forbruksvarer (pakketape, strekkfilm, strammebånd, polybags, palleark og pallehetter) har fått konkrete varianter. Tilleggene er merket med `source.name` = «STOK (tillegg for demo)».

@@ -1,8 +1,12 @@
+import { Suspense } from "react";
+
+import { ShopHeaderLink, ShopHeaderLinkFallback } from "@/components/shop/ShopHeaderLink";
 import { getNavigation, getSiteSettings } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionaries";
 import { isExternal, resolveHref } from "@/lib/links";
 import { marketPath, markets, type MarketId } from "@/lib/markets";
 import type { Link as SanityLink } from "@/sanity/types";
+import { SHOP_MARKET } from "@/shop/paths";
 
 import { Logo } from "./Logo";
 import { MainNav } from "./MainNav";
@@ -55,6 +59,11 @@ export async function Header({ market }: { market: MarketId }) {
             chooseMarket: t.chooseMarket,
           }}
         />
+        {market === SHOP_MARKET && (
+          <Suspense fallback={<ShopHeaderLinkFallback />}>
+            <ShopHeaderLink />
+          </Suspense>
+        )}
       </div>
     </header>
   );

@@ -41,10 +41,11 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 
 ### Del 2: Min side (fase B)
 
-1. Kunden åpner Min side og ser ordren fra del 1 øverst i ordrehistorikken.
-2. Kunden gjentar en ordre fra i sommer med ett klikk og justerer antallet.
-3. Kunden logger inn som Lunde Bakeri og åpner en tidligere ordre på en skreddersydd eske.
-4. Kunden velger «Lag variant», endrer dybden fra 15 til 20 cm og sender en forespørsel. Varianten viser hva som er endret mot originalen.
+1. Kunden åpner Min side og ser ordren fra del 1 øverst under «Siste ordre».
+2. Kunden åpner en tidligere ordre, velger «Gjenta ordren» og justerer antallet i kurven. Den nye ordren er merket «Gjenkjøp av …».
+3. Kunden logger inn som Lunde Bakeri og åpner ordre 10327 med «Brødeske med logo, 400 x 300 x 150 mm».
+4. Kunden velger «Lag variant», endrer høyden fra 150 til 200 mm og antallet fra 700 til 500, og ser endringene og foreløpig pris fortløpende.
+5. Kunden sender forespørselen. Under Forespørsler vises varianten med endringene mot originalen.
 
 ### Del 3: Skreddersydd kasse (fase C)
 
@@ -57,7 +58,7 @@ Manuset viser hele flyten på 10–15 minutter. Hver fase legger til en del av m
 1. Nordlys Netthandel skriver: «Jeg skal sende 6 vinflasker med post, og pakken må tåle litt fukt.»
 2. Assistenten stiller ett eller to oppfølgingsspørsmål og foreslår en eske fra katalogen og en skreddersydd variant.
 3. Kunden velger den skreddersydde, og konfiguratoren åpnes med verdiene ferdig utfylt.
-4. Lunde Bakeri skriver på Min side: «Samme som ordre 10482, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
+4. Lunde Bakeri skriver på Min side: «Samme som ordre 10327, men 20 cm dype og 500 stk.» Assistenten lager varianten og viser endringene.
 
 ### Del 5: Utvidelser (fase E)
 

@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Produktlisten i nettbutikken er slått sammen med butikkens forside. Query-parametere følger med.
+  async redirects() {
+    return [{ source: "/no/butikk/produkter", destination: "/no/butikk", permanent: false }];
+  },
   // PoC-en skal ikke indekseres. Headeren gjelder alle svar, også bilder, filer og Studio.
   async headers() {
     if (allowIndexing) return [];

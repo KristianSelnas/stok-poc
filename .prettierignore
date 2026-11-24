@@ -5,3 +5,5 @@ pnpm-workspace.yaml
 node_modules/
 .idea/
 src/sanity/sanity.types.ts
+# Generert av skriptene i scripts/shop/
+scripts/shop/data/
