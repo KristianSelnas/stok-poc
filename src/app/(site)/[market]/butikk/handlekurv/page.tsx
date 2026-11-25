@@ -7,6 +7,7 @@ import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { StockBadge } from "@/components/shop/StockBadge";
 import { buttonClasses } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { Input } from "@/components/ui/Form";
 import { removeCartLine, updateCartLine } from "@/shop/actions";
 import { getCartView } from "@/shop/cart-view";
 import { t } from "@/shop/dictionary";
@@ -79,14 +80,15 @@ async function CartContents({ searchParams }: { searchParams: Props["searchParam
                   <label className="sr-only" htmlFor={`qty-${line.sku}`}>
                     {t.quantityFor(line.variant.name)}
                   </label>
-                  <input
+                  <Input
+                    shape="pill"
                     id={`qty-${line.sku}`}
                     name="quantity"
                     type="number"
                     inputMode="numeric"
                     min={1}
                     defaultValue={line.quantity}
-                    className="w-28 rounded-full border-2 border-stok-blue/20 px-4 py-2 focus:border-stok-blue focus:outline-none"
+                    className="w-28"
                   />
                   <button
                     type="submit"

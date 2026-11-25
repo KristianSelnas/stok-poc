@@ -4,13 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
+import { Label, Select } from "@/components/ui/Form";
 import { t } from "@/shop/dictionary";
 import type { Taxon } from "@/shop/domain";
 import { catalogPath, type CatalogParams, shopPath } from "@/shop/paths";
-
-/** Egen pil i stedet for nettleserens, så den får plass innenfor den runde kanten. */
-const fieldClass =
-  "appearance-none rounded-full border-2 border-stok-blue/20 bg-white py-2.5 pr-11 pl-4 focus:border-stok-blue focus:outline-none";
 
 type FilterKey = "type" | "gruppe" | "materiale";
 
@@ -59,38 +56,21 @@ export function CatalogFilters({ params, types, groups, materials }: Props) {
       {params.q && <input type="hidden" name="q" value={params.q} />}
       {filters.map((filter) => (
         <div key={filter.key}>
-          <label
-            htmlFor={`filter-${filter.key}`}
-            className="mb-1 block font-meta text-sm font-medium text-stok-blue"
+          <Label htmlFor={`filter-${filter.key}`}>{filter.label}</Label>
+          <Select
+            shape="pill"
+            id={`filter-${filter.key}`}
+            name={filter.key}
+            defaultValue={params[filter.key] ?? ""}
+            onChange={(event) => change(filter.key, event.target.value)}
           >
-            {filter.label}
-          </label>
-          <div className="relative">
-            <select
-              id={`filter-${filter.key}`}
-              name={filter.key}
-              defaultValue={params[filter.key] ?? ""}
-              onChange={(event) => change(filter.key, event.target.value)}
-              className={fieldClass}
-            >
-              <option value="">{filter.all}</option>
-              {filter.options.map((option) => (
-                <option key={option.slug} value={option.slug}>
-                  {option.title}
-                </option>
-              ))}
-            </select>
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-stok-blue"
-            >
-              <path d="m5 7.5 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
+            <option value="">{filter.all}</option>
+            {filter.options.map((option) => (
+              <option key={option.slug} value={option.slug}>
+                {option.title}
+              </option>
+            ))}
+          </Select>
         </div>
       ))}
       <noscript>

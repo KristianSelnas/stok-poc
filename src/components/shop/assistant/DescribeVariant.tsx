@@ -7,6 +7,7 @@ import { streamAssistant } from "@/shop/assistant/client";
 import { t } from "@/shop/dictionary";
 
 import { buttonClasses } from "../../ui/Button";
+import { Input } from "../../ui/Form";
 
 /**
  * «Beskriv endringen» på en skreddersydd ordrelinje (fase D4). Assistenten
@@ -76,13 +77,14 @@ export function DescribeVariant({
           {t.describeChangeLabel(lineName)}
         </label>
         <div className="flex flex-wrap gap-2">
-          <input
+          <Input
+            shape="pill"
             id={`${id}-text`}
             value={text}
             onChange={(e) => setText(e.target.value)}
             maxLength={500}
             placeholder={t.describeChangePlaceholder}
-            className="min-w-0 flex-1 rounded-full border-2 border-stok-blue/20 bg-white px-4 py-2 focus:border-stok-blue focus:outline-none"
+            className="min-w-0 flex-1"
           />
           <button
             type="submit"

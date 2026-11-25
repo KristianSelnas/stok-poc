@@ -8,6 +8,7 @@ import { ProductImageBox } from "@/components/shop/ProductImageBox";
 import { ShopProductCard } from "@/components/shop/ShopProductCard";
 import { buttonClasses } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { Input } from "@/components/ui/Form";
 import { quickAddToCart } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import { formatNok, formatNumber, formatShopDate } from "@/shop/format";
@@ -25,9 +26,6 @@ type SearchParams = Props["searchParams"];
 
 /** Produktene som vises når ingen kunde er logget inn. */
 const popularSlugs = ["fiskekasse", "stablebar-transportkasse", "brodkasser", "pakketape"];
-
-const fieldClass =
-  "rounded-full border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none";
 
 /** Leser og sjekker filtrene i adressen. Ukjente verdier ignoreres. */
 async function readParams(searchParams: SearchParams): Promise<CatalogParams> {
@@ -65,13 +63,14 @@ function SearchFields({ params = {} }: { params?: CatalogParams }) {
       <label htmlFor="shop-search" className="sr-only">
         {t.searchLabel}
       </label>
-      <input
+      <Input
+        shape="pill"
         id="shop-search"
         name="q"
         type="search"
         defaultValue={params.q}
         placeholder={t.searchPlaceholder}
-        className={`min-w-0 flex-1 ${fieldClass} px-5 py-3`}
+        className="min-w-0 flex-1"
       />
       {params.type && <input type="hidden" name="type" value={params.type} />}
       {params.gruppe && <input type="hidden" name="gruppe" value={params.gruppe} />}

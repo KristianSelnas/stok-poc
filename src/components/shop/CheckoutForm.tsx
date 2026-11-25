@@ -7,10 +7,7 @@ import { t } from "@/shop/dictionary";
 import type { Address } from "@/shop/domain";
 
 import { buttonClasses } from "../ui/Button";
-
-const inputClass =
-  "w-full rounded-2xl border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none";
-const labelClass = "mb-1 block font-meta text-sm font-medium text-stok-blue";
+import { FieldHelp, Input, Label, Textarea } from "../ui/Form";
 
 /** Kasseskjemaet. Kunde og varer leses fra sesjon og kurv på serveren. */
 export function CheckoutForm({
@@ -64,51 +61,32 @@ export function CheckoutForm({
         </legend>
         <div className="clear-both grid gap-5 sm:grid-cols-2">
           <div>
-            <label htmlFor="poNumber" className={labelClass}>
-              {t.poNumber}
-            </label>
-            <input
+            <Label htmlFor="poNumber">{t.poNumber}</Label>
+            <Input
               id="poNumber"
               name="poNumber"
               maxLength={40}
               aria-describedby="poNumber-help"
-              className={inputClass}
+              className="w-full"
             />
-            <p id="poNumber-help" className="mt-1 text-sm">
-              {t.poNumberHelp}
-            </p>
+            <FieldHelp id="poNumber-help">{t.poNumberHelp}</FieldHelp>
           </div>
           <div>
-            <label htmlFor="requestedDeliveryDate" className={labelClass}>
-              {t.requestedDate}
-            </label>
-            <input
+            <Label htmlFor="requestedDeliveryDate">{t.requestedDate}</Label>
+            <Input
               id="requestedDeliveryDate"
               name="requestedDeliveryDate"
               type="date"
               min={minDate}
               aria-describedby="date-help"
-              className={inputClass}
+              className="w-full"
             />
-            <p id="date-help" className="mt-1 text-sm">
-              {t.requestedDateHelp}
-            </p>
+            <FieldHelp id="date-help">{t.requestedDateHelp}</FieldHelp>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="note" className={labelClass}>
-              {t.note}
-            </label>
-            <textarea
-              id="note"
-              name="note"
-              rows={3}
-              maxLength={500}
-              aria-describedby="note-help"
-              className={inputClass}
-            />
-            <p id="note-help" className="mt-1 text-sm">
-              {t.noteHelp}
-            </p>
+            <Label htmlFor="note">{t.note}</Label>
+            <Textarea id="note" name="note" rows={3} maxLength={500} aria-describedby="note-help" />
+            <FieldHelp id="note-help">{t.noteHelp}</FieldHelp>
           </div>
         </div>
         <dl className="mt-6 grid gap-4 border-t border-stok-blue/10 pt-5 text-sm sm:grid-cols-2">

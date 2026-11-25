@@ -10,13 +10,10 @@ import { estimateVariantUnitPrice } from "@/shop/mock/rules";
 import { boardOptions, colorOptions, diffSpec, specName, type VariantFormValues } from "@/shop/specs";
 
 import { buttonClasses } from "../ui/Button";
+import { FieldError, FieldHelp, Input, Label, Select, Textarea } from "../ui/Form";
 import { ChangesTable } from "./SpecSummary";
 
 type Original = { name: string; spec: PackagingSpec; quantity: number; unitPrice: number };
-
-const inputClass =
-  "w-full rounded-2xl border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none aria-invalid:border-red-600";
-const labelClass = "mb-1 block font-meta text-sm font-medium text-stok-blue";
 
 /**
  * Skjema for en variant av en skreddersydd ordrelinje. Feltene starter med
@@ -76,10 +73,8 @@ export function CustomVariantForm({
 
   const field = (key: "length" | "width" | "height", label: string) => (
     <div>
-      <label htmlFor={key} className={labelClass}>
-        {label}
-      </label>
-      <input
+      <Label htmlFor={key}>{label}</Label>
+      <Input
         id={key}
         name={key}
         type="number"
@@ -90,13 +85,9 @@ export function CustomVariantForm({
         onChange={set(key)}
         aria-invalid={!!error(key)}
         aria-describedby={error(key) ? `${key}-error` : undefined}
-        className={inputClass}
+        className="w-full"
       />
-      {error(key) && (
-        <p id={`${key}-error`} className="mt-1 text-sm text-red-700">
-          {error(key)}
-        </p>
-      )}
+      {error(key) && <FieldError id={`${key}-error`}>{error(key)}</FieldError>}
     </div>
   );
 
@@ -107,7 +98,9 @@ export function CustomVariantForm({
 
       <div className="space-y-6 rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10">
         <fieldset>
-          <legend className={`${labelClass} text-base`}>{t.dimensionsMm}</legend>
+          <legend className="mb-1 block font-meta text-base font-medium text-stok-blue">
+            {t.dimensionsMm}
+          </legend>
           <div className="grid grid-cols-3 gap-3">
             {field("length", t.length)}
             {field("width", t.width)}
@@ -117,60 +110,39 @@ export function CustomVariantForm({
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label htmlFor="board" className={labelClass}>
-              {t.board}
-            </label>
-            <select
-              id="board"
-              name="board"
-              value={values.board}
-              onChange={set("board")}
-              className={inputClass}
-            >
+            <Label htmlFor="board">{t.board}</Label>
+            <Select id="board" name="board" value={values.board} onChange={set("board")}>
               {[...new Set([o.board, ...boardOptions])].map((b) => (
                 <option key={b}>{b}</option>
               ))}
-            </select>
+            </Select>
           </div>
           <div>
-            <label htmlFor="color" className={labelClass}>
-              {t.color}
-            </label>
-            <select
-              id="color"
-              name="color"
-              value={values.color}
-              onChange={set("color")}
-              className={inputClass}
-            >
+            <Label htmlFor="color">{t.color}</Label>
+            <Select id="color" name="color" value={values.color} onChange={set("color")}>
               {[...new Set([o.color, ...colorOptions])].map((c) => (
                 <option key={c}>{c}</option>
               ))}
-            </select>
+            </Select>
           </div>
           <div>
-            <label htmlFor="printColors" className={labelClass}>
-              {t.printColors}
-            </label>
-            <select
+            <Label htmlFor="printColors">{t.printColors}</Label>
+            <Select
               id="printColors"
               name="printColors"
               value={values.printColors}
               onChange={set("printColors")}
-              className={inputClass}
             >
               {[0, 1, 2, 3, 4].map((n) => (
                 <option key={n} value={n}>
                   {n === 0 ? "Uten trykk" : n}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
           <div>
-            <label htmlFor="quantity" className={labelClass}>
-              {t.quantity}
-            </label>
-            <input
+            <Label htmlFor="quantity">{t.quantity}</Label>
+            <Input
               id="quantity"
               name="quantity"
               type="number"
@@ -180,57 +152,38 @@ export function CustomVariantForm({
               onChange={set("quantity")}
               aria-invalid={!!error("quantity")}
               aria-describedby={error("quantity") ? "quantity-error" : undefined}
-              className={inputClass}
+              className="w-full"
             />
-            {error("quantity") && (
-              <p id="quantity-error" className="mt-1 text-sm text-red-700">
-                {error("quantity")}
-              </p>
-            )}
+            {error("quantity") && <FieldError id="quantity-error">{error("quantity")}</FieldError>}
           </div>
           {colors > 0 && (
             <div className="sm:col-span-2">
-              <label htmlFor="printDescription" className={labelClass}>
-                {t.printDescription}
-              </label>
-              <input
+              <Label htmlFor="printDescription">{t.printDescription}</Label>
+              <Input
                 id="printDescription"
                 name="printDescription"
                 maxLength={200}
                 value={values.printDescription}
                 onChange={set("printDescription")}
-                className={inputClass}
+                className="w-full"
               />
             </div>
           )}
           <div className="sm:col-span-2">
-            <label htmlFor="notes" className={labelClass}>
-              {t.specNotes}
-            </label>
-            <input
+            <Label htmlFor="notes">{t.specNotes}</Label>
+            <Input
               id="notes"
               name="notes"
               maxLength={300}
               value={values.notes}
               onChange={set("notes")}
-              className={inputClass}
+              className="w-full"
             />
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="note" className={labelClass}>
-              {t.messageToSeller}
-            </label>
-            <textarea
-              id="note"
-              name="note"
-              rows={3}
-              maxLength={500}
-              aria-describedby="note-help"
-              className={inputClass}
-            />
-            <p id="note-help" className="mt-1 text-sm">
-              {t.messageToSellerHelp}
-            </p>
+            <Label htmlFor="note">{t.messageToSeller}</Label>
+            <Textarea id="note" name="note" rows={3} maxLength={500} aria-describedby="note-help" />
+            <FieldHelp id="note-help">{t.messageToSellerHelp}</FieldHelp>
           </div>
         </div>
       </div>

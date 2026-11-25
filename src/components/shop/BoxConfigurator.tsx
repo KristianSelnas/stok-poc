@@ -24,12 +24,10 @@ import {
 } from "@/shop/specs";
 
 import { buttonClasses } from "../ui/Button";
+import { FieldError, FieldHelp, Input, Label, Select, Textarea } from "../ui/Form";
 import { DescribeBox } from "./assistant/DescribeBox";
 import { BoxPreview } from "./BoxPreview";
 
-const inputClass =
-  "w-full rounded-2xl border-2 border-stok-blue/20 bg-white px-4 py-2.5 focus:border-stok-blue focus:outline-none aria-invalid:border-red-600";
-const labelClass = "mb-1 block font-meta text-sm font-medium text-stok-blue";
 const cardClass = "rounded-3xl bg-white p-6 ring-1 ring-stok-blue/10";
 
 type Props = {
@@ -104,10 +102,8 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
     const error = fieldError(key);
     return (
       <div>
-        <label htmlFor={key} className={labelClass}>
-          {label}
-        </label>
-        <input
+        <Label htmlFor={key}>{label}</Label>
+        <Input
           id={key}
           name={key}
           type="number"
@@ -119,13 +115,9 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
           onBlur={blur(key)}
           aria-invalid={!!error}
           aria-describedby={error ? `${key}-error` : "dimension-limits"}
-          className={inputClass}
+          className="w-full"
         />
-        {error && (
-          <p id={`${key}-error`} className="mt-1 text-sm text-red-700">
-            {error}
-          </p>
-        )}
+        {error && <FieldError id={`${key}-error`}>{error}</FieldError>}
       </div>
     );
   };
@@ -211,7 +203,7 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
           <p aria-hidden className="mb-3 text-xl font-bold text-stok-blue">
             {t.sizeAndMaterial}
           </p>
-          <p className={`${labelClass} text-base`}>{t.dimensionsMm}</p>
+          <p className="mb-1 block font-meta text-base font-medium text-stok-blue">{t.dimensionsMm}</p>
           <div className="grid grid-cols-3 gap-3">
             {numberField("l", t.length, limits.length)}
             {numberField("b", t.width, limits.width)}
@@ -223,40 +215,27 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
 
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="kvalitet" className={labelClass}>
-                {t.board}
-              </label>
-              <select
+              <Label htmlFor="kvalitet">{t.board}</Label>
+              <Select
                 id="kvalitet"
                 name="kvalitet"
                 value={values.kvalitet}
                 onChange={set("kvalitet")}
                 aria-describedby="kvalitet-help"
-                className={inputClass}
               >
                 {boardOptions.map((b) => (
                   <option key={b}>{b}</option>
                 ))}
-              </select>
-              <p id="kvalitet-help" className="mt-1 text-sm">
-                {boardDescriptions[values.kvalitet]}
-              </p>
+              </Select>
+              <FieldHelp id="kvalitet-help">{boardDescriptions[values.kvalitet]}</FieldHelp>
             </div>
             <div>
-              <label htmlFor="farge" className={labelClass}>
-                {t.color}
-              </label>
-              <select
-                id="farge"
-                name="farge"
-                value={values.farge}
-                onChange={set("farge")}
-                className={inputClass}
-              >
+              <Label htmlFor="farge">{t.color}</Label>
+              <Select id="farge" name="farge" value={values.farge} onChange={set("farge")}>
                 {colorOptions.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
-              </select>
+              </Select>
             </div>
           </div>
         </fieldset>
@@ -268,28 +247,18 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
           </p>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="trykk" className={labelClass}>
-                {t.printColors}
-              </label>
-              <select
-                id="trykk"
-                name="trykk"
-                value={values.trykk}
-                onChange={set("trykk")}
-                className={inputClass}
-              >
+              <Label htmlFor="trykk">{t.printColors}</Label>
+              <Select id="trykk" name="trykk" value={values.trykk} onChange={set("trykk")}>
                 {[0, 1, 2, 3, 4].map((n) => (
                   <option key={n} value={n}>
                     {n === 0 ? t.noPrint : n}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
             <div>
-              <label htmlFor="antall" className={labelClass}>
-                {t.quantity}
-              </label>
-              <input
+              <Label htmlFor="antall">{t.quantity}</Label>
+              <Input
                 id="antall"
                 name="antall"
                 type="number"
@@ -302,78 +271,57 @@ export function BoxConfigurator({ initialValues, initialEstimate, loggedIn }: Pr
                 onBlur={blur("antall")}
                 aria-invalid={!!fieldError("antall")}
                 aria-describedby={fieldError("antall") ? "antall-error" : "antall-help"}
-                className={inputClass}
+                className="w-full"
               />
               {fieldError("antall") ? (
-                <p id="antall-error" className="mt-1 text-sm text-red-700">
-                  {fieldError("antall")}
-                </p>
+                <FieldError id="antall-error">{fieldError("antall")}</FieldError>
               ) : (
-                <p id="antall-help" className="mt-1 text-sm">
+                <FieldHelp id="antall-help">
                   {t.customQuantityHelp(formatNumber(customQuantity.min))}
-                </p>
+                </FieldHelp>
               )}
             </div>
             {colors > 0 && (
               <div className="sm:col-span-2">
-                <label htmlFor="trykktekst" className={labelClass}>
-                  {t.printDescription}
-                </label>
-                <input
+                <Label htmlFor="trykktekst">{t.printDescription}</Label>
+                <Input
                   id="trykktekst"
                   name="trykktekst"
                   maxLength={200}
                   value={values.trykktekst}
                   onChange={set("trykktekst")}
-                  className={inputClass}
+                  className="w-full"
                 />
               </div>
             )}
             <div className="sm:col-span-2">
-              <label htmlFor="navn" className={labelClass}>
-                {t.boxName}
-              </label>
-              <input
+              <Label htmlFor="navn">{t.boxName}</Label>
+              <Input
                 id="navn"
                 name="navn"
                 maxLength={80}
                 value={values.navn}
                 onChange={set("navn")}
                 aria-describedby="navn-help"
-                className={inputClass}
+                className="w-full"
               />
-              <p id="navn-help" className="mt-1 text-sm">
-                {t.boxNameHelp}
-              </p>
+              <FieldHelp id="navn-help">{t.boxNameHelp}</FieldHelp>
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="merknad" className={labelClass}>
-                {t.specNotes}
-              </label>
-              <input
+              <Label htmlFor="merknad">{t.specNotes}</Label>
+              <Input
                 id="merknad"
                 name="merknad"
                 maxLength={300}
                 value={values.merknad}
                 onChange={set("merknad")}
-                className={inputClass}
+                className="w-full"
               />
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="note" className={labelClass}>
-                {t.messageToSeller}
-              </label>
-              <textarea
-                id="note"
-                name="note"
-                rows={3}
-                maxLength={500}
-                aria-describedby="note-help"
-                className={inputClass}
-              />
-              <p id="note-help" className="mt-1 text-sm">
-                {t.messageToSellerHelp}
-              </p>
+              <Label htmlFor="note">{t.messageToSeller}</Label>
+              <Textarea id="note" name="note" rows={3} maxLength={500} aria-describedby="note-help" />
+              <FieldHelp id="note-help">{t.messageToSellerHelp}</FieldHelp>
             </div>
           </div>
         </fieldset>

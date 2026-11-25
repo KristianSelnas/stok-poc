@@ -10,6 +10,7 @@ import { formatNok, formatNumber } from "@/shop/format";
 import { roundToBundle, unitPriceFor } from "@/shop/mock/rules";
 
 import { buttonClasses } from "../ui/Button";
+import { Input, Label } from "../ui/Form";
 import { StockBadge } from "./StockBadge";
 
 type PurchaseVariant = Pick<Variant, "sku" | "name" | "salesMode" | "unitsPerBundle" | "unitsPerPallet">;
@@ -183,13 +184,9 @@ export function VariantPurchase({
               <input type="hidden" name="sku" value={variant.sku} />
               <div className="flex flex-wrap items-end gap-3">
                 <div>
-                  <label
-                    htmlFor={`${id}-qty`}
-                    className="mb-1 block font-meta text-sm font-medium text-stok-blue"
-                  >
-                    {t.quantity}
-                  </label>
-                  <input
+                  <Label htmlFor={`${id}-qty`}>{t.quantity}</Label>
+                  <Input
+                    shape="pill"
                     id={`${id}-qty`}
                     name="quantity"
                     type="number"
@@ -198,7 +195,7 @@ export function VariantPurchase({
                     value={quantityInput}
                     onChange={(e) => setQuantityInput(e.target.value)}
                     aria-describedby={`${id}-qty-help`}
-                    className="w-32 rounded-full border-2 border-stok-blue/20 px-4 py-2.5 focus:border-stok-blue focus:outline-none"
+                    className="w-32"
                   />
                 </div>
                 <button

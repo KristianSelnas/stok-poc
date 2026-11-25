@@ -7,6 +7,7 @@ import { CustomVariantForm } from "@/components/shop/CustomVariantForm";
 import { MinSideSkeleton } from "@/components/shop/PageSkeleton";
 import { SpecSummary } from "@/components/shop/SpecSummary";
 import { buttonClasses } from "@/components/ui/Button";
+import { FieldHelp, Input, Label } from "@/components/ui/Form";
 import { addVariantToCart } from "@/shop/actions";
 import { t } from "@/shop/dictionary";
 import type { Order, OrderLine } from "@/shop/domain";
@@ -72,21 +73,20 @@ async function CatalogVariant({ session, line }: { session: Session; line: Order
         </div>
       </fieldset>
       <div>
-        <label htmlFor="quantity" className="mb-1 block font-meta text-sm font-medium text-stok-blue">
-          {t.quantity}
-        </label>
-        <input
+        <Label htmlFor="quantity">{t.quantity}</Label>
+        <Input
+          shape="pill"
           id="quantity"
           name="quantity"
           type="number"
           inputMode="numeric"
           min={1}
           defaultValue={line.quantity}
-          className="w-40 rounded-full border-2 border-stok-blue/20 px-4 py-2.5 focus:border-stok-blue focus:outline-none"
+          className="w-40"
         />
-        <p className="mt-1 text-sm">
+        <FieldHelp>
           {t.original}: {formatNumber(line.quantity)} stk. {line.name}
-        </p>
+        </FieldHelp>
       </div>
       <button type="submit" className={buttonClasses("primary")}>
         {t.addToCart}
